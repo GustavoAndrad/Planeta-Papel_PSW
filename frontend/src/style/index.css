@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+    @apply font-sans;
+    margin: 0;
+    padding: 0;
+    box-sizing: 0;
+}
+
+body{
+    height: 100vh;
+    min-height: 100vh;
+    background-color: #E6E6E7;
+}
+
+::-webkit-scrollbar {
+    width: 8px; /* Largura da scrollbar */
+}
+
+::-webkit-scrollbar-track {
+    background: #E6E6E7; /* Cor do fundo da scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888; /* Cor da parte rolável */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Cor da parte rolável ao passar o mouse */
+    width: 12px; /* Largura da scrollbar */
+}
+
+  /* Personalize a barra de rolagem para a área de produtos */
+  .scroll-produtos::-webkit-scrollbar {
+    height: 8px; /* Altura da barra de rolagem */
+  }
+
+  .scroll-produtos::-webkit-scrollbar-thumb {
+    background-color: #1D437A; /* Cor do "polegar" da barra */
+    border-radius: 4px;
+  }
+
+  .scroll-produtos::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Cor do fundo da barra */
+    border-radius: 4px;
+  }
