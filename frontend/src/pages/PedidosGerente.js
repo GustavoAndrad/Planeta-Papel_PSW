@@ -2,20 +2,20 @@ import StrokeLine from "../components/Catalogo/StrokeLine";
 import Barra from "../components/PedidosGerente/Barra";
 import Pedido from "../components/PedidosGerente/Pedido";
 import SearchBar from "../components/PedidosGerente/SearchBar";
-import SectionName from "../components/PedidosGerente/SectionName";
+import TitleSection from "../components/PedidosGerente/TitleSection";
 
 function PedidosGerente(){
     return (
         <>
-        <SectionName sectionName={"Pedidos realizados"} img={"/images/pedido.png"}></SectionName>
+        <TitleSection sectionName={"Pedidos realizados"} img={"/images/pedido.png"}></TitleSection>
         <SearchBar></SearchBar>
         <StrokeLine></StrokeLine>
-        <SectionName sectionName={"Agosto de 2024......................"} img={"/images/prod.png"}></SectionName>
+        <TitleSection sectionName={"Agosto de 2024......................"} img={"/images/prod.png"}></TitleSection>
         <Pedido cancelled={true} data={"27/08/2024"} valor={"123,00"}></Pedido>
         <Pedido cancelled={false} data={"24/08/2024"} valor={"123,00"}></Pedido>
         <Pedido cancelled={false} data={"14/08/2024"} valor={"123,00"}></Pedido>
         <StrokeLine></StrokeLine>
-        <SectionName sectionName={"Junho de 2024..............."} img={"/images/prod.png"}></SectionName>
+        <TitleSection sectionName={"Junho de 2024..............."} img={"/images/prod.png"}></TitleSection>
         <Pedido cancelled={false} data={"24/08/2024"} valor={"123,00"}></Pedido>
         <Pedido cancelled={true} data={"14/08/2024"} valor={"123,00"}></Pedido>
         <StrokeLine></StrokeLine>

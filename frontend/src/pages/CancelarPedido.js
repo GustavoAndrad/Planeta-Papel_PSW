@@ -2,7 +2,7 @@ import StrokeLine from "../components/Catalogo/StrokeLine";
 import BoxResumo from "../components/PedidoCliente/BoxResumo";
 import WhiteBox from "../components/PedidoCliente/WhiteBox";
 import BotaoPedidos from "../components/PedidosGerente/BotaoPedidos";
-import SectionName from "../components/PedidosGerente/SectionName";
+import TitleSection from "../components/PedidosGerente/TitleSection";
 
 function CancelarPedido() {
 
@@ -13,7 +13,7 @@ function CancelarPedido() {
 
     return(
         <>
-            <SectionName sectionName={"Informações do Pedido"} img={"/images/check.png"} />
+            <TitleSection sectionName={"Informações do Pedido"} img={"/images/check.png"} />
             <StrokeLine />
             <WhiteBox itemPedidos={items}>
             </WhiteBox>
