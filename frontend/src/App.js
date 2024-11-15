@@ -25,7 +25,6 @@ function App() {
 
       <main className="pt-36 pb-10 pl-6 pr-6 min-h-[100vh] h-auto max-w-full">
       
-        <BrowserRouter>
           <Routes>
             {/* CONTEÚDO AQUI */}
             <Route path="/" element={<Catalogo />} />
@@ -37,7 +36,6 @@ function App() {
             <Route path="/gerente/planos" element={<PlanosGerente/>} />
             <Route path="/gerente/plano" element={<EditarPlano/>} />
           </Routes>
-        </BrowserRouter>
       
       </main>
 
