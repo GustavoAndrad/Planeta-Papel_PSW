@@ -1,4 +1,4 @@
-function SectionName({sectionName, img}){
+function TitleSection({sectionName, img}){
     return (
         <div class="w-full flex items-center mb-6 gap-3">
                 <img src={img} alt="" class="size-8"/>
@@ -7,4 +7,4 @@ function SectionName({sectionName, img}){
     )
 }
 
-export default SectionName;
+export default TitleSection;

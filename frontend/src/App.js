@@ -5,6 +5,10 @@ import Header from "./components/Header"
 import Catalogo from "./pages/Catalogo";
 import Carrinho from "./pages/Carrinho";
 import PedidosGerente from "./pages/PedidosGerente";
+import PlanosGerente from "./pages/PlanosGerente";
+import PedidoCliente from "./pages/PedidoCliente";
+import CancelarPedido from "./pages/CancelarPedido";
+import EditarPlano from "./pages/EditarPlano";
 
 import {
   BrowserRouter,
@@ -12,8 +16,6 @@ import {
   Route,
   Link,
 } from "react-router-dom";
-import PedidoCliente from "./pages/PedidoCliente";
-import CancelarPedido from "./pages/CancelarPedido";
 
 function App() {
   return (
@@ -31,6 +33,8 @@ function App() {
             <Route path="/gerente/pedidos" element={<PedidosGerente/>} />
             <Route path="/cliente/pedido" element={<PedidoCliente/>} />
             <Route path="/gerente/pedido" element={<CancelarPedido/>} />
+            <Route path="/gerente/planos" element={<PlanosGerente/>} />
+            <Route path="/gerente/plano" element={<EditarPlano/>} />
           </Routes>
         </BrowserRouter>
       
