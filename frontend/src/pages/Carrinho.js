@@ -1,5 +1,6 @@
 import { useState } from "react";
 import CarrinhoCard from "../components/CarrinhoCard";
+import { Link } from 'react-router-dom';
 
 const ProdutoList = [
       { id:1, prodName: "Produto A", prodPrice: 10.50 },
@@ -22,10 +23,7 @@ const startTotalCar = ProdutoList.reduce((acc,produto)=>(acc+produto.prodPrice),
 function Carrinho(){
     const [prodList, setProdList] = useState(ProdutoList);
     const [totalCar, setTotalCar] = useState(startTotalCar);
-    console.log(prodList);
-    const CarrinhoList = prodList.map((produto)=>(
-        <CarrinhoCard key={produto.id} produto={produto} prodList={prodList} setProdList={setProdList} totalCar={totalCar} setTotalCar={setTotalCar}/>
-    ));
+    
 
     return(
         <>
@@ -35,26 +33,34 @@ function Carrinho(){
                 <h1 className="text-2xl font-semibold text-secondaryBlue">{formatSectionName("Carrinho")}</h1>
             </div>
             
-            {CarrinhoList}
+            {prodList.map((produto)=>(
+                <CarrinhoCard key={produto.id} produto={produto} prodList={prodList} setProdList={setProdList} totalCar={totalCar} setTotalCar={setTotalCar}/>
+            ))}
             
             {totalCar > 0 &&(<>
             <div className="flex items-center justify-center mt-6">
                 <h1 className="text-2xl font-semibold text-secondaryBlue">Total ...................... R$ {totalCar.toFixed(2)}</h1>
             </div>
-            <div className="flex-col items-center justify-center mt-6">
-                <a href="./catálogo.html" className="flex w-full justify-center text-xl font-semibold bg-white text-primaryBlue rounded-3xl border-2 border-primaryBlue p-3">Continuar Comprando</a>
-            </div>
-            <div className="flex-col items-center justify-center mt-6">
-                <a href="./conf_pedido.html" className="flex w-full justify-center text-xl font-semibold bg-primaryBlue text-white rounded-3xl border-2 border-accentBlue p-3">Confirmar Pedido</a>
+            <Link to="/catalogo">
+                <div className="mt-6">
+                    <button type='button' className="flex p-3 w-full justify-center text-xl font-semibold bg-white text-primaryBlue rounded-full border-2 border-primaryBlue shadow-md hover:bg-secondaryBlue hover:text-white hover:border-accentBlue">
+                    Continuar Comprando</button>
+                </div>
+            </Link>
+            <div className="mt-6">
+                <a href="./conf_pedido.html" className="flex p-3 w-full justify-center text-xl font-semibold bg-primaryBlue text-white rounded-full border-2 border-accentBlue shadow-md hover:bg-secondaryBlue">Confirmar Pedido</a>
             </div>
             </>)}
             {totalCar <= 0 &&(<>
             <div className="flex items-center justify-center mt-6">
                 <h1 className="text-2xl font-semibold text-cancelRed">Não há itens no Carrinho</h1>
             </div>
-            <div className="flex-col items-center justify-center mt-6">
-                <a href="./catálogo.html" className="flex w-full justify-center text-xl font-semibold bg-white text-primaryBlue rounded-3xl border-2 border-primaryBlue p-3">Continuar Comprando</a>
-            </div>
+            <Link to="/catalogo">
+                <div className="mt-6">
+                    <button type='button' className="flex p-3 w-full justify-center text-xl font-semibold bg-white text-primaryBlue rounded-full border-2 border-primaryBlue shadow-md hover:bg-secondaryBlue hover:text-white hover:border-accentBlue">
+                        Continuar Comprando</button>
+                </div>
+            </Link>
             </>)}
 
         </>)
