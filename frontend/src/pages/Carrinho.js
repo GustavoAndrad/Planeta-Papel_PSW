@@ -16,7 +16,7 @@ const ProdutoList = [
 
 function formatSectionName(name){
     return name.padEnd(34, '.');
-  }
+}
 
 const startTotalCar = ProdutoList.reduce((acc,produto)=>(acc+produto.prodPrice),0);
 

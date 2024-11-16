@@ -9,6 +9,7 @@ import PlanosGerente from "./pages/PlanosGerente";
 import PedidoCliente from "./pages/PedidoCliente";
 import CancelarPedido from "./pages/CancelarPedido";
 import EditarPlano from "./pages/EditarPlano";
+import SolicReciclagem from "./pages/SolicReciclagem";
 
 import {
   BrowserRouter,
@@ -35,6 +36,7 @@ function App() {
             <Route path="/gerente/pedido" element={<CancelarPedido/>} />
             <Route path="/gerente/planos" element={<PlanosGerente/>} />
             <Route path="/gerente/plano" element={<EditarPlano/>} />
+            <Route path="/cliente/solicitacao" element={<SolicReciclagem/>}/>
           </Routes>
       
       </main>
