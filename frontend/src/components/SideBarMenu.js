@@ -40,7 +40,7 @@ export default function SideBarMenu(){
         </div>
 
         <div class={`z-50 absolute top-0 ${isOpen? "w-full h-full":"invisible"} flex justify-end bg-opacity-50`}>
-            <div ref={sidebarRef} class="h-full md:w-desktop sm:w-mobile bg-secondaryBlue flex justify-center text-white fixed">
+            <div ref={sidebarRef} class="h-full md:w-desktop sm:w-mobile bg-secondaryBlue flex justify-center text-white fixed shadow-black shadow-2xl">
                 
                 <div class="w-full min-w-[50px]">
 
