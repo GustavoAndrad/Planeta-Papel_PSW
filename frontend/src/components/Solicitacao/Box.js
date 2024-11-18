@@ -4,7 +4,6 @@ function formatSectionName(name,num){
 }
 
 export default function Box({info, type}){
-    console.log(info)
     return(<>
         <div className={`${(type === 1)? "":"invisible h-0"}`}>
             <h1 class="text-xl font-semibold">Resumo da Solicitação</h1>

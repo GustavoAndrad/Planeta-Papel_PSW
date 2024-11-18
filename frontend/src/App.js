@@ -17,6 +17,7 @@ import EditarPlano from "./pages/EditarPlano";
 import SolicReciclagem from "./pages/SolicReciclagem";
 import AcompSolic from "./pages/AcompSolic";
 import AnalisarSolic from "./pages/AnalisarSolic";
+import CriarPlano from "./pages/CriarPlano";
 
 
 function App() {
@@ -32,14 +33,17 @@ function App() {
             <Route path="/" element={<Catalogo />} />
             <Route path="/catalogo" element={<Catalogo />} />
             <Route path="/carrinho" element={<Carrinho />} />
-            <Route path="/gerente/pedidos" element={<PedidosGerente/>} />
+            
             <Route path="/cliente/pedido" element={<PedidoCliente/>} />
+            <Route path="/cliente/solicitacao" element={<SolicReciclagem/>}/>
+            <Route path="/cliente/acompanhar" element={<AcompSolic/>}/>
+
+            <Route path="/gerente/pedidos" element={<PedidosGerente/>} />
             <Route path="/gerente/pedido" element={<CancelarPedido/>} />
             <Route path="/gerente/planos" element={<PlanosGerente/>} />
             <Route path="/gerente/plano" element={<EditarPlano/>} />
-            <Route path="/cliente/solicitacao" element={<SolicReciclagem/>}/>
-            <Route path="/cliente/acompanhar" element={<AcompSolic/>}/>
             <Route path="/gerente/analisar" element={<AnalisarSolic/>}/>
+            <Route path="/gerente/criar-plano" element={<CriarPlano/>} />
           </Routes>
       
       </main>

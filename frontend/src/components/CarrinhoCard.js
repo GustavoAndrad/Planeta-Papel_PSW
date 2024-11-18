@@ -1,24 +1,9 @@
 import {useState} from 'react';
 
-
 export default function CarrinhoCard({produto, ...props}){
     const [qtd, setQtd] = useState(1);
     const [total, setTotal] = useState(produto.prodPrice);
-    /*
-    function changeQtd(value){
-        return prodList.map(prod => {
-            console.log(prodList);
-            if (prod.id === produto.id) {
-              return {
-                ...prod,
-                qtd: value
-              };
-            } else {
-              return prod;
-            }
-          })
-    }
-    */
+    
     function handleQtdClick(n){
         let value = qtd+n;
         if(value>9999){
@@ -26,7 +11,6 @@ export default function CarrinhoCard({produto, ...props}){
         }
         if(value>=1){
             setQtd(value);
-            //setProdList(()=>changeQtd(value));
             setTotal((value)*produto.prodPrice);
             props.setTotalCar(props.totalCar-total+(value)*produto.prodPrice);
         }
@@ -42,7 +26,6 @@ export default function CarrinhoCard({produto, ...props}){
             value = 1;
         }
         setQtd(value);
-        //setProdList(()=>changeQtd(value));
         setTotal(value*produto.prodPrice);
         props.setTotalCar(props.totalCar-total+value*produto.prodPrice);
     }
@@ -66,7 +49,7 @@ export default function CarrinhoCard({produto, ...props}){
             </div>
             <div>
                 <button type="button" onClick={() => handleQtdClick(-1)}
-                    className="size-8 inline-flex justify-center items-center gap-x-2 text-md  rounded-md border-1 border-accentBlue bg-primaryBlue text-white shadow-sm hover:bg-accenteBlue focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" aria-label="Decrease">
+                    className="size-8 inline-flex justify-center items-center gap-x-2 text-md  rounded-md border-1 border-accentBlue bg-primaryBlue text-white shadow-sm hover:bg-secondaryBlue focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" aria-label="Decrease">
                     <svg className="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M5 12h14"></path>
                      </svg>
@@ -76,7 +59,7 @@ export default function CarrinhoCard({produto, ...props}){
                     value={qtd} onChange={(e)=>handleQtdChange(e.target.value)} data-hs-input-number-input=""/>
                 
                 <button type="button" onClick={() => handleQtdClick(1)}
-                    className="size-8 inline-flex justify-center items-center gap-x-2 text-md  rounded-md border-1 border-accentBlue bg-primaryBlue text-white shadow-sm hover:bg-accenteBlue focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" aria-label="Increase">
+                    className="size-8 inline-flex justify-center items-center gap-x-2 text-md  rounded-md border-1 border-accentBlue bg-primaryBlue text-white shadow-sm hover:bg-secondaryBlue focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" aria-label="Increase">
                     <svg className="shrink-0 size-3.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M5 12h14"></path>
                         <path d="M12 5v14"></path>

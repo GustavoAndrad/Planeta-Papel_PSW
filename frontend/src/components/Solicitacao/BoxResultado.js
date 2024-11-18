@@ -11,7 +11,7 @@ export default function BoxResultado({status,setStatus}){
             <h1 class="text-xl font-semibold text-center">Qual o Resultado?</h1>
             <button onClick={()=>(handleStatus(true))} type="submit" class="mt-3 min-w-[200px] hover:bg-secondaryBlue w-3/4 bg-primaryBlue text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-full text-2xl px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                 Aprovar</button>
-            <button onClick={()=>(handleStatus(false))} type="submit" class="mt-3 min-w-[200px] hover:bg-red-700 w-3/4 bg-[#f80000] text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-full text-2xl px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+            <button onClick={()=>(handleStatus(false))} type="submit" class="mt-3 min-w-[200px] hover:bg-red-700 w-3/4 bg-cancelRed text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-full text-2xl px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                 Reprovar</button>
         </div>
 
@@ -24,9 +24,9 @@ export default function BoxResultado({status,setStatus}){
         </div>
 
         <div class={`${status===false? "w-2/3 mx-auto min-w-72 py-5 flex flex-col items-center bg-white rounded-3xl border-2 border-accentBlue":"invisible h-0"}  `}>
-            <h1 class="text-xl font-semibold text-center">Informar motivo da <span class="text-[#f80000]">negação</span></h1>
+            <h1 class="text-xl font-semibold text-center">Informar motivo da <span class="text-cancelRed">negação</span></h1>
             <textarea id="motivo" name="motivo" rows="4" placeholder="Motivo da negação" class="mt-3 w-5/6  rounded-xl" required></textarea>
-            <button type="submit" class="mt-3 min-w-[200px] hover:bg-red-700 w-3/4 bg-[#f80000] text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-full text-2xl px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+            <button type="submit" class="mt-3 min-w-[200px] hover:bg-red-700 w-3/4 bg-cancelRed text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-full text-2xl px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                 Confirmar</button>
         </div>
     </>);

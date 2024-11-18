@@ -48,7 +48,7 @@ function Carrinho(){
                 </div>
             </Link>
             <div className="mt-6">
-                <a href="./conf_pedido.html" className="flex p-3 w-full justify-center text-xl font-semibold bg-primaryBlue text-white rounded-full border-2 border-accentBlue shadow-md hover:bg-secondaryBlue">Confirmar Pedido</a>
+                <a href="./conf_pedido.html" className="flex p-3 w-full justify-center text-xl font-semibold bg-primaryBlue text-white rounded-full hover:bg-secondaryBlue shadow-md">Confirmar Pedido</a>
             </div>
             </>)}
             {totalCar <= 0 &&(<>
