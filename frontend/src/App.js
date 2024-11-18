@@ -1,5 +1,10 @@
 import "./style/index.css";
 import "./style/generated.css";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
 import Footer from "./components/Footer";
 import Header from "./components/Header"
 import Catalogo from "./pages/Catalogo";
@@ -11,12 +16,7 @@ import CancelarPedido from "./pages/CancelarPedido";
 import EditarPlano from "./pages/EditarPlano";
 import SolicReciclagem from "./pages/SolicReciclagem";
 import AcompSolic from "./pages/AcompSolic";
-
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
+import AnalisarSolic from "./pages/AnalisarSolic";
 
 
 function App() {
@@ -38,7 +38,8 @@ function App() {
             <Route path="/gerente/planos" element={<PlanosGerente/>} />
             <Route path="/gerente/plano" element={<EditarPlano/>} />
             <Route path="/cliente/solicitacao" element={<SolicReciclagem/>}/>
-            <Route path="/cliente/acomp_solic" element={<AcompSolic/>}/>
+            <Route path="/cliente/acompanhar" element={<AcompSolic/>}/>
+            <Route path="/gerente/analisar" element={<AnalisarSolic/>}/>
           </Routes>
       
       </main>

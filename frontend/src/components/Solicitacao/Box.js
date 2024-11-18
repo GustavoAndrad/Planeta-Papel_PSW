@@ -15,13 +15,13 @@ export default function Box({info, type}){
                         
                         {info.items?.map((item)=>{
                             if(item.nome!=="Outro"){
-                                return <li className="font-mono">{formatSectionName(item.nome,22)}{item.qtd}</li>
+                                return <li className="font-mono">{formatSectionName(item.nome,20)}{item.qtd}</li>
                             }else{
                                 return<>
                                     <li className="font-mono">Outro:</li>
                                     <ul className="list-disc pl-5">
                                         {item.outros.map((item)=>
-                                            <li className="font-mono">{formatSectionName(item.nome,20)}{item.qtd}</li>)}
+                                            <li className="font-mono">{formatSectionName(item.nome,18)}{item.qtd}</li>)}
                                     </ul>
                                 </>
                             }
