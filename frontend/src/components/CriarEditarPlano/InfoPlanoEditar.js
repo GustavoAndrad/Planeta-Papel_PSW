@@ -11,25 +11,24 @@ function InfoPlanoEditar(){
     const plano = useSelector((state) =>
         state.planos.find((plano) => plano.id === parseInt(id))
     );
-    console.log(plano)
 
     const [nome, setNome] = useState("");
-    const [custo, setCusto] = useState("");
+    const [preco, setPreco] = useState("");
     const [duracao, setDuracao] = useState("");
     const [beneficios, setBeneficios] = useState([""]);
     
     useEffect(() => {
         if (plano) {
           setNome(plano.nome);
-          setCusto(plano.custo);
+          setPreco(plano.preco);
           setDuracao(plano.duracao);
           setBeneficios(plano.beneficios);
         }
       }, [plano]);
 
-    function handleCustoChange(e){
+    function handlePrecoChange(e){
         if(!isNaN(e)){
-            setCusto(e);
+            setPreco(e);
         }
     };
     function handleBeneficiosChange(novo, index){
@@ -57,17 +56,12 @@ function InfoPlanoEditar(){
         e.preventDefault();
         
         const ultimoItem = beneficios[beneficios.length - 1];
-        if(ultimoItem!==""){
-            setBeneficios(beneficios.slice(0, beneficios.length - 1))
-        }
-        if(!plano){
-            
-        }
+
         const updatedPlano = {
           nome,
-          custo,
+          preco,
           duracao,
-          beneficios,
+          beneficios: ultimoItem!==""? beneficios: beneficios.slice(0, beneficios.length - 1),
         };
         
         dispatch(updatePlano({ id: plano.id, updatedPlano }));
@@ -76,7 +70,7 @@ function InfoPlanoEditar(){
     };
     function handleRemove(id){
         dispatch(removePlano(id));
-        navigate('/');
+        navigate('/gerente/planos');
     };
     
     return(
@@ -92,8 +86,8 @@ function InfoPlanoEditar(){
             />
             <input
                 type="text"
-                value={`${custo!==""?"R$ " + custo:""}`}
-                onChange={(e)=>handleCustoChange(e.target.value.replace("R$", "").trim())}
+                value={`${preco!==""?"R$ " + preco:""}`}
+                onChange={(e)=>handlePrecoChange(e.target.value.replace("R$", "").trim())}
                 placeholder="Preço Mensal"
                 className="border border-accentBlue p-2 rounded-[20px] w-full mb-4 pl-4"
                 required

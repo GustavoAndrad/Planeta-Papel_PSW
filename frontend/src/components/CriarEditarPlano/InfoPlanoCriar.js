@@ -8,17 +8,17 @@ function InfoPlanoCriar(){
     const navigate = useNavigate();
 
     const nextId = useSelector((state) =>
-        state.planos[state.planos.length-1].id + 1
+        state.planos.length > 0 ? state.planos[state.planos.length-1].id + 1 : 1
     );
 
     const [nome, setNome] = useState("");
-    const [custo, setCusto] = useState("");
+    const [preco, setPreco] = useState("");
     const [duracao, setDuracao] = useState("");
     const [beneficios, setBeneficios] = useState([""]);
 
-    function handleCustoChange(e){
+    function handlePrecoChange(e){
         if(!isNaN(e)){
-            setCusto(e);
+            setPreco(e);
         }
     };
     function handleBeneficiosChange(novo, index){
@@ -46,18 +46,14 @@ function InfoPlanoCriar(){
         e.preventDefault();
         
         const ultimoItem = beneficios[beneficios.length - 1];
-        if(ultimoItem!==""){
-            setBeneficios(beneficios.slice(0, beneficios.length - 1))
-        }
 
         const newPlano = {
             id: parseInt(nextId),
             nome,
-            custo,
+            preco,
             duracao,
-            beneficios,
+            beneficios: ultimoItem!==""? beneficios: beneficios.slice(0, beneficios.length - 1),
         };
-        console.log(newPlano)
         dispatch(addPlano(newPlano));
     
         navigate('/gerente/planos');
@@ -76,8 +72,8 @@ function InfoPlanoCriar(){
             />
             <input
                 type="text"
-                value={`${custo!==""?"R$ " + custo:""}`}
-                onChange={(e)=>handleCustoChange(e.target.value.replace("R$", "").trim())}
+                value={`${preco!==""?"R$ " + preco:""}`}
+                onChange={(e)=>handlePrecoChange(e.target.value.replace("R$", "").trim())}
                 placeholder="Preço Mensal"
                 className="border border-accentBlue p-2 rounded-[20px] w-full mb-4 pl-4"
                 required

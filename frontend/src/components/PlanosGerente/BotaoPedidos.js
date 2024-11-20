@@ -1,8 +1,10 @@
+import { Link } from "react-router-dom";
+
 function Botao({text}){
     return(
-        <a href="./criar_plano.html">
-            <button className="w-full px-4 bg-primaryBlue text-white rounded-xl">{}{text}</button>
-        </a>
+        <Link to="/gerente/criar-plano">
+            <button className="w-full p-3 font-medium bg-primaryBlue text-white text-2xl rounded-full">{text}</button>
+        </Link>
     )
 }
 

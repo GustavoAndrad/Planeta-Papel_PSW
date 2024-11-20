@@ -4,9 +4,16 @@ const initialState = [
     {
         id: 1,
         nome: "Origami", 
-        custo: "123", 
+        preco: "123", 
         duracao: "3 meses", 
         beneficios: ["15% de desconto", "Brindes exclusivos"]
+    },
+    {
+        id: 2,
+        nome: "A4",
+        preco: "555",
+        duracao: "5 meses", 
+        beneficios: ["20% de desconto", "alguma coisa"]
     }
 ]
 
