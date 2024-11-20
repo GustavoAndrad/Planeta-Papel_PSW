@@ -1,19 +1,11 @@
-import InfoPlano from "../components/CriarEditarPlano/InfoPlano";
-import { useState } from "react";
+import InfoPlanoCriar from "../components/CriarEditarPlano/InfoPlanoCriar";
 
 function formatSectionName(name){
     return name.padEnd(34, '.');
 }
 
-const startPlano = {
-    nome: "", 
-    custo: "", 
-    duracao: "", 
-    beneficios: [""]
-}
 
 export default function CriarPlano(){
-    const [plano,setPlano] = useState(startPlano)
 
     return(<>
         <div class="flex items-center mb-6 gap-3">
@@ -23,7 +15,7 @@ export default function CriarPlano(){
             </span>
         </div>
         
-        <InfoPlano plano={plano} setPlano={setPlano} type={1}></InfoPlano>
+        <InfoPlanoCriar></InfoPlanoCriar>
 
     </>)
 }

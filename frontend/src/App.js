@@ -41,7 +41,7 @@ function App() {
             <Route path="/gerente/pedidos" element={<PedidosGerente/>} />
             <Route path="/gerente/pedido" element={<CancelarPedido/>} />
             <Route path="/gerente/planos" element={<PlanosGerente/>} />
-            <Route path="/gerente/plano" element={<EditarPlano/>} />
+            <Route path="/gerente/editar-plano/:id" element={<EditarPlano/>} />
             <Route path="/gerente/analisar" element={<AnalisarSolic/>}/>
             <Route path="/gerente/criar-plano" element={<CriarPlano/>} />
           </Routes>
