@@ -22,7 +22,7 @@ export default function SolicReciclagem(){
                 <img src="/images/reciclagem.png" alt="" className="size-8"/>
                 <span>
                     <h1 className="text-2xl font-semibold text-secondaryBlue">{formatSectionName("Solicitar Reciclagem")}</h1>
-                    <p class="text-sm font-semibold text-primaryBlue">Essa ação está sujeita  à validação</p>
+                    <p className="text-sm font-semibold text-primaryBlue">Essa ação está sujeita  à validação</p>
                 </span>
             </div>
             <Caixa sectionName={"O que vai reciclar ?"} items={items} type={"rec"}></Caixa>

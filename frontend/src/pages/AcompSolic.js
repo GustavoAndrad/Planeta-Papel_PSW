@@ -28,18 +28,18 @@ function formatSectionName(name){
 
 export default function AcompSolic(){
     return(<>
-        <div class="flex items-center mb-6 gap-3">
-            <img src="/images/reciclagem.png" alt="" class="size-8"/>
+        <div className="flex items-center mb-6 gap-3">
+            <img src="/images/reciclagem.png" alt="" className="size-8"/>
             <span>
-                <h1 class="text-2xl font-semibold text-secondaryBlue">{formatSectionName("Acompanhar Solicitação")}</h1>
+                <h1 className="text-2xl font-semibold text-secondaryBlue">{formatSectionName("Acompanhar Solicitação")}</h1>
             </span>
         </div>
-        <div class="px-4 pb-4">
+        <div className="px-4 pb-4">
             <Box info={info.solicitaçao} type={1}></Box>
             <Box info={info.analise} type={2}></Box>
         </div>
         
-        <p class="text-sm font-semibold text-center">
+        <p className="text-sm font-semibold text-center">
             Se houver problemas na coleta, entraremos em contato.<br/>
             Nosso meio de comunicação é o correio eletrônico.
         </p>
