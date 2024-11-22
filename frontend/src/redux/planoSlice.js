@@ -32,13 +32,13 @@ export const planosSlice = createSlice({
             }
         },
         removePlano: (state, action) => {
-            const planoId = action.payload;
-            const planoIndex = state.findIndex(plano => plano.id === planoId);
-            if (planoIndex !== -1) {
-                state.splice(planoIndex, 1); // Remove o item do array no estado
+            const id = action.payload;
+            const index = state.findIndex(item => item.id === id);
+            if (index !== -1) {
+                state.splice(index, 1); 
             }
         },
-    }
+    }   
 });
 
 export const { addPlano, updatePlano, removePlano} = planosSlice.actions;
