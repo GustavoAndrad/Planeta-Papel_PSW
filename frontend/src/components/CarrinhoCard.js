@@ -1,49 +1,73 @@
-import {useState} from 'react';
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { removeCarrinho, updateQtdCarrinho } from '../redux/carrinhoSlice';
 
-export default function CarrinhoCard({produto, ...props}){
-    const [qtd, setQtd] = useState(1);
-    const [total, setTotal] = useState(produto.prodPrice);
-    
+export default function CarrinhoCard({ id }){
+    const dispatch = useDispatch();
+
+    const produto = useSelector((state)=>
+        state.carrinho.find(prod=>prod.id===id)
+    );
+
+    const [qtd, setQtd] = useState(produto.qtd);
+    const total = qtd * produto.prodPrice; 
+
+    const handleBlur = () => {
+        if(qtd===0)
+            setQtd(1);
+    };
+
     function handleQtdClick(n){
         let value = qtd+n;
-        if(value>9999){
-            value=9999;
+        if(value > 999){
+            value = 999;
         }
         if(value>=1){
             setQtd(value);
-            setTotal((value)*produto.prodPrice);
-            props.setTotalCar(props.totalCar-total+(value)*produto.prodPrice);
+            dispatch(updateQtdCarrinho({id, updated: value}));
         }
     }
     function handleQtdChange(value){
-        if(isNaN(value)){
+        if(value===''){
+            value=0;
+        }else if(isNaN(value)){
             value=qtd;
         }
-        if(value>9999){
-            value=9999;
+        value = parseInt(value);
+        if(value < 0)
+            value=0; 
+        if(value>999){
+            value=999;
         }
-        if(value < 1){
-            value = 1;
-        }
+        
         setQtd(value);
-        setTotal(value*produto.prodPrice);
-        props.setTotalCar(props.totalCar-total+value*produto.prodPrice);
+        if(value !== qtd && value !== 0){
+            dispatch(updateQtdCarrinho({id, updated: value}));
+        }else{
+            dispatch(updateQtdCarrinho({id, updated: 1}));
+        }
     }
     function handleCardRemove(){
-        props.setProdList(props.prodList.filter((p)=>(p!==produto)));
-        props.setTotalCar(props.totalCar-total);
+        dispatch(removeCarrinho(id));
     }
-    
-    return(
+
+
+    //
+    //alterar link quado detalhes_prod for feito
+    //
+
+
+    return( 
         <div className="mt-5 group flex relative items-center rounded-lg p-4 text-sm/6 bg-white shadow-md">
             <div className="flex h-12 w-12 flex-none items-center justify-center rounded-lg">
               <img className="size-max cursor-pointer" src="images/prod.png" alt=""/>
-              <a href="detalhes_prod.html" className="absolute w-13 h-13"></a>
+              <Link to="/detalhes_prod" className="absolute w-13 h-13"></Link>
             </div>
             <div className="flex-auto border-x-4 border-dark px-3 mx-3">
-              <a href="./detalhes_prod.html" className=" text-xl font-bold text-primaryBlue">
+              <Link to="/detalhes_prod" className=" text-xl font-bold text-primaryBlue">
                 {produto.prodName}
-              </a>
+              </Link>
               <p className="mt-0.5 text-lg font-semibold text-secondaryBlue">Uni. R$ {produto.prodPrice.toFixed(2)}</p>
               <p className="mt-0.5 text-lg font-semibold text-secondaryBlue">Total R$ {total.toFixed(2)}</p>
             </div>
@@ -56,6 +80,7 @@ export default function CarrinhoCard({produto, ...props}){
                 </button>
 
                 <input className="p-0 w-8 bg-transparent border-0 text-gray-800 text-center focus:ring-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none dark:text-white" type="text" aria-roledescription="Number field" 
+                    onBlur={handleBlur}
                     value={qtd} onChange={(e)=>handleQtdChange(e.target.value)} data-hs-input-number-input=""/>
                 
                 <button type="button" onClick={() => handleQtdClick(1)}

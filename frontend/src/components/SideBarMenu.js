@@ -1,5 +1,5 @@
 import {useState, useEffect, useRef} from 'react';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 export default function SideBarMenu(){
     const [isOpen, setIsOpen] = useState(false);
@@ -51,11 +51,13 @@ export default function SideBarMenu(){
 
                 <hr />
 
-                <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/login_cliente"> 👤 Meu Perfil </Link></ul>
-                <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/carrinho"> 🛒 Carrinho </Link> </ul>
-                <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/assinar_plano"> 💸 Planos Mensais </Link> </ul>
-                <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/pedidos_cliente"> 📦 Pedidos </Link></ul> 
-                <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/solic_reciclagem"> ♻ Reciclagem</Link> </ul>
+                        <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/login_cliente"> 👤 Meu Perfil </Link></ul>
+                        <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/carrinho"> 🛒 Carrinho </Link> </ul>
+                        <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/assinar_plano"> 💸 Planos Mensais </Link> </ul>
+                        <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/pedidos_cliente"> 📦 Pedidos </Link></ul>
+                        <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/solic_reciclagem"> ♻ Reciclagem</Link> </ul>
+                        
+                        <hr/>
 
                 <hr />
 
