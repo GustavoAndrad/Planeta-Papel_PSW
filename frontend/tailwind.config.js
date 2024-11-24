@@ -23,7 +23,17 @@ module.exports = {
 
       screens:{
         vs: "410px",
-      }
+      },
+
+      keyframes: {
+        moveRight: {
+          '0%, 100%': { transform: 'translateX(0)' },
+          '50%': { transform: 'translateX(10px)' },
+        },
+      },
+      animation: {
+        moveRight: 'moveRight 1s ease-in-out',
+      },
     },
   },
   plugins: [

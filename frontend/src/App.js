@@ -18,7 +18,7 @@ import SolicReciclagem from "./pages/SolicReciclagem";
 import AcompSolic from "./pages/AcompSolic";
 import AnalisarSolic from "./pages/AnalisarSolic";
 import CriarPlano from "./pages/CriarPlano";
-
+import Produto from "./pages/Produto";
 
 function App() {
   return (
@@ -44,6 +44,8 @@ function App() {
             <Route path="/gerente/editar-plano/:id" element={<EditarPlano/>} />
             <Route path="/gerente/analisar" element={<AnalisarSolic/>}/>
             <Route path="/gerente/criar-plano" element={<CriarPlano/>} />
+
+            <Route path="/produto/:id" element={<Produto />} />
           </Routes>
       
       </main>

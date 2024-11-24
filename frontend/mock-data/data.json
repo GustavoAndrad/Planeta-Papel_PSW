@@ -1,0 +1,617 @@
+{
+  "produtos": [
+    {
+      "id": 1,
+      "nome": "Papel Sulfite A4 - 500 folhas",
+      "preco": 22.9,
+      "descricao": "Pacote com 500 folhas de papel sulfite A4, ideal para impressoras e copiadoras.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/arquivo.png"
+      ],
+      "qnt_disponivel": 100,
+      "categoria": "Papel"
+    },
+    {
+      "id": 2,
+      "nome": "Papel Colorido A4 - 100 folhas",
+      "preco": 12.9,
+      "descricao": "Pacote com 100 folhas de papel colorido A4, disponível em várias cores.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 50,
+      "categoria": "Papel"
+    },
+    {
+      "id": 3,
+      "nome": "Papel Cartão - 25 folhas",
+      "preco": 18.9,
+      "descricao": "Papel cartão resistente para uso em trabalhos manuais, scrapbooking e outros.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 60,
+      "categoria": "Papel"
+    },
+    {
+      "id": 4,
+      "nome": "Papel Reciclado A4 - 500 folhas",
+      "preco": 20.9,
+      "descricao": "Pacote com 500 folhas de papel reciclado A4, ideal para uso sustentável.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 75,
+      "categoria": "Papel"
+    },
+    {
+      "id": 5,
+      "nome": "Papel Couchê Glossy A4 - 200 folhas",
+      "preco": 35.9,
+      "descricao": "Pacote com 200 folhas de papel couchê glossy A4, perfeito para impressões de alta qualidade.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 30,
+      "categoria": "Papel"
+    },
+    {
+      "id": 6,
+      "nome": "Papel Fotográfico A4 - 100 folhas",
+      "preco": 45.9,
+      "descricao": "Papel fotográfico A4 para impressões de fotos, com excelente qualidade de imagem.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 80,
+      "categoria": "Papel"
+    },
+    {
+      "id": 7,
+      "nome": "Papel Offset A4 - 1000 folhas",
+      "preco": 55.9,
+      "descricao": "Pacote com 1000 folhas de papel offset A4, ideal para uso comercial.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 200,
+      "categoria": "Papel"
+    },
+    {
+      "id": 8,
+      "nome": "Post-it 76mm x 76mm - Bloco com 100 folhas",
+      "preco": 9.9,
+      "descricao": "Bloco de post-it tamanho 76mm x 76mm, perfeito para anotações rápidas.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 200,
+      "categoria": "Post-it"
+    },
+    {
+      "id": 9,
+      "nome": "Post-it Super Sticky 76mm x 76mm - Bloco com 90 folhas",
+      "preco": 14.9,
+      "descricao": "Post-it super sticky que gruda mais e é ideal para papéis e superfícies diversas.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 120,
+      "categoria": "Post-it"
+    },
+    {
+      "id": 10,
+      "nome": "Post-it 50mm x 50mm - Bloco com 150 folhas",
+      "preco": 11.9,
+      "descricao": "Post-it com 150 folhas no tamanho 50mm x 50mm, excelente para uso escolar e de escritório.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 180,
+      "categoria": "Post-it"
+    },
+    {
+      "id": 11,
+      "nome": "Post-it Neon 76mm x 76mm - Bloco com 100 folhas",
+      "preco": 13.9,
+      "descricao": "Bloco de post-it neon para destacar suas anotações, com 100 folhas.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 150,
+      "categoria": "Post-it"
+    },
+    {
+      "id": 12,
+      "nome": "Post-it 76mm x 76mm - Bloco com 50 folhas",
+      "preco": 7.9,
+      "descricao": "Bloco de post-it tamanho 76mm x 76mm com 50 folhas.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 200,
+      "categoria": "Post-it"
+    },
+    {
+      "id": 13,
+      "nome": "Post-it 38mm x 38mm - Bloco com 150 folhas",
+      "preco": 8.9,
+      "descricao": "Post-it pequeno, ideal para anotações rápidas com 150 folhas.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 250,
+      "categoria": "Post-it"
+    },
+    {
+      "id": 14,
+      "nome": "Post-it Ultra 76mm x 76mm - Bloco com 100 folhas",
+      "preco": 15.9,
+      "descricao": "Post-it Ultra, ideal para uso em ambientes mais exigentes.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 130,
+      "categoria": "Post-it"
+    },
+    {
+      "id": 15,
+      "nome": "Post-it Super Sticky 76mm x 76mm - Bloco com 100 folhas",
+      "preco": 17.9,
+      "descricao": "Post-it super sticky com 100 folhas para uso prolongado.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 100,
+      "categoria": "Post-it"
+    },
+    {
+      "id": 16,
+      "nome": "Cartolina Colorida A3 - 10 folhas",
+      "preco": 10.9,
+      "descricao": "Pacote com 10 folhas de cartolina colorida A3, excelente para trabalhos escolares e artes.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 80,
+      "categoria": "Cartolina"
+    },
+    {
+      "id": 17,
+      "nome": "Cartolina Branca A3 - 10 folhas",
+      "preco": 8.9,
+      "descricao": "Pacote de 10 folhas de cartolina branca A3, versátil para projetos e apresentações.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 60,
+      "categoria": "Cartolina"
+    },
+    {
+      "id": 18,
+      "nome": "Cartolina Colorida A4 - 25 folhas",
+      "preco": 12.9,
+      "descricao": "Cartolina colorida A4, com 25 folhas para criar projetos criativos.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 100,
+      "categoria": "Cartolina"
+    },
+    {
+      "id": 19,
+      "nome": "Cartolina Branca A4 - 25 folhas",
+      "preco": 10.9,
+      "descricao": "Cartolina branca A4, pacote com 25 folhas.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 80,
+      "categoria": "Cartolina"
+    },
+    {
+      "id": 20,
+      "nome": "Cartolina Colorida A3 - 5 folhas",
+      "preco": 7.9,
+      "descricao": "Cartolina colorida A3, com 5 folhas para pequenas criações.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 60,
+      "categoria": "Cartolina"
+    },
+    {
+      "id": 21,
+      "nome": "Cartolina de Cores Variadas A4 - 10 folhas",
+      "preco": 9.9,
+      "descricao": "Pacote com 10 folhas de cartolina A4 em cores variadas.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 100,
+      "categoria": "Cartolina"
+    },
+    {
+      "id": 22,
+      "nome": "Cartolina A4 - 100 folhas",
+      "preco": 25.9,
+      "descricao": "Cartolina A4 com 100 folhas, ideal para atividades em grupo.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 150,
+      "categoria": "Cartolina"
+    },
+    {
+      "id": 23,
+      "nome": "Cartolina Preta A4 - 5 folhas",
+      "preco": 6.9,
+      "descricao": "Cartolina preta A4, pacote com 5 folhas.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 50,
+      "categoria": "Cartolina"
+    },
+    {
+      "id": 24,
+      "nome": "Caderno Universitário - 80 folhas",
+      "preco": 19.9,
+      "descricao": "Caderno universitário com capa dura e 80 folhas, ideal para anotações no dia a dia.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 150,
+      "categoria": "Caderno"
+    },
+    {
+      "id": 25,
+      "nome": "Caderno Espiral - 100 folhas",
+      "preco": 23.9,
+      "descricao": "Caderno espiral com 100 folhas, capa dura e formato A5, ideal para o uso escolar e profissional.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 120,
+      "categoria": "Caderno"
+    },
+    {
+      "id": 26,
+      "nome": "Caderno Universitário 120 folhas",
+      "preco": 28.9,
+      "descricao": "Caderno universitário 120 folhas, ideal para uso em cursos técnicos e faculdade.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 90,
+      "categoria": "Caderno"
+    },
+    {
+      "id": 27,
+      "nome": "Caderno Pautado - 200 folhas",
+      "preco": 35.9,
+      "descricao": "Caderno pautado de 200 folhas, ideal para escritores e estudantes.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 60,
+      "categoria": "Caderno"
+    },
+    {
+      "id": 28,
+      "nome": "Caderno Escolar - 60 folhas",
+      "preco": 16.9,
+      "descricao": "Caderno escolar com 60 folhas pautadas, ideal para o uso diário.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 200,
+      "categoria": "Caderno"
+    },
+    {
+      "id": 29,
+      "nome": "Caderno Espiral 80 folhas",
+      "preco": 21.9,
+      "descricao": "Caderno espiral de 80 folhas, com design moderno e resistente.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 150,
+      "categoria": "Caderno"
+    },
+    {
+      "id": 30,
+      "nome": "Caderno Personalizado - 100 folhas",
+      "preco": 29.9,
+      "descricao": "Caderno personalizado com capa dura, ideal para anotações e organização.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 80,
+      "categoria": "Caderno"
+    },
+    {
+      "id": 31,
+      "nome": "Caderno de Desenho - 50 folhas",
+      "preco": 18.9,
+      "descricao": "Caderno de desenho com 50 folhas, para artistas e estudantes.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 70,
+      "categoria": "Caderno"
+    },
+    {
+      "id": 32,
+      "nome": "Planner 2024 - Capa Dura",
+      "preco": 34.9,
+      "descricao": "Planner 2024 com capa dura, semanas e meses organizados para facilitar o planejamento diário e mensal.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 200,
+      "categoria": "Planner"
+    },
+    {
+      "id": 33,
+      "nome": "Planner 2024 - Flexível",
+      "preco": 29.9,
+      "descricao": "Planner 2024 com capa flexível, ideal para quem precisa de praticidade e organização no dia a dia.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 150,
+      "categoria": "Planner"
+    },
+    {
+      "id": 34,
+      "nome": "Planner Semanal - 2024",
+      "preco": 39.9,
+      "descricao": "Planner semanal de 2024, excelente para quem quer organizar suas semanas com precisão.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 120,
+      "categoria": "Planner"
+    },
+    {
+      "id": 35,
+      "nome": "Planner Diário - 2024",
+      "preco": 45.9,
+      "descricao": "Planner diário de 2024, perfeito para quem gosta de planejar o dia a dia com detalhes.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 80,
+      "categoria": "Planner"
+    },
+    {
+      "id": 36,
+      "nome": "Planner Mensal - 2024",
+      "preco": 40.9,
+      "descricao": "Planner mensal de 2024, ideal para quem precisa visualizar o mês todo de uma vez.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 100,
+      "categoria": "Planner"
+    },
+    {
+      "id": 37,
+      "nome": "Planner Espiral 2024",
+      "preco": 42.9,
+      "descricao": "Planner espiral com capa resistente, ideal para planejar todo o ano de forma prática.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 90,
+      "categoria": "Planner"
+    },
+    {
+      "id": 38,
+      "nome": "Planner Personalizado - 2024",
+      "preco": 49.9,
+      "descricao": "Planner personalizado, com capa flexível e design moderno, para 2024.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 60,
+      "categoria": "Planner"
+    },
+    {
+      "id": 39,
+      "nome": "Planner de Tarefas - 2024",
+      "preco": 29.9,
+      "descricao": "Planner de tarefas, ideal para organizar os compromissos diários e manter o foco.",
+      "imagem": [
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png",
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 110,
+      "categoria": "Planner"
+    }
+  ],
+  "planos": [
+    {
+      "id": 1,
+      "nome": "Post-it",
+      "preco": 19.99,
+      "duracao": 3,
+      "desconto": 5,
+      "beneficios": [
+        "Caixa misteriosa pequena"
+      ]
+    },
+    {
+      "id": 2,
+      "nome": "A4",
+      "preco": 24.99,
+      "duracao": 6,
+      "desconto": 10,
+      "beneficios": [
+        "1 caderno",
+        "Caixa misteriosa média"
+      ]
+    },
+    {
+      "id": 3,
+      "nome": "Cartolina",
+      "preco": 39.99,
+      "duracao": 12,
+      "desconto": 20,
+      "beneficios": [
+        "3Kg de Papel A4"
+      ]
+    },
+    {
+      "id": 4,
+      "nome": "Planner",
+      "preco": 24.99,
+      "duracao": 3,
+      "desconto": 12,
+      "beneficios": [
+        "1 Convite para Tour de Reciclagem",
+        "Caixa misteriosa pequena"
+      ]
+    },
+    {
+      "id": 5,
+      "nome": "Sustentável",
+      "preco": 29.99,
+      "duracao": 6,
+      "desconto": 20,
+      "beneficios": [
+        "Doação de uma árvore plantada em seu nome",
+        "2 Convites para Tour de Reciclagem",
+        "Caixa misteriosa sustentável"
+      ]
+    },
+    {
+      "id": 6,
+      "nome": "Jumbo",
+      "preco": 119.99,
+      "duracao": 12,
+      "desconto": 25,
+      "beneficios": [
+        "5Kg de Papel A4",
+        "10 cadernos"
+      ]
+    }
+  ]
+}

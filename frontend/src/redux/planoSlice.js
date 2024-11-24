@@ -1,25 +1,23 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-const initialState = [
-    {
-        id: 1,
-        nome: "Origami", 
-        preco: "123", 
-        duracao: "3 meses", 
-        beneficios: ["15% de desconto", "Brindes exclusivos"]
-    },
-    {
-        id: 2,
-        nome: "A4",
-        preco: "555",
-        duracao: "5 meses", 
-        beneficios: ["20% de desconto", "alguma coisa"]
+export const fetchPlanos = createAsyncThunk('planos/fetchProdutos', async () => {
+    try {
+      let response = await fetch(`${process.env.REACT_APP_API_URL}/planos`);
+      let planos = await response.json();
+      return planos;
+      
+    } catch (error) {
+      console.log("Erro ao buscar produtos", error);
+      return [];
     }
-]
+  });
 
 export const planosSlice = createSlice({
     name: 'planos',
-    initialState,
+    initialState: {
+        planos: [],
+        status: 'idle', // requisição ainda não foi feita
+    },
     reducers:{
         addPlano:(state, action) => {
             state.push(action.payload);
@@ -38,7 +36,30 @@ export const planosSlice = createSlice({
                 state.splice(planoIndex, 1); // Remove o item do array no estado
             }
         },
-    }
+    },
+    extraReducers: (builder) => {
+        builder
+            // PENDING OPERATION
+            .addCase(fetchPlanos.pending,
+                (state) => { 
+                    state.status = 'pending';
+                    console.log(`[ ${(new Date()).toUTCString()} ] Carregando dados de planos...`)
+            })
+
+            // FULLFILLED OPERATION
+            .addCase(fetchPlanos.fulfilled,
+                (state, action) => { 
+                    state.status = 'fulfilled'; 
+                    state.planos = action.payload;
+                    console.log(`[ ${(new Date()).toUTCString()} ] Dados de planos carregados com sucesso`)
+            })
+
+            // REJECTED OPERATION
+            .addCase(fetchPlanos.rejected,
+                (state) => { state.status = 'rejected'; 
+                    console.log(`[ ${(new Date()).toUTCString()} ] Falha ao carregar dados de planos...`)
+            });
+    },
 });
 
 export const { addPlano, updatePlano, removePlano} = planosSlice.actions;

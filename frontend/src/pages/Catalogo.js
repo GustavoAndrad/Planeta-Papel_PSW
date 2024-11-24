@@ -1,89 +1,148 @@
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
+import { fetchProdutos } from "../redux/produtoSlice";
+import { fetchPlanos } from "../redux/planoSlice";
+
 import SectionProd from "../components/Catalogo/SectionProd";
 import SearchBar from "../components/Catalogo/SearchBar";
 import StrokeLine from "../components/Catalogo/StrokeLine";
-import Propaganda from "../components/Catalogo/Propaganda"
+import Propaganda from "../components/Catalogo/Propaganda";
 
 function Catalogo() {
+  const dispatch = useDispatch();
 
-  const sectionsName = ["Folhas", "Papéis", "Cartolinas", "Post-it"];
-  const products = [
-    [
-      { prodName: "Produto A", prodPrice: 10.50 },
-      { prodName: "Produto B", prodPrice: 10 },
-      { prodName: "Produto C", prodPrice: 15.30 },
-      { prodName: "Produto D", prodPrice: 12.99 },
-      { prodName: "Produto E", prodPrice: 8.75 },
-      { prodName: "Produto F", prodPrice: 22.40 },
-      { prodName: "Produto G", prodPrice: 5.60 }
-    ],
-    [
-      { prodName: "Produto H", prodPrice: 13.50 },
-      { prodName: "Produto I", prodPrice: 20 },
-      { prodName: "Produto J", prodPrice: 25.15 },
-      { prodName: "Produto K", prodPrice: 9.99 },
-      { prodName: "Produto L", prodPrice: 17.10 },
-      { prodName: "Produto M", prodPrice: 14.25 },
-      { prodName: "Produto N", prodPrice: 18.75 }
-    ],
-    [
-      { prodName: "Produto O", prodPrice: 30.50 },
-      { prodName: "Produto P", prodPrice: 27 },
-      { prodName: "Produto Q", prodPrice: 11.20 },
-      { prodName: "Produto R", prodPrice: 16.99 },
-      { prodName: "Produto S", prodPrice: 19.30 },
-      { prodName: "Produto T", prodPrice: 8.45 },
-      { prodName: "Produto U", prodPrice: 13.85 }
-    ],
-    [
-      { prodName: "Produto V", prodPrice: 10.70 },
-      { prodName: "Produto W", prodPrice: 9.40 },
-      { prodName: "Produto X", prodPrice: 14.60 },
-      { prodName: "Produto Y", prodPrice: 18 },
-      { prodName: "Produto Z", prodPrice: 7.30 },
-      { prodName: "Produto AA", prodPrice: 23.90 },
-      { prodName: "Produto AB", prodPrice: 21.40 }
-    ]
-  ];
-  const possiveisPropagandas = [
-    {plano: "A4", desconto: 15},
-    {plano: "Cartolina", desconto: 20},
-    {plano: "Post-it", desconto: 10},
-  ]
-  let propagandasMostradas = -1;
+  // Informações consumidas
+  const { produtos, status: prodStatus } = useSelector((state) => state.produtos);
+  const { planos, status: planoStatus } = useSelector((state) => state.planos);
 
-    
+  // Informações tratadas
+  const [produtosFiltrados, setProdutosFiltrados] = useState([]);
+
+  // Parâmetros de busca
+  const [searchParams] = useSearchParams();
+  const categoriaFiltro = searchParams.get("categoria");
+  const produtoFiltro = searchParams.get("produto");
+
+  // Controlador de recorrência das propagandas
+  let qntPropagandasMostradas = -1;
+
+  // Atualizando os produtos filtrados quando os produtos chegam
+  useEffect(() => {
+    if (produtos.length > 0) {
+      setProdutosFiltrados(getProdutosFiltrados(produtos));
+    }
+  }, [produtos]);
+  
+  // Consumindo informações
+  useEffect(() => {
+    if (planoStatus === "idle") {
+      dispatch(fetchPlanos());
+    }
+    if (prodStatus === "idle") {
+      dispatch(fetchProdutos());
+    }
+  }, [dispatch, prodStatus, planoStatus]);
+
+  
+  // Lidar com estados de carregamento ou erro
+  if (prodStatus === "loading" || planoStatus === "loading") {
+    return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Carregando...</div>;
+  }
+  
+  if (prodStatus === "failed" || planoStatus === "failed") {
+    return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Erro ao carregar informações do catálogo.</div>;
+  }
+
+  function getCategorias(produtos, categoriaExtra) {
+    const categorias = new Set(); // Usando Set para evitar duplicatas
+
+    if (categoriaExtra) {
+      categorias.add(categoriaExtra);
+    }
+
+    produtos.forEach(produto => {
+      if (produto.categoria) {
+        categorias.add(produto.categoria);
+      }
+    });
+
+    return Array.from(categorias); // Converte Set para Array novamente
+  }
+
+  function aplicaFiltroProdutos(produtos_agrupados) {
+    return produtos_agrupados
+      .filter((section) =>
+        categoriaFiltro 
+          ? section.categoria === categoriaFiltro // Aplica o filtro de categoria, se houver
+          : true // Se não tive filtro, mantém todas as categorias
+      )
+      .map((categoria) => ({
+        categoria: categoria.categoria,
+        lista: categoria.lista.filter((produto) =>
+          produtoFiltro
+            ? produto.nome.toLowerCase().includes(produtoFiltro.toLowerCase()) // Aplica o filtro de produto, se houver
+            : true // Caso contrário, mantém todos os produtos
+        ),
+      }))
+      .filter((categoria) => categoria.lista.length > 0 || !produtoFiltro); // Remove categorias vazias apenas se houver filtro de produto
+  }
+
+  function getProdutosFiltrados(produtos) {
+    const categorias = getCategorias(produtos);
+    const produtos_agrupados = [];
+
+    categorias.forEach((categoria) => {
+      produtos_agrupados.push({
+        categoria: categoria,
+        lista: []
+      });
+    });
+
+    // Itera sobre os produtos e agrupa-os por categoria
+    produtos.forEach((produto) => {
+      const categoriaIndex = produtos_agrupados.findIndex((item) => item.categoria === produto.categoria);
+
+      // Verifica se a categoria existe
+      if (categoriaIndex !== -1) {
+        produtos_agrupados[categoriaIndex].lista.push({
+          id: produto.id,
+          nome: produto.nome,
+          preco: produto.preco,
+          descricao: produto.descricao,
+          imagem: produto.imagem,
+          qnt_disponivel: produto.qnt_disponivel
+        });
+      }
+    });
+
+    return aplicaFiltroProdutos(produtos_agrupados);
+  }
+
   return (
     <>
-      <SearchBar />
-      
+      <SearchBar categorias={getCategorias(produtos, "Todos as Categorias")} />
+
       <StrokeLine />
 
-      {
-        sectionsName.map((section, index) => {
-          const renderPropaganda = index > 1 && index % 2 === 0;
+      {produtosFiltrados.map((section, index) => {
+        const renderPropaganda = index > 1 && index % 2 === 0;
+        if (renderPropaganda) {
+          qntPropagandasMostradas++;
+        }
+        return (
+          <div key={`section-${index}`}>
+            {renderPropaganda ? (
+              <Propaganda
+                planoName={planos[qntPropagandasMostradas]?.nome}
+                desconto={planos[qntPropagandasMostradas]?.desconto}
+              />
+            ) : null}
 
-          if (renderPropaganda && propagandasMostradas < possiveisPropagandas.length) {
-            propagandasMostradas++;
-          }
-
-          return (
-            <>
-              {renderPropaganda && propagandasMostradas < possiveisPropagandas.length && (
-                <Propaganda
-                  planoName={possiveisPropagandas[propagandasMostradas].plano}
-                  desconto={possiveisPropagandas[propagandasMostradas].desconto}
-                />
-              )}
-
-              {/* Sempre exibe a seção */}
-              <SectionProd key={index} sectionName={section} productList={products[index]} />
-            </>
-          );
-        })
-      }
-
-
-
+            <SectionProd sectionName={section.categoria} productList={section.lista} />
+          </div>
+        );
+      })}
     </>
   );
 }
