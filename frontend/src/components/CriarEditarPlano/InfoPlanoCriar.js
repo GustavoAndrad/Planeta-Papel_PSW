@@ -1,24 +1,45 @@
 import { useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux";
-import { addPlano } from "../../redux/planoSlice"
-import { useState } from "react";
+import { fetchPlanos, createPlano } from "../../redux/planoSlice"
+import { useState, useEffect } from "react";
 
 function InfoPlanoCriar(){
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const nextId = useSelector((state) =>
-        state.planos.length > 0 ? state.planos[state.planos.length-1].id + 1 : 1
-    );
+    const {planos, status:planoStatus} = useSelector(state=> state.planos);
 
     const [nome, setNome] = useState("");
     const [preco, setPreco] = useState("");
     const [duracao, setDuracao] = useState("");
+    const [desconto, setDesconto] = useState("");
     const [beneficios, setBeneficios] = useState([""]);
+
+    // Consumindo informações
+    useEffect(() => {
+        if (planoStatus === "idle") {
+            console.log(111)
+            dispatch(fetchPlanos());
+        }
+    }, [dispatch, planoStatus]);
+
+    const nextId = planos.length > 0 ? planos[planos.length-1].id + 1 : 1
 
     function handlePrecoChange(e){
         if(!isNaN(e)){
             setPreco(e);
+        }
+    };
+    function handleDuracaoChange(e){
+        e=parseInt(e);
+        if(!isNaN(e)){
+            setDuracao(e);
+        }
+    };
+    function handleDescontoChange(e){
+        e=parseInt(e);
+        if(!isNaN(e)){
+            setDesconto(e);
         }
     };
     function handleBeneficiosChange(novo, index){
@@ -52,13 +73,22 @@ function InfoPlanoCriar(){
             nome,
             preco,
             duracao,
+            desconto,
             beneficios: ultimoItem!==""? beneficios: beneficios.slice(0, beneficios.length - 1),
         };
-        dispatch(addPlano(newPlano));
+        dispatch(createPlano(newPlano));
     
         navigate('/gerente/planos');
     };
     
+    // Lidar com estados de carregamento ou erro
+    if (planoStatus === "loading") {
+        return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Carregando...</div>;
+    }
+    
+    if (planoStatus === "failed") {
+        return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Erro ao carregar informações do plano.</div>;
+    }
     return(
         <div className="bg-white shadow-md rounded-[20px] border-2 p-4 mb-6" >
         <form onSubmit={handleSubmit}>
@@ -81,8 +111,16 @@ function InfoPlanoCriar(){
             <input
                 type="text"
                 value={duracao}
-                onChange={(e)=>setDuracao(e.target.value)}
+                onChange={(e)=>handleDuracaoChange(e.target.value)}
                 placeholder="Duração"
+                className="border border-accentBlue p-2 rounded-[20px] w-full mb-4 pl-4"
+                required
+            />
+            <input
+                type="text"
+                value={desconto}
+                onChange={(e)=>handleDescontoChange(e.target.value)}
+                placeholder="Desconto"
                 className="border border-accentBlue p-2 rounded-[20px] w-full mb-4 pl-4"
                 required
             />

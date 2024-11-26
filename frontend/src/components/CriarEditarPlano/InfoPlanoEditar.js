@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux";
-import { updatePlano, removePlano} from "../../redux/planoSlice"
+import { fetchPlanos, updatePlano, deletePlano } from "../../redux/planoSlice"
 import { useState, useEffect } from "react";
 
 function InfoPlanoEditar(){
@@ -8,13 +8,27 @@ function InfoPlanoEditar(){
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const plano = useSelector((state) =>
-        state.planos.find((plano) => plano.id === parseInt(id))
-    );
+    const {planos, status:planoStatus} = useSelector((state) => state.planos);
+    const [plano, setPlano] = useState(null);
+    // Carregar os planos ao montar o componente, se necessário
+    useEffect(() => {
+        if (planoStatus === "idle") {
+        dispatch(fetchPlanos()); // Disparando a action para buscar os planos
+        }
+    }, [planoStatus, dispatch]);
+
+    // Encontrar o plano pelo ID quando a lista de planos estiver carregada
+    useEffect(() => {
+        if (planos.length > 0) {
+        const planoEncontrado = planos.find((p) => parseInt(p.id) === parseInt(id)); // Encontrando o plano na lista
+        setPlano(planoEncontrado); // Atualizando o estado com o plano encontrado
+        }
+    }, [planos, id]);
 
     const [nome, setNome] = useState("");
     const [preco, setPreco] = useState("");
     const [duracao, setDuracao] = useState("");
+    const [desconto, setDesconto] = useState("");
     const [beneficios, setBeneficios] = useState([""]);
     
     useEffect(() => {
@@ -22,6 +36,7 @@ function InfoPlanoEditar(){
           setNome(plano.nome);
           setPreco(plano.preco);
           setDuracao(plano.duracao);
+          setDesconto(plano.desconto);
           setBeneficios(plano.beneficios);
         }
       }, [plano]);
@@ -29,6 +44,18 @@ function InfoPlanoEditar(){
     function handlePrecoChange(e){
         if(!isNaN(e)){
             setPreco(e);
+        }
+    };
+    function handleDuracaoChange(e){
+        e=parseInt(e);
+        if(!isNaN(e)){
+            setDuracao(e);
+        }
+    };
+    function handleDescontoChange(e){
+        e=parseInt(e);
+        if(!isNaN(e)){
+            setDesconto(e);
         }
     };
     function handleBeneficiosChange(novo, index){
@@ -58,21 +85,35 @@ function InfoPlanoEditar(){
         const ultimoItem = beneficios[beneficios.length - 1];
 
         const updatedPlano = {
-          nome,
-          preco,
-          duracao,
-          beneficios: ultimoItem!==""? beneficios: beneficios.slice(0, beneficios.length - 1),
+            id: parseInt(id),
+            nome,
+            preco,
+            duracao,
+            beneficios: ultimoItem!==""? beneficios: beneficios.slice(0, beneficios.length - 1),
         };
         
-        dispatch(updatePlano({ id: plano.id, updatedPlano }));
+        dispatch(updatePlano(updatedPlano));
     
         navigate('/gerente/planos');
     };
     function handleRemove(id){
-        dispatch(removePlano(id));
+        dispatch(deletePlano(id));
         navigate('/gerente/planos');
     };
     
+    // Lidar com estados de carregamento ou erro
+    if (planoStatus === "loading") {
+        return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Carregando...</div>;
+    }
+    
+    if (planoStatus === "failed") {
+        return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Erro ao carregar informações do plano.</div>;
+    }
+
+    if (!plano) {
+        return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Plano não encontrado.</div>;
+    }
+
     return(
         <div className="bg-white shadow-md rounded-[20px] border-2 p-4 mb-6" >
         <form onSubmit={handleSubmit}>
@@ -95,8 +136,16 @@ function InfoPlanoEditar(){
             <input
                 type="text"
                 value={duracao}
-                onChange={(e)=>setDuracao(e.target.value)}
+                onChange={(e)=>handleDuracaoChange(e.target.value)}
                 placeholder="Duração"
+                className="border border-accentBlue p-2 rounded-[20px] w-full mb-4 pl-4"
+                required
+            />
+            <input
+                type="text"
+                value={desconto}
+                onChange={(e)=>handleDescontoChange(e.target.value)}
+                placeholder="Desconto"
                 className="border border-accentBlue p-2 rounded-[20px] w-full mb-4 pl-4"
                 required
             />

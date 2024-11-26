@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function CardPlano({id, name, preco, duracao, beneficios, isOpen, onClick}){
+function CardPlano({id, name, preco, duracao, desconto, beneficios, isOpen, onClick}){
     if(isOpen){
         return(
         <div onClick={()=>onClick(id)} className="cursor-pointer w-full pb-10 min-w-[300px] mt-5 flex flex-col bg-white rounded-3xl border-2 border-accentBlue">
@@ -13,12 +13,17 @@ function CardPlano({id, name, preco, duracao, beneficios, isOpen, onClick}){
                 <div className="w-[80%] h-full border-[#0000009d] border-2">
                     <div className="h-1/6 w-full flex justify-start items-center p-4 gap-4 border-b-red-400 border-b-2 min-w-[200px]">
                         <h1 className="text-xl font-medium text-">Preço Mensal: </h1>
-                        <h1 className="text-xl font-semibold text-secondaryBlue">R$ {preco}</h1>
+                        <h1 className="text-xl font-semibold text-secondaryBlue">R$ {parseFloat(preco).toFixed(2)}</h1>
                     </div>
 
                     <div className="h-1/6 w-full border-b-red-400 border-b-2 flex justify-start items-center p-4 gap-4 min-w-[200px]">
                         <h1 className="text-xl font-medium text-">Duração: </h1>
                         <h1 className="text-xl font-semibold text-secondaryBlue">{duracao}</h1>
+                    </div>
+
+                    <div className="h-1/6 w-full border-b-red-400 border-b-2 flex justify-start items-center p-4 gap-4 min-w-[200px]">
+                        <h1 className="text-xl font-medium text-">Desconto: </h1>
+                        <h1 className="text-xl font-semibold text-secondaryBlue">{desconto}</h1>
                     </div>
 
                     <div className="h-1/2 w-full justify-start items-center p-4 gap-4 min-w-[200px]">
