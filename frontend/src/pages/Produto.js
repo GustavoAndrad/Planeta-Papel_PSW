@@ -23,7 +23,7 @@ function Produto() {
   // Encontrar o produto pelo ID quando a lista de produtos estiver carregada
   useEffect(() => {
     if (produtos.length > 0) {
-      const produtoEncontrado = produtos.find((p) => p.id === parseInt(id)); // Encontrando o produto na lista
+      const produtoEncontrado = produtos.find((p) => parseInt(p.id) === parseInt(id)); // Encontrando o produto na lista
       setProduto(produtoEncontrado); // Atualizando o estado com o produto encontrado
     }
   }, [produtos, id]);
