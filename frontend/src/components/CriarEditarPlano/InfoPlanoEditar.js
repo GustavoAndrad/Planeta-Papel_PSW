@@ -89,6 +89,7 @@ function InfoPlanoEditar(){
             nome,
             preco,
             duracao,
+            desconto,
             beneficios: ultimoItem!==""? beneficios: beneficios.slice(0, beneficios.length - 1),
         };
         
