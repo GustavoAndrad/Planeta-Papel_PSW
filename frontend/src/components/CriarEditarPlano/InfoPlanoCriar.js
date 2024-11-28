@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPlanos, createPlano } from "../../redux/planoSlice"
 import { useState, useEffect } from "react";
+import BotaoAzul from "../BotaoAzul";
 
 function InfoPlanoCriar(){
     const dispatch = useDispatch();
@@ -153,14 +154,15 @@ function InfoPlanoCriar(){
             >
                 +
             </button>
-            
+            <BotaoAzul type={"submit"} text={"Confirmar"}></BotaoAzul>
+{/*
             <button
             type = 'submit'
             className="bg-primaryBlue hover:bg-secondaryBlue text-white py-2 px-4 rounded-full w-full mt-4 font-bold text-lg"
             >
             Confirmar
             </button>
-
+*/}
         </form>
       </div>
     )

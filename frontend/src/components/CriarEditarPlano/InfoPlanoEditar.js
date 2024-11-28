@@ -2,6 +2,8 @@ import { useNavigate, useParams } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPlanos, updatePlano, deletePlano } from "../../redux/planoSlice"
 import { useState, useEffect } from "react";
+import BotaoVermelho from "../BotaoVermelho";
+import BotaoAzul from "../BotaoAzul";
 
 function InfoPlanoEditar(){
     const {id} = useParams();
@@ -180,13 +182,18 @@ function InfoPlanoEditar(){
                 +
             </button>
 
+            <BotaoAzul type={"submit"} text={"Salvar alterações"}></BotaoAzul>
+{/*
             <button
                 type = 'submit'
                 className="bg-primaryBlue hover:bg-secondaryBlue text-white py-2 px-4 rounded-full w-full mt-4 font-bold text-lg"
             >
                 Salvar alterações
             </button>
-
+*/}
+            
+            <BotaoVermelho type={"button"} onClick={()=>handleRemove(plano.id)} text={"Excluir plano"}></BotaoVermelho>
+{/*
             <button
                 type = 'button' 
                 onClick={()=>handleRemove(plano.id)}
@@ -194,7 +201,7 @@ function InfoPlanoEditar(){
             >
                 Excluir plano
             </button>
-
+*/}
         </form>
       </div>
     )

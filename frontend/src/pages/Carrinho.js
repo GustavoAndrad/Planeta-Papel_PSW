@@ -2,6 +2,8 @@
 import CarrinhoCard from "../components/CarrinhoCard";
 import { Link } from 'react-router-dom';
 import { useSelector } from "react-redux";
+import BotaoAzul from "../components/BotaoAzul";
+import BotaoBranco from "../components/BotaoBranco";
 
 
 function formatSectionName(name){
@@ -36,13 +38,14 @@ function Carrinho(){
             </div>
             <Link to="/catalogo">
                 <div className="mt-6">
-                    <button type='button' className="flex p-3 w-full justify-center text-xl font-semibold bg-white text-primaryBlue rounded-full border-2 border-primaryBlue shadow-md hover:bg-secondaryBlue hover:text-white hover:border-accentBlue">
-                    Continuar Comprando</button>
+                    <BotaoBranco type={"button"} text={"Continuar Comprando"}></BotaoBranco>
                 </div>
             </Link>
-            <div className="mt-6">
-                <a href="./conf_pedido.html" className="flex p-3 w-full justify-center text-xl font-semibold bg-primaryBlue text-white rounded-full hover:bg-secondaryBlue shadow-md">Confirmar Pedido</a>
-            </div>
+            <Link to="/catalogo">
+                <div className="mt-6">
+                    <BotaoAzul text={"Confirmar Pedido"}></BotaoAzul>
+                </div>
+            </Link>
             </>)}
 
             {totalCar <= 0 &&(<>
@@ -51,8 +54,7 @@ function Carrinho(){
             </div>
             <Link to="/catalogo">
                 <div className="mt-6">
-                    <button type='button' className="flex p-3 w-full justify-center text-xl font-semibold bg-white text-primaryBlue rounded-full border-2 border-primaryBlue shadow-md hover:bg-secondaryBlue hover:text-white hover:border-accentBlue">
-                        Continuar Comprando</button>
+                    <BotaoBranco type={"button"} text={"Continuar Comprando"}></BotaoBranco>
                 </div>
             </Link>
             </>)}

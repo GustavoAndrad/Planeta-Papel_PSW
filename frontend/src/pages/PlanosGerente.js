@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPlanos } from "../redux/planoSlice";
+import { Link } from "react-router-dom";
 
 import SectionName from "../components/PedidosGerente/TitleSection"
-import Botao from "../components/PlanosGerente/BotaoPedidos"
 import CardPlano from "../components/PlanosGerente/CardPlano"
+import BotaoAzul from "../components/BotaoAzul";
 
 function PlanosGerente(){
     const dispatch = useDispatch();
@@ -35,7 +36,9 @@ function PlanosGerente(){
     return(
         <>
             <SectionName sectionName={"Gerenciar Planos"} img={"/images/assinatura.png"}></SectionName>
-            <Botao text={"Adicionar plano"}></Botao>
+            <Link to="/gerente/criar-plano">
+                <BotaoAzul type={"button"} text={"Adicionar plano"}></BotaoAzul>
+            </Link>
             
             {planos.map((item) => {
                 return (
