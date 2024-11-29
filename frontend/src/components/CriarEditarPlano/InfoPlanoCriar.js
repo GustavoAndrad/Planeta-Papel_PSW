@@ -83,7 +83,7 @@ function InfoPlanoCriar(){
     };
     
     // Lidar com estados de carregamento ou erro
-    if (planoStatus === "loading") {
+    if (planoStatus === "pending") {
         return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Carregando...</div>;
     }
     

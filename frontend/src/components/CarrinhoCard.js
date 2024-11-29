@@ -1,21 +1,18 @@
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+//import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { removeCarrinho, updateQtdCarrinho } from '../redux/carrinhoSlice';
+import { deleteCarrinho, updateCarrinho } from '../redux/carrinhoSlice';
 
-export default function CarrinhoCard({ id }){
-    const dispatch = useDispatch();
-
-    const produto = useSelector((state)=>
-        state.carrinho.find(prod=>prod.id===id)
-    );
-
-    const [qtd, setQtd] = useState(produto.qtd);
-    const total = qtd * produto.prodPrice; 
+export default function CarrinhoCard({ ParamQtd, id, produto, dispatch }){
+    //const dispatch = useDispatch();
+    const [qtd, setQtd] = useState(ParamQtd);
+    const total = qtd * produto.preco; 
 
     const handleBlur = () => {
-        if(qtd===0)
+        if(qtd===0){
             setQtd(1);
+            dispatch(updateCarrinho({id, qtd: 1}));
+        }
     };
 
     function handleQtdClick(n){
@@ -25,7 +22,8 @@ export default function CarrinhoCard({ id }){
         }
         if(value>=1){
             setQtd(value);
-            dispatch(updateQtdCarrinho({id, updated: value}));
+            dispatch(updateCarrinho({id, qtd: value}))
+
         }
     }
     function handleQtdChange(value){
@@ -42,16 +40,14 @@ export default function CarrinhoCard({ id }){
         }
         
         setQtd(value);
-        if(value !== qtd && value !== 0){
-            dispatch(updateQtdCarrinho({id, updated: value}));
-        }else{
-            dispatch(updateQtdCarrinho({id, updated: 1}));
+        if(value !== qtd){
+            dispatch(updateCarrinho({id, qtd: value}));
         }
     }
     function handleCardRemove(){
-        dispatch(removeCarrinho(id));
+        console.log("Excluindo produto com ID:", id);
+        dispatch(deleteCarrinho(id));
     }
-
 
     //
     //alterar link quado detalhes_prod for feito
@@ -66,9 +62,9 @@ export default function CarrinhoCard({ id }){
             </div>
             <div className="flex-auto border-x-4 border-dark px-3 mx-3">
               <Link to="/detalhes_prod" className=" text-xl font-bold text-primaryBlue">
-                {produto.prodName}
+                {produto.nome}
               </Link>
-              <p className="mt-0.5 text-lg font-semibold text-secondaryBlue">Uni. R$ {produto.prodPrice.toFixed(2)}</p>
+              <p className="mt-0.5 text-lg font-semibold text-secondaryBlue">Uni. R$ {produto.preco.toFixed(2)}</p>
               <p className="mt-0.5 text-lg font-semibold text-secondaryBlue">Total R$ {total.toFixed(2)}</p>
             </div>
             <div>

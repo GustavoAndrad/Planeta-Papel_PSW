@@ -96,10 +96,7 @@ const produtoSlice = createSlice({
         console.log(`[ ${(new Date()).toUTCString()} ] Atualizando produto...`);
       })
       .addCase(updateProduto.fulfilled, (state, action) => {
-        produtoAdapter.updateOne(state, {
-          id: action.payload.id,
-          changes: action.payload,  // Mudanças a serem aplicadas ao produto
-        })
+        produtoAdapter.updateOne(state, action.payload);
         console.log(`[ ${(new Date()).toUTCString()} ] Produto atualizado com sucesso`);
       })
       .addCase(updateProduto.rejected, (state) => {
@@ -120,6 +117,6 @@ const produtoSlice = createSlice({
   },
 });
 
-export const produtoSelectors = produtoAdapter.getSelectors( state => state.produto );
+export const produtoSelectors = produtoAdapter.getSelectors( state => state.produtos );
 
 export default produtoSlice.reducer;
