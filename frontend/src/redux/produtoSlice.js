@@ -1,4 +1,8 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/toolkit';
+
+const produtoAdapter = createEntityAdapter({
+  selectId: (prod) => prod.id,
+});
 
 // Thunks para operações assíncronas com a API
 export const fetchProdutos = createAsyncThunk('produtos/fetchProdutos', async () => {
@@ -54,10 +58,9 @@ export const deleteProduto = createAsyncThunk('produtos/deleteProduto', async (i
 // Slice
 const produtoSlice = createSlice({
   name: 'produtos',
-  initialState: {
-    produtos: [],
-    status: 'idle', // Status da requisição
-  },
+  initialState: produtoAdapter.getInitialState({ 
+    status: 'idle'/* Status da requisição*/
+  }),
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -68,7 +71,7 @@ const produtoSlice = createSlice({
       })
       .addCase(fetchProdutos.fulfilled, (state, action) => {
         state.status = 'fulfilled';
-        state.produtos = action.payload;
+        produtoAdapter.setAll(state, action.payload);
         console.log(`[ ${(new Date()).toUTCString()} ] Dados de produtos carregados com sucesso`);
       })
       .addCase(fetchProdutos.rejected, (state) => {
@@ -81,7 +84,7 @@ const produtoSlice = createSlice({
         console.log(`[ ${(new Date()).toUTCString()} ] Criando novo produto...`);
       })
       .addCase(createProduto.fulfilled, (state, action) => {
-        state.produtos.push(action.payload);
+        produtoAdapter.addOne(state, action.payload);
         console.log(`[ ${(new Date()).toUTCString()} ] Produto criado com sucesso`);
       })
       .addCase(createProduto.rejected, (state) => {
@@ -93,10 +96,10 @@ const produtoSlice = createSlice({
         console.log(`[ ${(new Date()).toUTCString()} ] Atualizando produto...`);
       })
       .addCase(updateProduto.fulfilled, (state, action) => {
-        const index = state.produtos.findIndex((p) => p.id === action.payload.id);
-        if (index >= 0) {
-          state.produtos[index] = action.payload;
-        }
+        produtoAdapter.updateOne(state, {
+          id: action.payload.id,
+          changes: action.payload,  // Mudanças a serem aplicadas ao produto
+        })
         console.log(`[ ${(new Date()).toUTCString()} ] Produto atualizado com sucesso`);
       })
       .addCase(updateProduto.rejected, (state) => {
@@ -108,7 +111,7 @@ const produtoSlice = createSlice({
         console.log(`[ ${(new Date()).toUTCString()} ] Removendo produto...`);
       })
       .addCase(deleteProduto.fulfilled, (state, action) => {
-        state.produtos = state.produtos.filter((p) => p.id !== action.payload);
+        produtoAdapter.removeOne(state, action.payload.id);
         console.log(`[ ${(new Date()).toUTCString()} ] Produto removido com sucesso`);
       })
       .addCase(deleteProduto.rejected, (state) => {
@@ -116,5 +119,7 @@ const produtoSlice = createSlice({
       });
   },
 });
+
+export const produtoSelectors = produtoAdapter.getSelectors( state => state.produto );
 
 export default produtoSlice.reducer;
