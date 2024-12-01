@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux";
-import { fetchPlanos, createPlano } from "../../redux/planoSlice"
+import { fetchPlanos, createPlano, planoSelectors } from "../../redux/planoSlice"
 import { useState, useEffect } from "react";
 import BotaoAzul from "../BotaoAzul";
 
@@ -8,7 +8,8 @@ function InfoPlanoCriar(){
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const {planos, status:planoStatus} = useSelector(state=> state.planos);
+    const planos = useSelector(planoSelectors.selectAll);
+    const planoStatus = useSelector((state) => state.planos.status);
 
     const [nome, setNome] = useState("");
     const [preco, setPreco] = useState("");
@@ -19,12 +20,11 @@ function InfoPlanoCriar(){
     // Consumindo informações
     useEffect(() => {
         if (planoStatus === "idle") {
-            console.log(111)
             dispatch(fetchPlanos());
         }
     }, [dispatch, planoStatus]);
 
-    const nextId = planos.length > 0 ? planos[planos.length-1].id + 1 : 1
+    const nextId = planos.length > 0 ? Number(planos[planos.length-1].id) + 1 : 1
 
     function handlePrecoChange(e){
         if(!isNaN(e)){
@@ -70,9 +70,9 @@ function InfoPlanoCriar(){
         const ultimoItem = beneficios[beneficios.length - 1];
 
         const newPlano = {
-            id: parseInt(nextId),
+            id: String(nextId),
             nome,
-            preco,
+            preco: parseFloat(preco).toFixed(2),
             duracao,
             desconto,
             beneficios: ultimoItem!==""? beneficios: beneficios.slice(0, beneficios.length - 1),

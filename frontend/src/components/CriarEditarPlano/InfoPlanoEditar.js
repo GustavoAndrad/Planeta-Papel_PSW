@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux";
-import { fetchPlanos, updatePlano, deletePlano } from "../../redux/planoSlice"
+import { fetchPlanos, updatePlano, deletePlano, planoSelectors } from "../../redux/planoSlice"
 import { useState, useEffect } from "react";
 import BotaoVermelho from "../BotaoVermelho";
 import BotaoAzul from "../BotaoAzul";
@@ -10,8 +10,8 @@ function InfoPlanoEditar(){
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const {planos, status:planoStatus} = useSelector((state) => state.planos);
-    const [plano, setPlano] = useState(null);
+    const plano = useSelector(state => planoSelectors.selectById(state, id));
+    const planoStatus = useSelector((state) => state.planos.status);
     // Carregar os planos ao montar o componente, se necessário
     useEffect(() => {
         if (planoStatus === "idle") {
@@ -19,18 +19,10 @@ function InfoPlanoEditar(){
         }
     }, [planoStatus, dispatch]);
 
-    // Encontrar o plano pelo ID quando a lista de planos estiver carregada
-    useEffect(() => {
-        if (planos.length > 0) {
-        const planoEncontrado = planos.find((p) => parseInt(p.id) === parseInt(id)); // Encontrando o plano na lista
-        setPlano(planoEncontrado); // Atualizando o estado com o plano encontrado
-        }
-    }, [planos, id]);
-
     const [nome, setNome] = useState("");
-    const [preco, setPreco] = useState("");
-    const [duracao, setDuracao] = useState("");
-    const [desconto, setDesconto] = useState("");
+    const [preco, setPreco] = useState(0);
+    const [duracao, setDuracao] = useState(0);
+    const [desconto, setDesconto] = useState(0);
     const [beneficios, setBeneficios] = useState([""]);
     
     useEffect(() => {
@@ -87,9 +79,9 @@ function InfoPlanoEditar(){
         const ultimoItem = beneficios[beneficios.length - 1];
 
         const updatedPlano = {
-            id: parseInt(id),
+            id,
             nome,
-            preco,
+            preco: parseFloat(preco).toFixed(2),
             duracao,
             desconto,
             beneficios: ultimoItem!==""? beneficios: beneficios.slice(0, beneficios.length - 1),

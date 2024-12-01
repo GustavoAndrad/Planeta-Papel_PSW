@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchPlanos } from "../redux/planoSlice";
+import { fetchPlanos, planoSelectors } from "../redux/planoSlice";
 import { Link } from "react-router-dom";
 
 import SectionName from "../components/PedidosGerente/TitleSection"
@@ -10,7 +10,8 @@ import BotaoAzul from "../components/BotaoAzul";
 function PlanosGerente(){
     const dispatch = useDispatch();
 
-    const {planos, status:planoStatus} = useSelector(state=> state.planos);
+    const planos = useSelector(planoSelectors.selectAll);
+    const planoStatus = useSelector((state) => state.planos.status);
     const [openCardId, setOpenCardId] = useState(null);
 
     function handleCardClick(id){
@@ -19,13 +20,12 @@ function PlanosGerente(){
     // Consumindo informações
     useEffect(() => {
         if (planoStatus === "idle") {
-            console.log(111)
             dispatch(fetchPlanos());
         }
     }, [dispatch, planoStatus]);
 
     // Lidar com estados de carregamento ou erro
-    if (planoStatus === "loading") {
+    if (planoStatus === "pending") {
         return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Carregando...</div>;
     }
     

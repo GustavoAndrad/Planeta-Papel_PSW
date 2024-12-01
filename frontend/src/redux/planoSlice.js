@@ -1,12 +1,8 @@
 import { createAsyncThunk, createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 
 const planosAdapter = createEntityAdapter({
-    // Assume IDs are stored in a field other than `book.id`
     selectId: (plano) => plano.id,
-    // Keep the "all IDs" array sorted based on book titles
-    //sortComparer: (a, b) => a.title.localeCompare(b.title),
 })
-
 
 export const fetchPlanos = createAsyncThunk('planos/fetchPlanos', async () => {
     try {
@@ -62,10 +58,9 @@ export const deletePlano = createAsyncThunk('planos/deletePlano', async (idPlano
 
 export const planosSlice = createSlice({
     name: 'planos',
-    initialState: {
-        planos: [],
-        status: 'idle', // requisição ainda não foi feita
-    },
+    initialState: planosAdapter.getInitialState({
+        status: 'idle'
+    }),
     reducers:{
         /*
         addPlano:(state, action) => {
@@ -96,10 +91,11 @@ export const planosSlice = createSlice({
             })
             .addCase(fetchPlanos.fulfilled,(state, action) => { 
                 state.status = 'fulfilled'; 
-                state.planos = action.payload;
+                planosAdapter.setAll(state, action.payload);
                 console.log(`[ ${(new Date()).toUTCString()} ] Dados de planos carregados com sucesso`)
             })
-            .addCase(fetchPlanos.rejected,(state) => { state.status = 'rejected'; 
+            .addCase(fetchPlanos.rejected,(state) => { 
+                state.status = 'rejected'; 
                 console.log(`[ ${(new Date()).toUTCString()} ] Falha ao carregar dados de planos...`)
             })
             // Create plano
@@ -107,7 +103,7 @@ export const planosSlice = createSlice({
                 console.log(`[ ${(new Date()).toUTCString()} ] Criando novo plano...`);
             })
             .addCase(createPlano.fulfilled, (state, action) => {
-                state.planos.push(action.payload);
+                planosAdapter.addOne(state, action.payload);
                 console.log(`[ ${(new Date()).toUTCString()} ] Plano criado com sucesso`);
             })
             .addCase(createPlano.rejected, (state) => {
@@ -119,10 +115,10 @@ export const planosSlice = createSlice({
                 console.log(`[ ${(new Date()).toUTCString()} ] Atualizando plano...`);
             })
             .addCase(updatePlano.fulfilled, (state, action) => {
-                const index = state.planos.findIndex((p) => p.id === action.payload.id);
-                if (index >= 0) {
-                state.planos[index] = action.payload;
-                }
+                planosAdapter.updateOne(state, {
+                    id: action.payload.id,
+                    changes: action.payload
+                });
                 console.log(`[ ${(new Date()).toUTCString()} ] Plano atualizado com sucesso`);
             })
             .addCase(updatePlano.rejected, (state) => {
@@ -134,7 +130,7 @@ export const planosSlice = createSlice({
                 console.log(`[ ${(new Date()).toUTCString()} ] Removendo plano...`);
             })
             .addCase(deletePlano.fulfilled, (state, action) => {
-                state.planos = state.planos.filter((p) => p.id !== action.payload);
+                planosAdapter.removeOne(state, action.payload);
                 console.log(`[ ${(new Date()).toUTCString()} ] Plano removido com sucesso`);
             })
             .addCase(deletePlano.rejected, (state) => {
@@ -145,5 +141,6 @@ export const planosSlice = createSlice({
 });
 
 //export const { addPlano, updatePlano, removePlano} = planosSlice.actions;
+export const planoSelectors = planosAdapter.getSelectors(state => state.planos);
 
 export default planosSlice.reducer;

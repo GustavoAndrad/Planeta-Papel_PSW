@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { fetchProdutos, produtoSelectors } from "../redux/produtoSlice";
-import { fetchPlanos } from "../redux/planoSlice";
+import { fetchPlanos, planoSelectors } from "../redux/planoSlice";
 
 import SectionProd from "../components/Catalogo/SectionProd";
 import SearchBar from "../components/Catalogo/SearchBar";
@@ -15,7 +15,8 @@ function Catalogo() {
   // Informações consumidas
   const produtos = useSelector(produtoSelectors.selectAll);
   const prodStatus = useSelector((state) => state.produtos.status);
-  const { planos, status: planoStatus } = useSelector((state) => state.planos);
+  const planos = useSelector(planoSelectors.selectAll);
+  const planoStatus = useSelector((state) => state.planos.status);
   //  MUDAR PLANO PARA ENTITY ADAPTER
 
   // Informações tratadas

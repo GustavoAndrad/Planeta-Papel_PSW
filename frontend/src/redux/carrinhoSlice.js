@@ -99,7 +99,6 @@ export const carrinhoSlice = createSlice({
             .addCase(fetchCarrinho.fulfilled,(state, action) => { 
                 state.status = 'fulfilled'; 
                 carrinhoAdapter.setAll(state,action.payload);
-                //console.log( action.payload)
                 console.log(`[ ${(new Date()).toUTCString()} ] Dados de carrinho carregados com sucesso`)
             })
             .addCase(fetchCarrinho.rejected,(state) => { 

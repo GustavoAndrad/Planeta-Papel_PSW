@@ -108,7 +108,7 @@ const produtoSlice = createSlice({
         console.log(`[ ${(new Date()).toUTCString()} ] Removendo produto...`);
       })
       .addCase(deleteProduto.fulfilled, (state, action) => {
-        produtoAdapter.removeOne(state, action.payload.id);
+        produtoAdapter.removeOne(state, action.payload);
         console.log(`[ ${(new Date()).toUTCString()} ] Produto removido com sucesso`);
       })
       .addCase(deleteProduto.rejected, (state) => {
