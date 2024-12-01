@@ -16,13 +16,15 @@ function formatSectionName(name){
 function Carrinho(){
     const dispatch = useDispatch();
 
+    // Informações consumidas
     const carrinho = useSelector(carrinhoSelectors.selectAll);
     const carrinhoStatus = useSelector(state => state.carrinho.status);
 
-    const produtosId = carrinho.map(item=>Number(item.prodId));
+    const produtosId = carrinho.map(item=>item.prodId);
     const produtosSelecionados = useSelector(state => produtosId.map(id => produtoSelectors.selectById(state, id)).filter(produto => produto !== undefined));
     const prodStatus = useSelector(state => state.produtos.status);
 
+    // Funcionamento do Carrinho
     const produtosIndexados = useMemo(() => {
         if(produtosSelecionados.length >0 ){
             return produtosSelecionados.reduce((acc, produto) => {
@@ -35,7 +37,7 @@ function Carrinho(){
     const totalCar = useMemo(() => {
         if( produtosSelecionados.length >0 ){ 
             return carrinho.reduce((total, item) => {
-                const produto = produtosIndexados[Number(item.prodId)];
+                const produto = produtosIndexados[item.prodId];
                 return total + produto.preco * item.qtd;
             }, 0);
         }
@@ -44,11 +46,9 @@ function Carrinho(){
     useEffect(()=>{
         if(carrinhoStatus === "idle"){
             dispatch(fetchCarrinho())
-            console.log("Carrinho re-renderizado"+carrinhoStatus);
         }
         if(prodStatus === "idle"){
             dispatch(fetchProdutos())
-            console.log("Carrinho re-renderizado"+carrinhoStatus);
         }
     }, [dispatch, prodStatus, carrinhoStatus]);
 
@@ -73,7 +73,7 @@ function Carrinho(){
                 <CarrinhoCard 
                     key={item.id}
                     ParamQtd={item.qtd}
-                    id={Number(item.id)} 
+                    id={item.id} 
                     produto={produtosIndexados[item.prodId]}
                     dispatch={dispatch}
                     />

@@ -16,8 +16,15 @@ export const fetchCarrinho = createAsyncThunk('carrinho/fetchCarrinho', async ()
     }
   });
 
-export const addToCarrinho = createAsyncThunk('carrinho/addCarrinho', async (novoItem) => {
+export const addToCarrinho = createAsyncThunk('carrinho/addCarrinho', async (novoItem, {getState}) => {
     try {
+      const state = getState();
+      const carrinho = state.carrinho.entities; // Supondo que o carrinho esteja armazenado no estado global
+
+      // Verificar se o item já está no carrinho
+      const itemExistente = Object.values(carrinho).find(item => item.prodId === novoItem.prodId);
+      if(itemExistente) throw new Error('Produto já adicionado ao carrinho');
+
       const response = await fetch(`${process.env.REACT_APP_API_URL}/carrinho`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -107,11 +114,11 @@ export const carrinhoSlice = createSlice({
             .addCase(addToCarrinho.fulfilled, (state, action) => {
                 //state.status = 'fulfilled'; 
                 carrinhoAdapter.addOne(state, action.payload);
-                console.log(`[ ${(new Date()).toUTCString()} ] Plano adicionado com sucesso`);
+                console.log(`[ ${(new Date()).toUTCString()} ] Item adicionado com sucesso ao carrinho`);
             })
             .addCase(addToCarrinho.rejected, (state) => {
                 //state.status = 'rejected'; 
-                console.log(`[ ${(new Date()).toUTCString()} ] Falha ao adicionar item aocarrinho`);
+                console.log(`[ ${(new Date()).toUTCString()} ] Falha ao adicionar item ao carrinho`);
             })
 
             // Update Carrinho

@@ -617,37 +617,37 @@
   "carrinho": [
     {
       "id": "0",
-      "prodId": 2,
+      "prodId": "2",
       "qtd": 1
     },
     {
       "id": "1",
-      "prodId": 3,
+      "prodId": "3",
       "qtd": 1
     },
     {
       "id": "2",
-      "prodId": 1,
+      "prodId": "1",
       "qtd": 1
     },
     {
       "id": "3",
-      "prodId": 4,
+      "prodId": "4",
       "qtd": 1
     },
     {
       "id": "4",
-      "prodId": 7,
+      "prodId": "7",
       "qtd": 1
     },
     {
       "id": "5",
-      "prodId": 8,
+      "prodId": "8",
       "qtd": 3
     },
     {
       "id": "6",
-      "prodId": 3,
+      "prodId": "3",
       "qtd": 1
     }
   ]

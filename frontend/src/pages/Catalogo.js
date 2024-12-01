@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
-import { fetchProdutos } from "../redux/produtoSlice";
+import { fetchProdutos, produtoSelectors } from "../redux/produtoSlice";
 import { fetchPlanos } from "../redux/planoSlice";
 
 import SectionProd from "../components/Catalogo/SectionProd";
@@ -13,8 +13,10 @@ function Catalogo() {
   const dispatch = useDispatch();
 
   // Informações consumidas
-  const { produtos, status: prodStatus } = useSelector((state) => state.produtos);
+  const produtos = useSelector(produtoSelectors.selectAll);
+  const prodStatus = useSelector((state) => state.produtos.status);
   const { planos, status: planoStatus } = useSelector((state) => state.planos);
+  //  MUDAR PLANO PARA ENTITY ADAPTER
 
   // Informações tratadas
   const [produtosFiltrados, setProdutosFiltrados] = useState([]);
@@ -113,7 +115,7 @@ function Catalogo() {
 
   
   // Lidar com estados de carregamento ou erro
-  if (prodStatus === "loading" || planoStatus === "loading") {
+  if (prodStatus === "pending" || planoStatus === "pending") {
     return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Carregando...</div>;
   }
   

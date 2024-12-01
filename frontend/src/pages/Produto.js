@@ -1,25 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { fetchProdutos } from "../redux/produtoSlice";
+import { fetchProdutos, produtoSelectors } from "../redux/produtoSlice";
+import { addToCarrinho } from "../redux/carrinhoSlice";
 
 function Produto() {
   const dispatch = useDispatch();
 
   const { id } = useParams();  // Pegando o ID do produto da URL
 
-  const { produtos, status: prodStatus } = useSelector((state) => state.produtos);
+  const produto = useSelector(state => produtoSelectors.selectById(state, id));
+  const prodStatus = useSelector((state) => state.produtos);
 
   const [standardImage, setStandardImage] = useState(null);
-  const [produto, setProduto] = useState(null);
+  //const [produto, setProduto] = useState(null);
 
   // Carregar os produtos ao montar o componente, se necessário
   useEffect(() => {
-    if (prodStatus === "idle") {
+    if (prodStatus === "idle" || !produto) {
       dispatch(fetchProdutos()); // Disparando a action para buscar os produtos
     }
-  }, [prodStatus, dispatch]);
+  }, [prodStatus, dispatch, produto]);
 
+  /*
   // Encontrar o produto pelo ID quando a lista de produtos estiver carregada
   useEffect(() => {
     if (produtos.length > 0) {
@@ -27,9 +30,10 @@ function Produto() {
       setProduto(produtoEncontrado); // Atualizando o estado com o produto encontrado
     }
   }, [produtos, id]);
+  */
 
   // Lidar com estados de carregamento ou erro
-  if (prodStatus === "loading") {
+  if (prodStatus === "pending") {
     return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Carregando...</div>;
   }
 
@@ -113,13 +117,14 @@ function Produto() {
             </div>
 
             <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
-              <a
-                href="./carrinho.html"
+              <button
+                type="button"
                 title="Adicionar ao Carrinho"
+                onClick={() => dispatch(addToCarrinho({prodId: id, qtd: 1}))}
                 className="flex items-center justify-center py-2.5 px-5 text-sm text-white bg-primaryBlue font-bold rounded-lg hover:bg-secondaryBlue"
               >
                 🛒 Adicionar ao Carrinho
-              </a>
+              </button>
             </div>
 
             <hr className="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
