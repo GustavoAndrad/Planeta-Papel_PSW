@@ -21,7 +21,6 @@ function Carrinho(){
     const carrinhoStatus = useSelector(state => state.carrinho.status);
 
     const produtosId = carrinho.map(item=>item.prodId);
-    //const produtosSelecionados = useSelector(state => produtosId.map(id => produtoSelectors.selectById(state, id)).filter(produto => produto !== undefined));
     const produtosSelecionados = useSelector(state => selectProdutoByID(state, produtosId));
     const prodStatus = useSelector(state => state.produtos.status);
 
