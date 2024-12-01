@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useMemo } from "react";
 import { fetchCarrinho, carrinhoSelectors } from "../redux/carrinhoSlice";
-import { fetchProdutos, produtoSelectors } from '../redux/produtoSlice';
+import { fetchProdutos, produtoSelectors, selectProdutoByID } from '../redux/produtoSlice';
 
 import CarrinhoCard from "../components/CarrinhoCard";
 import BotaoAzul from "../components/BotaoAzul";
@@ -21,7 +21,8 @@ function Carrinho(){
     const carrinhoStatus = useSelector(state => state.carrinho.status);
 
     const produtosId = carrinho.map(item=>item.prodId);
-    const produtosSelecionados = useSelector(state => produtosId.map(id => produtoSelectors.selectById(state, id)).filter(produto => produto !== undefined));
+    //const produtosSelecionados = useSelector(state => produtosId.map(id => produtoSelectors.selectById(state, id)).filter(produto => produto !== undefined));
+    const produtosSelecionados = useSelector(state => selectProdutoByID(state, produtosId));
     const prodStatus = useSelector(state => state.produtos.status);
 
     // Funcionamento do Carrinho

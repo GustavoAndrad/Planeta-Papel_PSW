@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, createEntityAdapter, createSelector } from '@reduxjs/toolkit';
 
 const produtoAdapter = createEntityAdapter({
   selectId: (prod) => prod.id,
@@ -120,3 +120,15 @@ const produtoSlice = createSlice({
 export const produtoSelectors = produtoAdapter.getSelectors( state => state.produtos );
 
 export default produtoSlice.reducer;
+
+
+// Selector     selectProdutoByID
+const selectProdutosEntities = (state) => state.produtos.entities;
+const selectProdutosIds = (state) => state.produtos.ids;
+
+export const selectProdutoByID = createSelector(
+  [selectProdutosEntities, selectProdutosIds],
+  (entities, ids) => {
+    return ids.map(id => entities[id]).filter(Boolean);
+  }
+);

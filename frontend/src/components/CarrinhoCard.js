@@ -47,7 +47,6 @@ export default function CarrinhoCard({ ParamQtd, id, produto, dispatch }){
         dispatch(deleteCarrinho(id));
     }
 
-    console.log({produto})
     return( 
         <div className="mt-5 group flex relative items-center rounded-lg p-4 text-sm/6 bg-white shadow-md">
             <div className="flex h-12 w-12 flex-none items-center justify-center rounded-lg">
