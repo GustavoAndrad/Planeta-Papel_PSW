@@ -20,6 +20,9 @@ import AnalisarSolic from "./pages/AnalisarSolic";
 import CriarPlano from "./pages/CriarPlano";
 import Produto from "./pages/Produto";
 import Pagamento from "./pages/Pagamento";
+import CadastroCliente from "./pages/CadastroCliente";
+import EditarExcluirCliente from "./pages/EditarExcluirCliente";
+
 function App() {
   return (
     <>
@@ -28,7 +31,6 @@ function App() {
 
         <main className="pt-36 pb-10 pl-6 pr-6 min-h-[100vh] h-auto max-w-full">
           <Routes>
-            {/* Rotas já existentes */}
             <Route path="/" element={<Catalogo />} />
             <Route path="/catalogo" element={<Catalogo />} />
             <Route path="/carrinho" element={<Carrinho />} />
@@ -42,11 +44,10 @@ function App() {
             <Route path="/gerente/editar-plano/:id" element={<EditarPlano />} />
             <Route path="/gerente/analisar" element={<AnalisarSolic />} />
             <Route path="/gerente/criar-plano" element={<CriarPlano />} />
-
             <Route path="/produto/:id" element={<Produto />} />
-
-            {/* Adicionando a nova rota para a página de pagamento */}
             <Route path="/pagamento" element={<Pagamento />} />
+            <Route path="/cadastro-cliente" element={<CadastroCliente />} />
+            <Route path="/dados-cliente" element={<EditarExcluirCliente />} />
           </Routes>
         </main>
 
@@ -57,5 +58,6 @@ function App() {
 }
 
 export default App;
+
 
 
