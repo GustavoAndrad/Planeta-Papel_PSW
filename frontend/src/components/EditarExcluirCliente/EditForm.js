@@ -22,16 +22,33 @@ export default function EditForm({
     cep,
   });
 
-  const isFormValid = Object.values(formData).every((value) => value.trim() !== '');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const isFormValid = Object.values(formData).every(
+    (value) => value.trim() !== ''
+  );
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
+
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
 
+    if (value.trim() !== '') {
+      setErrorMessage('');
+    }
+
     if (onChange) onChange(event);
+  };
+
+  const handleSaveClick = () => {
+    if (isFormValid) {
+      onSaveClick(formData);
+    } else {
+      setErrorMessage('Todos os campos precisam estar preenchidos.');
+    }
   };
 
   return (
@@ -85,11 +102,15 @@ export default function EditForm({
         onChange={handleInputChange}
         className="border border-[#1D437A] p-2 rounded-[20px] w-full mb-4 pl-4"
       />
+
+      {errorMessage && (
+        <p className="text-red-500 text-sm mb-4">{errorMessage}</p>
+      )}
+
       <BotaoAzul
         text="Salvar"
-        onClick={onSaveClick}
+        onClick={handleSaveClick}
         type="button"
-        disabled={!isFormValid}
       />
     </form>
   );
