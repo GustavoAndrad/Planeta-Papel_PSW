@@ -10,6 +10,12 @@ function SectionProd(props) {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
 
+  const [visibleCount, setVisibleCount] = useState(6); // Quantidade inicial de produtos visiveis na seção
+
+  const handleVerMais = () => {
+    setVisibleCount((prevCount) => prevCount + 6);
+  };
+
   const checkScroll = () => {
     if (scrollRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
@@ -86,16 +92,20 @@ function SectionProd(props) {
           ref={scrollRef}
           className="scroll-produtos w-full overflow-x-auto flex justify-start items-center gap-6 p-4"
         >
-          {props.productList.map((produto, index) => (
-              <ProdutoCard
-                onClick={()=>{navigate(`/produto/${produto.id}`)}}
-                prodStandardImage={produto.imagem[0]}
-                key={index}
-                prodName={produto.nome}
-                prodPrice={parseFloat(produto.preco)}
-              />
-          ))}
-          <VerMaisCard sectionName={props.sectionName} />
+        {props.productList.slice(0, visibleCount).map((produto, index) => (
+          <ProdutoCard
+            onClick={() => {
+              navigate(`/produto/${produto.id}`);
+            }}
+            prodStandardImage={produto.imagem[0]}
+            key={index}
+            prodName={produto.nome}
+            prodPrice={parseFloat(produto.preco)}
+          />
+        ))}
+        {visibleCount < props.productList.length && ( // Só exibe o "Ver Mais" se ainda houver mais itens
+          <VerMaisCard sectionName={props.sectionName} onClick={handleVerMais}/>
+        )}
         </div>
 
         {/* Seta para a direita */}

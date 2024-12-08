@@ -30,6 +30,8 @@ export const addToCarrinho = createAsyncThunk('carrinho/addCarrinho', async (nov
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(novoItem),
       });
+
+      window.location="/carrinho"  
       return await response.json();
     } catch (error) {
       console.log('Erro ao adicionar produto no carrinho:', error);
