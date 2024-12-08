@@ -14,7 +14,6 @@ function SectionProd(props) {
 
   const handleVerMais = () => {
     setVisibleCount((prevCount) => prevCount + 6);
-    console.log(visibleCount);
   };
 
   const checkScroll = () => {

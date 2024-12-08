@@ -22,16 +22,6 @@ function Produto() {
     }
   }, [prodStatus, dispatch, produto]);
 
-  /*
-  // Encontrar o produto pelo ID quando a lista de produtos estiver carregada
-  useEffect(() => {
-    if (produtos.length > 0) {
-      const produtoEncontrado = produtos.find((p) => parseInt(p.id) === parseInt(id)); // Encontrando o produto na lista
-      setProduto(produtoEncontrado); // Atualizando o estado com o produto encontrado
-    }
-  }, [produtos, id]);
-  */
-
   // Lidar com estados de carregamento ou erro
   if (prodStatus === "pending") {
     return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Carregando...</div>;
