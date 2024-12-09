@@ -20,18 +20,13 @@ export default function Box({info, type}){
                 <ul className="pl-5 list-disc text-lg text-secondaryBlue  border-b-red-400 border-b-2">
                     
                     {info.items?.map((item, index)=>{
-                        if(item.nome!=="Outro"){
-                            return <li key={`item-${index}`} className="font-mono">{formatSectionName(item.nome,20)}{item.qtd}</li>
-                        }else{
-                            return<React.Fragment key={`item-${index}`}>
-                                <li className="font-mono">Outro:</li>
-                                <ul key={`sublist-${index}`} className="list-disc pl-5">
-                                    {item.outros?.map((item, subIndex)=>
-                                        <li key={`subitem-${subIndex}`} className="font-mono">{formatSectionName(item.nome,18)}{item.qtd}</li>)}
-                                </ul>
-                            </React.Fragment>
-                        }
+                        return <li key={`item-${index}`} className="font-mono">{formatSectionName(item.nome,20)}{item.qtd}</li>
                     })}
+                    <li className="font-mono">Outro:</li>
+                        <ul key={`sublist`} className="list-disc pl-5">
+                            {info.outros?.map((item, subIndex)=>
+                                <li key={`subitem-${subIndex}`} className="font-mono">{formatSectionName(item.nome,18)}{item.qtd}</li>)}
+                        </ul>
                 </ul>
                 
                 <p className="text-lg font-semibold border-b-red-400 border-b-2 mt-2">

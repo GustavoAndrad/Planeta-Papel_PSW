@@ -62,10 +62,6 @@ export default function BoxResultado({status,setStatus}){
                 <div className="w-3/4">
                     <BotaoVermelho type={"submit"} text={"Confirmar"}></BotaoVermelho>
                 </div>
-{/*
-                <button type="submit" className="mt-3 min-w-[200px] hover:bg-red-700 w-3/4 bg-cancelRed text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-full text-2xl px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                    Confirmar</button>
-*/}
             </div>
         </>);
 }

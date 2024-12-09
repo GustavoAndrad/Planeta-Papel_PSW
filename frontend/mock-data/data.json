@@ -625,5 +625,39 @@
       "prodId": "10",
       "qtd": 1
     }
+  ],
+  "solicitacoes": [
+    {
+      "id": "0",
+      "cliente": "1",
+      "items": [
+        {
+          "nome": "Folhas/Cadernos",
+          "qtd": "20 und"
+        },
+        {
+          "nome": "Cartolina",
+          "qtd": "2kg"
+        }
+      ],
+      "outros": [
+        {
+          "nome": "Jornal",
+          "qtd": "30 und"
+        },
+        {
+          "nome": "Jornal",
+          "qtd": "30 und"
+        }
+      ],
+      "modalidade": "Coleta Residencial",
+      "data": "xx/xx/xxxx",
+      "analise":{
+        "data": "xx/xx/xxxx",
+        "status": true,
+        "dataLimite": "xx/xx/xxxx"
+    }
+    }
+
   ]
 }

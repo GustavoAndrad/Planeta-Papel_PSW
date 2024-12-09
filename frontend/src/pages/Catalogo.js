@@ -17,7 +17,6 @@ function Catalogo() {
   const prodStatus = useSelector((state) => state.produtos.status);
   const planos = useSelector(planoSelectors.selectAll);
   const planoStatus = useSelector((state) => state.planos.status);
-  //  MUDAR PLANO PARA ENTITY ADAPTER
 
   // Informações tratadas
   const [produtosFiltrados, setProdutosFiltrados] = useState([]);
