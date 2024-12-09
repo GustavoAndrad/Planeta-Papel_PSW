@@ -684,6 +684,16 @@
       "id": "3e62",
       "prodId": "1",
       "qtd": 1
+    },
+    {
+      "id": "4529",
+      "prodId": "4",
+      "qtd": 1
+    },
+    {
+      "id": "e50d",
+      "prodId": "3",
+      "qtd": 1
     }
   ],
   "users": [
@@ -764,22 +774,24 @@
       "modalidade": "endereco",
       "data": "09/12/2024"
     }
-  ]
-  ,
+  ],
   "pedidos": [
-    {"id":"1",
-    "prods": [
-      {"prodName": "AAA",
-        "prodQt" : "4",
-        "prodTotal" : "132"
-      },
-      {"prodName": "BBB",
-        "prodQt" : "4",
-        "prodTotal" : "132"
-      }
-    ],
-    "date": "24/02/2023",
-    "met": "PIX"
+    {
+      "id": "1",
+      "prods": [
+        {
+          "prodName": "AAA",
+          "prodQt": "4",
+          "prodTotal": "132"
+        },
+        {
+          "prodName": "BBB",
+          "prodQt": "4",
+          "prodTotal": "132"
+        }
+      ],
+      "date": "24/02/2023",
+      "met": "PIX"
     }
   ]
 }
