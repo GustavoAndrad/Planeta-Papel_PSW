@@ -659,36 +659,41 @@
       "id": "9c72",
       "prodId": "5",
       "qtd": 1
+    },
+    {
+      "id": "acf6",
+      "prodId": "2",
+      "qtd": 1
     }
   ],
   "users": [
-      {
-        "id": 1,
-        "nome": "João da Silva",
-        "email": "user@example.com",
-        "senha": "1234",
-        "telefone": "(11) 98765-4321",
-        "bairro": "Centro",
-        "endereco": "Rua das Flores, 123",
-        "complemento": "Apartamento 45",
-        "cep": "01000-000",
-        "isGerente": false
-      },
-      {
-        "id": 2,
-        "nome": "Maria Oliveira",
-        "email": "adm@example.com",
-        "senha": "5678",
-        "telefone": "(21) 99876-5432",
-        "bairro": "Jardins",
-        "endereco": "Avenida Paulista, 456",
-        "complemento": "Cobertura",
-        "cep": "22000-000",
-        "cpf": "000.000.000-00",
-        "codigoSeguranca": "123456",
-        "isGerente": true
-      }
-    ],
+    {
+      "id": 1,
+      "nome": "João da Silva",
+      "email": "user@example.com",
+      "senha": "1234",
+      "telefone": "(11) 98765-4321",
+      "bairro": "Centro",
+      "endereco": "Rua das Flores, 123",
+      "complemento": "Apartamento 45",
+      "cep": "01000-000",
+      "isGerente": false
+    },
+    {
+      "id": 2,
+      "nome": "Maria Oliveira",
+      "email": "adm@example.com",
+      "senha": "5678",
+      "telefone": "(21) 99876-5432",
+      "bairro": "Jardins",
+      "endereco": "Avenida Paulista, 456",
+      "complemento": "Cobertura",
+      "cep": "22000-000",
+      "cpf": "000.000.000-00",
+      "codigoSeguranca": "123456",
+      "isGerente": true
+    }
+  ],
   "solicitacoes": [
     {
       "id": "0",
