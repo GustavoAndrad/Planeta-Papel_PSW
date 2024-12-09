@@ -127,7 +127,7 @@ function Produto() {
                 </button>
               </div>
 
-              {isGerente && <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
+              {isGerente==='true' && <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
                 <button
                   type="button"
                   title="Adicionar ao Carrinho"

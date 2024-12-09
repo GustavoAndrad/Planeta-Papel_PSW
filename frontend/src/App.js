@@ -24,6 +24,7 @@ import CriarProduto from "./pages/CriarProduto";
 import AlteraProduto from "./pages/AlterarProduto"
 import CadastroCliente from "./pages/CadastroCliente";
 import EditarExcluirCliente from "./pages/EditarExcluirCliente";
+import Login from "./pages/Login";
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
             <Route path="/gerente/alterar-produto/:id" element={<AlteraProduto />} />
 
             <Route path="/produto/:id" element={<Produto />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/pagamento" element={<Pagamento />} />
             <Route path="/cadastro-cliente" element={<CadastroCliente />} />
             <Route path="/dados-cliente" element={<EditarExcluirCliente />} />

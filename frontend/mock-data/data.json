@@ -545,6 +545,36 @@
       ],
       "qnt_disponivel": 110,
       "categoria": "Planner"
+    },
+    {
+      "id": "87c3",
+      "nome": "Produto",
+      "preco": 1,
+      "descricao": "oipjfoçief",
+      "imagem": [
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 2,
+      "categoria": "Papel"
+    },
+    {
+      "id": "2ae9",
+      "nome": "teste",
+      "preco": 1,
+      "descricao": "yt",
+      "qnt_disponivel": 4,
+      "categoria": "Cartolina"
+    },
+    {
+      "id": "08dd",
+      "nome": "teste",
+      "preco": 8,
+      "descricao": "UGHIU",
+      "imagem": [
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 9,
+      "categoria": "Papel"
     }
   ],
   "planos": [
@@ -624,6 +654,39 @@
       "id": "bf04",
       "prodId": "10",
       "qtd": 1
+    },
+    {
+      "id": "9c72",
+      "prodId": "5",
+      "qtd": 1
     }
-  ]
+  ],
+  "users": [
+      {
+        "id": 1,
+        "nome": "João da Silva",
+        "email": "user@example.com",
+        "senha": "1234",
+        "telefone": "(11) 98765-4321",
+        "bairro": "Centro",
+        "endereco": "Rua das Flores, 123",
+        "complemento": "Apartamento 45",
+        "cep": "01000-000",
+        "isGerente": false
+      },
+      {
+        "id": 2,
+        "nome": "Maria Oliveira",
+        "email": "adm@example.com",
+        "senha": "5678",
+        "telefone": "(21) 99876-5432",
+        "bairro": "Jardins",
+        "endereco": "Avenida Paulista, 456",
+        "complemento": "Cobertura",
+        "cep": "22000-000",
+        "cpf": "000.000.000-00",
+        "codigoSeguranca": "123456",
+        "isGerente": true
+      }
+    ]
 }
