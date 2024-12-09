@@ -8,6 +8,7 @@ import SectionProd from "../components/Catalogo/SectionProd";
 import SearchBar from "../components/Catalogo/SearchBar";
 import StrokeLine from "../components/Catalogo/StrokeLine";
 import Propaganda from "../components/Catalogo/Propaganda";
+import Loader from "../components/Loader";
 
 function Catalogo() {
   const dispatch = useDispatch();
@@ -28,7 +29,7 @@ function Catalogo() {
 
   // Controlador de recorrência das propagandas
   let qntPropagandasMostradas = -1;
-
+  
   
   const getCategorias = useCallback((produtos, categoriaExtra) => {
     const categorias = new Set(); // Usando Set para evitar duplicatas
@@ -116,11 +117,21 @@ function Catalogo() {
   
   // Lidar com estados de carregamento ou erro
   if (prodStatus === "pending" || planoStatus === "pending") {
-    return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Carregando...</div>;
+    return (
+      <>
+      <div className="pt-24 w-full h-full flex items-center justify-center">
+        <Loader></Loader>
+      </div>
+      </>
+    )
   }
   
-  if (prodStatus === "failed" || planoStatus === "failed") {
-    return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Erro ao carregar informações do catálogo.</div>;
+  if (prodStatus === "rejected" || planoStatus === "rejected") {
+    return (
+      <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10 text-center text-red-600 font-bold">
+        Erro ao carregar informações do catálogo.<br></br> Experimente recarregar a página.
+      </div>
+    )
   }
 
   return (

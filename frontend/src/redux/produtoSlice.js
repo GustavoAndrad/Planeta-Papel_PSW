@@ -11,7 +11,7 @@ export const fetchProdutos = createAsyncThunk('produtos/fetchProdutos', async ()
     return await response.json();
   } catch (error) {
     console.log('Erro ao buscar produtos:', error);
-    return [];
+    throw error;
   }
 });
 
@@ -48,7 +48,7 @@ export const deleteProduto = createAsyncThunk('produtos/deleteProduto', async (i
     await fetch(`${process.env.REACT_APP_API_URL}/produtos/${idProduto}`, {
       method: 'DELETE',
     });
-    return idProduto;
+    return idProduto; // Retorna o ID para remoção no estado
   } catch (error) {
     console.log('Erro ao deletar produto:', error);
     throw error;
@@ -58,8 +58,8 @@ export const deleteProduto = createAsyncThunk('produtos/deleteProduto', async (i
 // Slice
 const produtoSlice = createSlice({
   name: 'produtos',
-  initialState: produtoAdapter.getInitialState({ 
-    status: 'idle'/* Status da requisição*/
+  initialState: produtoAdapter.getInitialState({
+    status: 'idle', // Status da requisição
   }),
   reducers: {},
   extraReducers: (builder) => {
@@ -71,12 +71,12 @@ const produtoSlice = createSlice({
       })
       .addCase(fetchProdutos.fulfilled, (state, action) => {
         state.status = 'fulfilled';
-        produtoAdapter.setAll(state, action.payload);
+        produtoAdapter.setAll(state, action.payload); // Adiciona todos os produtos
         console.log(`[ ${(new Date()).toUTCString()} ] Dados de produtos carregados com sucesso`);
       })
       .addCase(fetchProdutos.rejected, (state) => {
         state.status = 'rejected';
-        console.log(`[ ${(new Date()).toUTCString()} ] Falha ao carregar dados de produtos...`);
+        console.log(`[ ${(new Date()).toUTCString()} ] Falha ao carregar dados de produtos`);
       })
 
       // Create produto
@@ -96,7 +96,10 @@ const produtoSlice = createSlice({
         console.log(`[ ${(new Date()).toUTCString()} ] Atualizando produto...`);
       })
       .addCase(updateProduto.fulfilled, (state, action) => {
-        produtoAdapter.updateOne(state, action.payload);
+        produtoAdapter.updateOne(state, {
+          id: action.payload.id,
+          changes: action.payload,
+        });
         console.log(`[ ${(new Date()).toUTCString()} ] Produto atualizado com sucesso`);
       })
       .addCase(updateProduto.rejected, (state) => {
@@ -117,12 +120,12 @@ const produtoSlice = createSlice({
   },
 });
 
-export const produtoSelectors = produtoAdapter.getSelectors( state => state.produtos );
+export const produtoSelectors = produtoAdapter.getSelectors((state) => state.produtos);
 
 export default produtoSlice.reducer;
 
 
-// Selector     selectProdutoByID
+
 const selectProdutosEntities = (state) => state.produtos.entities;
 const selectProdutosIds = (state) => state.produtos.ids;
 

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { fetchProdutos, produtoSelectors } from "../redux/produtoSlice";
 import { addToCarrinho } from "../redux/carrinhoSlice";
+import Loader from "../components/Loader";
 
 function Produto() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { id } = useParams();  // Pegando o ID do produto da URL
 
@@ -13,7 +15,8 @@ function Produto() {
   const prodStatus = useSelector((state) => state.produtos);
 
   const [standardImage, setStandardImage] = useState(null);
-  //const [produto, setProduto] = useState(null);
+
+  const isGerente = localStorage.getItem('gerente');
 
   // Carregar os produtos ao montar o componente, se necessário
   useEffect(() => {
@@ -24,15 +27,21 @@ function Produto() {
 
   // Lidar com estados de carregamento ou erro
   if (prodStatus === "pending") {
-    return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Carregando...</div>;
+    return (
+      <>
+      <div className="pt-24 w-full h-full flex items-center justify-center">
+        <Loader></Loader>
+      </div>
+      </>
+    )
   }
-
-  if (prodStatus === "failed") {
-    return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Erro ao carregar produtos.</div>;
-  }
-
-  if (!produto) {
-    return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Produto não encontrado.</div>;
+  
+  if (prodStatus === "failed" || !produto) {
+    return (
+      <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10 text-center text-red-600 font-bold">
+        Erro ao carregar informações do produto<br></br> Código buscado: {id}
+      </div>
+    )
   }
 
   const { nome, preco, descricao, imagem } = produto;
@@ -106,16 +115,30 @@ function Produto() {
               </p>
             </div>
 
-            <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
-              <button
-                type="button"
-                title="Adicionar ao Carrinho"
-                onClick={() => dispatch(addToCarrinho({prodId: id, qtd: 1}))}
-                className="flex items-center justify-center py-2.5 px-5 text-sm text-white bg-primaryBlue font-bold rounded-lg hover:bg-secondaryBlue"
-              >
-                🛒 Adicionar ao Carrinho
-              </button>
+            <div className="flex gap-5">
+              <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
+                <button
+                  type="button"
+                  title="Adicionar ao Carrinho"
+                  onClick={() => dispatch(addToCarrinho({prodId: id, qtd: 1}))}
+                  className="flex items-center justify-center py-2.5 px-5 text-sm text-white bg-primaryBlue font-bold rounded-lg hover:bg-secondaryBlue"
+                >
+                  🛒 Adicionar ao Carrinho
+                </button>
+              </div>
+
+              {isGerente && <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
+                <button
+                  type="button"
+                  title="Adicionar ao Carrinho"
+                  onClick={()=>{navigate(`/gerente/alterar-produto/${id}`)}}
+                  className="flex items-center justify-center py-2.5 px-5 text-sm text-white bg-secondaryBlue font-bold rounded-lg hover:bg-primaryBlue"
+                >
+                  🖋 Atualizar Dados
+                </button>
+              </div>}
             </div>
+
 
             <hr className="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
 
