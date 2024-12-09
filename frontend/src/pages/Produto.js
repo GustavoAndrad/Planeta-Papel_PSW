@@ -17,6 +17,7 @@ function Produto() {
   const [standardImage, setStandardImage] = useState(null);
 
   const isGerente = localStorage.getItem('gerente');
+  const isLogged = localStorage.getItem('id');
 
   // Carregar os produtos ao montar o componente, se necessário
   useEffect(() => {
@@ -120,7 +121,14 @@ function Produto() {
                 <button
                   type="button"
                   title="Adicionar ao Carrinho"
-                  onClick={() => dispatch(addToCarrinho({prodId: id, qtd: 1}))}
+                  onClick={() => {
+                    if(isLogged){
+                    dispatch(addToCarrinho({prodId: id, qtd: 1}))
+                    }else{
+                      navigate("/login");
+                    }
+                    }
+                  }
                   className="flex items-center justify-center py-2.5 px-5 text-sm text-white bg-primaryBlue font-bold rounded-lg hover:bg-secondaryBlue"
                 >
                   🛒 Adicionar ao Carrinho

@@ -1,12 +1,23 @@
+import { useEffect, useState } from "react";
 import SidebarMenu from "./SideBarMenu";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUsers, userSelectors } from "../redux/usuarioSlice";
 
 function Header() {
+  const dispatch = useDispatch();
+
+  const [userId, setUserId] = useState(() => localStorage.getItem("id"));
+  const usuario = useSelector((state) => userSelectors.selectById(state, userId));
+
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, [dispatch]); 
     
   return (
     <>
       <header className="pl-2 pr-6 w-full h-28 bg-secondaryBlue fixed top-0 z-10 flex items-center justify-between border-b-accentBlue border-b-8">
-        <div>
+        <div className="flex gap-4 font-bold text-md items-center text-white">
           <Link to="/catalogo">
             <img
               className="w-20 h-20 cursor-pointer"
@@ -14,9 +25,11 @@ function Header() {
               alt="Logo da Planeta Papel"
             />
           </Link>
+
+          {<>{usuario?<span>Como posso te ajudar, {usuario.nome}?</span>:<Link to="/login">É novo por aqui?</Link>}</>}
         </div>
 
-        <SidebarMenu/>
+        <SidebarMenu usuario={usuario}/>
       </header>
 
     </>
