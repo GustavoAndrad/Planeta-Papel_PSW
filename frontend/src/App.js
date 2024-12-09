@@ -39,7 +39,7 @@ function App() {
             <Route path="/catalogo" element={<Catalogo />} />
             <Route path="/produto/:id" element={<Produto />} />
             <Route path="/carrinho" element={<Carrinho />} />
-            <Route path="/cliente/pedido" element={<PedidoCliente />} />
+            <Route path="/informacoes-pedido/:id" element={<PedidoCliente />} />
             <Route path="/cliente/pedidos" element={<PedidosCliente />} />
             <Route path="/cliente/solicitacao" element={<SolicReciclagem />} />
             <Route path="/cliente/acompanhar" element={<AcompSolic />} />

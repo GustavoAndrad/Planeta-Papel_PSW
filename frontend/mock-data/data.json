@@ -765,4 +765,21 @@
       "data": "09/12/2024"
     }
   ]
+  ,
+  "pedidos": [
+    {"id":"1",
+    "prods": [
+      {"prodName": "AAA",
+        "prodQt" : "4",
+        "prodTotal" : "132"
+      },
+      {"prodName": "BBB",
+        "prodQt" : "4",
+        "prodTotal" : "132"
+      }
+    ],
+    "date": "24/02/2023",
+    "met": "PIX"
+    }
+  ]
 }

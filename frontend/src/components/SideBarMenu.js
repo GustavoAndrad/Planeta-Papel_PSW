@@ -54,7 +54,7 @@ export default function SideBarMenu(){
                         <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/dados-cliente"> 👤 Meu Perfil </Link></ul>
                         <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/carrinho"> 🛒 Carrinho </Link> </ul>
                         <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/assinar_plano"> 💸 Planos Mensais </Link> </ul>
-                        <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/pedidos_cliente"> 📦 Pedidos </Link></ul>
+                        <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/cliente/pedidos"> 📦 Pedidos </Link></ul>
                         <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/solic_reciclagem"> ♻ Reciclagem</Link> </ul>
                         <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/gerente/planos"> 💸 ADMIN PLANO </Link> </ul>
                         
