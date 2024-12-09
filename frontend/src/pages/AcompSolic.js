@@ -1,5 +1,9 @@
 import Box from "../components/Solicitacao/Box";
 import TitleSection from "../components/PedidosGerente/TitleSection";
+import { useParams } from "react-router-dom";
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from "react-redux";
+import { fetchSolicitacoes, solicSelectors} from "../redux/solicitacoesSlice"
 
 const info = {
     solicitaçao:{
@@ -28,12 +32,36 @@ function formatSectionName(name){
 }
 
 export default function AcompSolic(){
+    const {id} = useParams();
+    const dispatch = useDispatch();
+
+    const solic = useSelector(state => solicSelectors.selectById(state, id));
+    const solicStatus = useSelector((state) => state.solicitacoes.status);
+    useEffect(() => {
+        if (solicStatus === "idle") {
+        dispatch(fetchSolicitacoes());
+        }
+    }, [solicStatus, dispatch]);
+
+    // Lidar com estados de carregamento ou erro
+    if (solicStatus === "pending") {
+        return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Carregando...</div>;
+    }
+    
+    if (solicStatus === "failed") {
+        return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Erro ao carregar informações da Solicitação.</div>;
+    }
+    
+    if (!solic) {
+        return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Solicitação não encontrada.</div>;
+    }
+
     return(<>
         <TitleSection sectionName={formatSectionName("Acompanhar Solicitação")} img="/images/reciclagem.png"></TitleSection>
         
         <div className="px-4 pb-4">
-            <Box info={info.solicitaçao} type={1}></Box>
-            <Box info={info.analise} type={2}></Box>
+            <Box info={solic} type={1}></Box>
+            <Box info={solic} type={2}></Box>
         </div>
         
         <p className="text-sm font-semibold text-center">
