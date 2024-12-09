@@ -1,5 +1,8 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { createSolicitacao } from "../redux/solicitacoesSlice"
+import { useDispatch } from "react-redux";
+
 import Caixa from "../components/Solicitacao/SolicRecic/Caixa";
 import CaixaMod from "../components/Solicitacao/SolicRecic/CaixaMod";
 import BotaoAzul from "../components/BotaoAzul";
@@ -19,6 +22,8 @@ function formatSectionName(name){
 }
 
 export default function SolicReciclagem(){
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [items, setItems] = useState(startItems);
     const [outros, setOutros] = useState(startOutros);
@@ -35,6 +40,44 @@ export default function SolicReciclagem(){
     const [isCheckMod, setIsCheckMod]=useState(null);
     const toggleCheckMod = (value) => {
         setIsCheckMod(isCheckMod === value ? null : value);
+    };
+
+    function handleSubmit(e){
+        e.preventDefault();
+
+        if (!isCheckMod) {
+            alert("Por favor, selecione uma modalidade de coleta.");
+            return; // Não envia a solicitação se a modalidade não estiver selecionada
+        }
+        
+        const invalidItems = items.filter(item => {
+            return isCheck[items.indexOf(item)] && (!item.qtd || item.qtd.trim() === "");
+        });
+        if (invalidItems.length > 0) {
+            alert("Por favor, preencha a quantidade de todos os itens selecionados.");
+            return; // Não envia a solicitação se algum item não estiver preenchido corretamente
+        }
+
+        const invalidOutros = outros.filter(item => !item.nome.trim() || !item.qtd.trim());
+        if (invalidOutros.length > 0) {
+            alert("Por favor, preencha o nome e a quantidade de todos os itens 'Outros'.");
+            return; // Não envia a solicitação se algum item 'Outro' não estiver preenchido corretamente
+        }
+
+        const ultimoItem = outros[outros.length - 1];        
+        const outrosValidados = ultimoItem.nome !== "" ? outros : outros.slice(0, outros.length - 1);
+
+        const newSolicitacao = {  
+            cliente: "IDCLIENTE?",
+            items: items.filter((_, index) => isCheck[index]),
+            outros: outrosValidados.map(item => ({ nome: item.nome, qtd: item.qtd })),
+            modalidade: isCheckMod,
+            data: new Date().toLocaleDateString("pt-BR"),  
+        };
+    
+        dispatch(createSolicitacao(newSolicitacao));
+    
+        navigate('/cliente/acompanhar');
     };
 
     return(
@@ -58,10 +101,7 @@ export default function SolicReciclagem(){
                 isCheckMod={isCheckMod} 
                 toggleCheckMod={toggleCheckMod} 
             />
-            <Link to="/cliente/acompanhar">
-                <BotaoAzul text={"Confirmar"}/>
-            </Link>
-
+            <BotaoAzul text={"Confirmar"} onClick={handleSubmit}/>
         </>
     )
 }

@@ -42,9 +42,9 @@ export default function Box({info, type}){
                 <p className="text-lg font-semibold border-b-red-400 border-b-2">Realizado em: <span className="text-lg font-semibold text-secondaryBlue">{info.data}</span></p>
                 <p className="text-lg font-semibold border-b-red-400 border-b-2 mt-2">Status: <span className={`text-lg font-semibold ${info.status? "text-primaryBlue":"text-cancelRed"}`}>{info.status? "APROVADO":"NÃO APROVADO"}</span></p>
                 <p className="text-lg font-semibold mt-2">Data limite para Coleta: <span className="text-lg font-semibold text-secondaryBlue">{info.dataLimite}</span>
-                    <br/><a className="text-sm font-semibold">
+                    <br/><p className="text-sm font-semibold">
                         O horário padrão é SEMPRE de 10:00 às 18:00
-                    </a>
+                    </p>
                 </p>
             </div>
         </>)

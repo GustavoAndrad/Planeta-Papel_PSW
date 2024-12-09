@@ -652,12 +652,29 @@
       ],
       "modalidade": "Coleta Residencial",
       "data": "xx/xx/xxxx",
-      "analise":{
+      "analise": {
         "data": "xx/xx/xxxx",
         "status": true,
         "dataLimite": "xx/xx/xxxx"
+      }
+    },
+    {
+      "id": "10d9",
+      "cliente": "IDCLIENTE?",
+      "items": [
+        {
+          "nome": "Folhas/Cadernos",
+          "qtd": "5050"
+        }
+      ],
+      "outros": [
+        {
+          "nome": "Jornal",
+          "qtd": "30"
+        }
+      ],
+      "modalidade": "endereco",
+      "data": "09/12/2024"
     }
-    }
-
   ]
 }
