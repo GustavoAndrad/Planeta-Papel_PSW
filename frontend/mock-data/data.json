@@ -591,7 +591,7 @@
     {
       "id": "2",
       "nome": "A4",
-      "preco": 24.99,
+      "preco": "24.99",
       "duracao": 6,
       "desconto": 10,
       "beneficios": [
@@ -697,7 +697,8 @@
       "endereco": "Rua das Flores, 123",
       "complemento": "Apartamento 45",
       "cep": "01000-000",
-      "isGerente": false
+      "isGerente": false,
+      "plano": null
     },
     {
       "id": "2",
@@ -764,22 +765,24 @@
       "modalidade": "endereco",
       "data": "09/12/2024"
     }
-  ]
-  ,
+  ],
   "pedidos": [
-    {"id":"1",
-    "prods": [
-      {"prodName": "AAA",
-        "prodQt" : "4",
-        "prodTotal" : "132"
-      },
-      {"prodName": "BBB",
-        "prodQt" : "4",
-        "prodTotal" : "132"
-      }
-    ],
-    "date": "24/02/2023",
-    "met": "PIX"
+    {
+      "id": "1",
+      "prods": [
+        {
+          "prodName": "AAA",
+          "prodQt": "4",
+          "prodTotal": "132"
+        },
+        {
+          "prodName": "BBB",
+          "prodQt": "4",
+          "prodTotal": "132"
+        }
+      ],
+      "date": "24/02/2023",
+      "met": "PIX"
     }
   ]
 }
