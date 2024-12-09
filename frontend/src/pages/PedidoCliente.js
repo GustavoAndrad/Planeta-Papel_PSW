@@ -7,10 +7,13 @@ import TitleSection from "../components/PedidosGerente/TitleSection";
 
 function PedidoCliente() {
 
-    //const items = [{prodName: "PRODUTO 1", prodQt: 12, prodTotal: "123"},
-    //    {prodName: "PRODUTO 2", prodQt: 12, prodTotal: "123"},
-    //    {prodName: "PRODUTO 3", prodQt: 12, prodTotal: "123"}
-    //];
+    const info = {prods: [{prodName: "PRODUTO 1", prodQt: 12, prodTotal: "123"},
+        {prodName: "PRODUTO 2", prodQt: 12, prodTotal: "123"},
+        {prodName: "PRODUTO 3", prodQt: 12, prodTotal: "123"}
+    ],
+    date: "12/12/1212",
+    met: "PIX",
+    tot: "123"};
 
     //const { id } = useParams();
     //const info = useSelector((state) => pedidoSelectors.selectById(state, id))
