@@ -22,6 +22,8 @@ import Produto from "./pages/Produto";
 import Pagamento from "./pages/Pagamento";
 import CriarProduto from "./pages/CriarProduto";
 import AlteraProduto from "./pages/AlterarProduto"
+import CadastroCliente from "./pages/CadastroCliente";
+import EditarExcluirCliente from "./pages/EditarExcluirCliente";
 
 function App() {
   return (
@@ -31,7 +33,6 @@ function App() {
 
         <main className="pt-36 pb-10 pl-6 pr-6 min-h-[100vh] h-auto max-w-full">
           <Routes>
-
             <Route path="/" element={<Catalogo />} />
             <Route path="/catalogo" element={<Catalogo />} />
             <Route path="/produto/:id" element={<Produto />} />
@@ -50,6 +51,10 @@ function App() {
             <Route path="/gerente/criar-produto" element={<CriarProduto />} />
             <Route path="/gerente/alterar-produto/:id" element={<AlteraProduto />} />
 
+            <Route path="/produto/:id" element={<Produto />} />
+            <Route path="/pagamento" element={<Pagamento />} />
+            <Route path="/cadastro-cliente" element={<CadastroCliente />} />
+            <Route path="/dados-cliente" element={<EditarExcluirCliente />} />
           </Routes>
         </main>
 
@@ -60,5 +65,6 @@ function App() {
 }
 
 export default App;
+
 
 
