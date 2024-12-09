@@ -82,7 +82,7 @@ const solicitacaoSlice = createSlice({
           console.log(`[ ${(new Date()).toUTCString()} ] Criando nova solicitação`);
         })
         .addCase(createSolicitacao.fulfilled, (state, action) => {
-          solicitacaoAdapterAdapter.addOne(state, action.payload);
+          solicitacaoAdapter.addOne(state, action.payload);
           console.log(`[ ${(new Date()).toUTCString()} ] Solicitação criada com sucesso`);
         })
         .addCase(createSolicitacao.rejected, (state) => {
@@ -104,7 +104,7 @@ const solicitacaoSlice = createSlice({
           console.log(`[ ${(new Date()).toUTCString()} ] Removendo solicitacao`);
         })
         .addCase(deleteSolicitacao.fulfilled, (state, action) => {
-          solicitacaoAdapterAdapter.removeOne(state, action.payload);
+          solicitacaoAdapter.removeOne(state, action.payload);
           console.log(`[ ${(new Date()).toUTCString()} ] Solicitacao removida com sucesso`);
         })
         .addCase(deleteSolicitacao.rejected, (state) => {
@@ -115,7 +115,7 @@ const solicitacaoSlice = createSlice({
   
   export const solicSelectors = solicitacaoAdapter.getSelectors( state => state.solicitacoes );
   
-  export default solicitacaoSlicer.reducer;
+  export default solicitacaoSlice.reducer;
   
   const selectSolicitacoesEntities = (state) => state.solicitacoes.entities;
   const selectSolicitacoesIds = (state) => state.solicitacoes.ids;

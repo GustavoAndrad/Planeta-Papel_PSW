@@ -3,13 +3,16 @@ import planoReducer from './planoSlice'
 import produtosSlice from './produtoSlice'
 import carrinhoReducer from './carrinhoSlice'
 import usuarioSlice from "./usuarioSlice"
+import solicitacoesSlice from './solicitacoesSlice'
+
 
 const store = configureStore({
     reducer:{
         planos: planoReducer,
         produtos: produtosSlice,
         carrinho: carrinhoReducer,
-        users: usuarioSlice
+        users: usuarioSlice,
+        solicitacoes: solicitacoesSlice,
     },
 })
 
