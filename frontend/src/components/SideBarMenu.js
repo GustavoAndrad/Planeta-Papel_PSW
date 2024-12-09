@@ -50,8 +50,8 @@ export default function SideBarMenu(){
                 <h1 className="text-3xl font-bold">MENU</h1>
 
                 <hr />
-
-                        <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/login_cliente"> 👤 Meu Perfil </Link></ul>
+                        <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/login"> 👤 Login </Link></ul>
+                        <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/dados-cliente"> 👤 Meu Perfil </Link></ul>
                         <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/carrinho"> 🛒 Carrinho </Link> </ul>
                         <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/assinar_plano"> 💸 Planos Mensais </Link> </ul>
                         <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/pedidos_cliente"> 📦 Pedidos </Link></ul>

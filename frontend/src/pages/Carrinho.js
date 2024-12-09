@@ -90,7 +90,7 @@ function Carrinho(){
                     <BotaoBranco type={"button"} text={"Continuar Comprando"}></BotaoBranco>
                 </div>
             </Link>
-            <Link to="/catalogo">
+            <Link to="/pagamento">
                 <div className="mt-6">
                     <BotaoAzul text={"Confirmar Pedido"}></BotaoAzul>
                 </div>

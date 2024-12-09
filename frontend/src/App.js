@@ -12,6 +12,7 @@ import Carrinho from "./pages/Carrinho";
 import PedidosGerente from "./pages/PedidosGerente";
 import PlanosGerente from "./pages/PlanosGerente";
 import PedidoCliente from "./pages/PedidoCliente";
+import PedidosCliente from "./pages/PedidosCliente";
 import CancelarPedido from "./pages/CancelarPedido";
 import EditarPlano from "./pages/EditarPlano";
 import SolicReciclagem from "./pages/SolicReciclagem";
@@ -39,6 +40,7 @@ function App() {
             <Route path="/produto/:id" element={<Produto />} />
             <Route path="/carrinho" element={<Carrinho />} />
             <Route path="/cliente/pedido" element={<PedidoCliente />} />
+            <Route path="/cliente/pedidos" element={<PedidosCliente />} />
             <Route path="/cliente/solicitacao" element={<SolicReciclagem />} />
             <Route path="/cliente/acompanhar" element={<AcompSolic />} />
             <Route path="/pagamento" element={<Pagamento />} />

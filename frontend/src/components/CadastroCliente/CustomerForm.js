@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Importando useNavigate
 import InputField from '../InputField';
 import BotaoAzul from '../BotaoAzul';
 
@@ -11,8 +12,11 @@ const CustomerForm = () => {
     address: '',
     complement: '',
     zipCode: '',
+    password: '', // Adicionando o campo de senha
   });
   const [error, setError] = useState('');
+
+  const navigate = useNavigate(); // Inicializando o hook de navegação
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,14 +26,17 @@ const CustomerForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const { fullName, email, phone, neighborhood, address, zipCode } = formData;
-    if (!fullName || !email || !phone || !neighborhood || !address || !zipCode) {
+    const { fullName, email, phone, neighborhood, address, zipCode, password } = formData;
+    if (!fullName || !email || !phone || !neighborhood || !address || !zipCode || !password) {
       setError('Por favor, preencha todos os campos obrigatórios!');
       return;
     }
 
     setError('');
     console.log('Cadastro realizado com sucesso:', formData);
+
+    // Redirecionar para a tela de login
+    navigate('/login');
   };
 
   return (
@@ -84,6 +91,13 @@ const CustomerForm = () => {
           value={formData.zipCode}
           onChange={handleChange}
         />
+        <InputField
+          type="password" // Campo de senha com tipo apropriado
+          name="password"
+          placeholder="Senha"
+          value={formData.password}
+          onChange={handleChange}
+        />
 
         {error && <p className="text-red-600 text-sm mb-4">{error}</p>}
 
@@ -94,3 +108,4 @@ const CustomerForm = () => {
 };
 
 export default CustomerForm;
+

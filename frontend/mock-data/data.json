@@ -664,11 +664,31 @@
       "id": "acf6",
       "prodId": "2",
       "qtd": 1
+    },
+    {
+      "id": "c747",
+      "prodId": "1",
+      "qtd": 1
+    },
+    {
+      "id": "2498",
+      "prodId": "17",
+      "qtd": 1
+    },
+    {
+      "id": "bbed",
+      "prodId": "19",
+      "qtd": 1
+    },
+    {
+      "id": "3e62",
+      "prodId": "1",
+      "qtd": 1
     }
   ],
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "nome": "João da Silva",
       "email": "user@example.com",
       "senha": "1234",
@@ -680,7 +700,7 @@
       "isGerente": false
     },
     {
-      "id": 2,
+      "id": "2",
       "nome": "Maria Oliveira",
       "email": "adm@example.com",
       "senha": "5678",
