@@ -42,14 +42,14 @@ function App() {
             <Route path="/informacoes-pedido/:id" element={<PedidoCliente />} />
             <Route path="/cliente/pedidos" element={<PedidosCliente />} />
             <Route path="/cliente/solicitacao" element={<SolicReciclagem />} />
-            <Route path="/cliente/acompanhar" element={<AcompSolic />} />
+            <Route path="/cliente/acompanhar/:id" element={<AcompSolic />} />
             <Route path="/pagamento" element={<Pagamento />} />
 
             <Route path="/gerente/pedidos" element={<PedidosGerente />} />
             <Route path="/gerente/pedido" element={<CancelarPedido />} />
             <Route path="/gerente/planos" element={<PlanosGerente />} />
             <Route path="/gerente/editar-plano/:id" element={<EditarPlano />} />
-            <Route path="/gerente/analisar" element={<AnalisarSolic />} />
+            <Route path="/gerente/analisar/:id" element={<AnalisarSolic />} />
             <Route path="/gerente/criar-plano" element={<CriarPlano />} />
             <Route path="/gerente/criar-produto" element={<CriarProduto />} />
             <Route path="/gerente/alterar-produto/:id" element={<AlteraProduto />} />

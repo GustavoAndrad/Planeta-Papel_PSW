@@ -1,37 +1,48 @@
-import { useState } from 'react'
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from "react-redux";
+import { fetchSolicitacoes, solicSelectors} from "../redux/solicitacoesSlice"
+
 import Box from '../components/Solicitacao/Box';
 import BoxResultado from '../components/Solicitacao/BoxResultado';
 import TitleSection from '../components/PedidosGerente/TitleSection';
-
-const info = {
-    solicitaçao:{
-        cliente: "NomeNome",
-        items:[
-            {nome:"Folhas/Cadernos", qtd:"20 und"},
-            {nome:"Cartolina", qtd:"2kg"}
-        ],
-        outros:[
-            {nome:"Jornal",qtd:"30 und"},
-            {nome:"Jornal",qtd:"30 und"}
-        ],
-        modalidade: "Coleta Residencial",
-        data: "xx/xx/xxxx"
-    }
-}
 
 function formatSectionName(name){
     return name.padEnd(34, '.');
 }
 
+
 export default function AnalisarSolic(){
-    const [status, setStatus] = useState(null);
+    const {id} = useParams();
+    const dispatch = useDispatch();
+
+    const solic = useSelector(state => solicSelectors.selectById(state, id));
+    const solicStatus = useSelector((state) => state.solicitacoes.status);
+    useEffect(() => {
+        if (solicStatus === "idle") {
+        dispatch(fetchSolicitacoes());
+        }
+    }, [solicStatus, dispatch]);
+
+    // Lidar com estados de carregamento ou erro
+    if (solicStatus === "pending") {
+        return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Carregando...</div>;
+    }
     
+    if (solicStatus === "failed") {
+        return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Erro ao carregar informações da Solicitação.</div>;
+    }
+    
+    if (!solic) {
+        return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Solicitação não encontrada.</div>;
+    }
+
     return(<>
-        <TitleSection sectionName={formatSectionName("Analisar Solicitação")} img="/images/reciclagem.png"></TitleSection>
+        <TitleSection sectionName={formatSectionName("Analisar Solicitação")} img="/images/reciclagem.png"/>
         
         <div className="px-4 pb-4">
-            <Box info={info.solicitaçao} type={1}></Box>
-            <BoxResultado status={status} setStatus={setStatus}></BoxResultado>
+            <Box info={solic} type={1}/>
+            <BoxResultado solicitacaoId={id}/>
         </div>
     </>)
 }

@@ -31,7 +31,7 @@ export const fetchSolicitacoes = createAsyncThunk('solicitacoes/fetchSolicitacoe
   export const updateSolicitacao = createAsyncThunk('solicitacoes/updateSolicitacoes', async (solicitacoAtualizada) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/solicitacoes/${solicitacoAtualizada.id}`, {
-        method: 'PUT',
+        method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(solicitacoAtualizada),
       });
