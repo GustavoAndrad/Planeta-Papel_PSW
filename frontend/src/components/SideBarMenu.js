@@ -68,12 +68,12 @@ export default function SideBarMenu(props){
                       </span>
 
                         <hr />
-                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/carrinho"> 📓 Criar Produto </Link> </ul>
-                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/carrinho"> 🌱 Criar Plano </Link> </ul>
+                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/gerente/criar-produto"> 📓 Criar Produto </Link> </ul>
+                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/gerente/criar-plano"> 🌱 Criar Plano </Link> </ul>
                             <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/carrinho"> 🛒 Carrinho </Link> </ul>
-                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/assinar_plano"> 💸 Planos Mensais </Link> </ul>
-                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/cliente/pedidos"> 📦 Pedidos </Link></ul>
-                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/solic_reciclagem"> ♻ Reciclagem</Link> </ul>
+                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/gerente/planos"> 💸 Planos Mensais </Link> </ul>
+                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/gerente/pedidos"> 📦 Pedidos </Link></ul>
+                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/gerente/analisar"> ♻ Reciclagem</Link> </ul>
                         <hr />
 
                         <ul onClick={handleLogout} className="text-white font-bold cursor-pointer hover:text-red-700">
@@ -87,9 +87,9 @@ export default function SideBarMenu(props){
                       <>
                         <hr />
                             <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/carrinho"> 🛒 Carrinho </Link> </ul>
-                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/assinar_plano"> 💸 Planos Mensais </Link> </ul>
+                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/cliente/planos"> 💸 Planos Mensais </Link> </ul>
                             <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/cliente/pedidos"> 📦 Pedidos </Link></ul>
-                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/solic_reciclagem"> ♻ Reciclagem</Link> </ul>
+                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/cliente/solicitacao"> ♻ Reciclagem</Link> </ul>
                         <hr />
 
                         <ul onClick={handleLogout} className="text-white font-bold cursor-pointer hover:text-red-700">
