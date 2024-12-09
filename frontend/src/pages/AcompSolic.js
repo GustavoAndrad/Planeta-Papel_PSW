@@ -36,7 +36,7 @@ export default function AcompSolic(){
     }
 
     return(<>
-        <Link to="/gerente/solicitacoes">
+        <Link to="/cliente/solicitacoes">
             <BotaoRetorno/>
         </Link>
         <TitleSection sectionName={formatSectionName("Acompanhar Solicitação")} img="/images/reciclagem.png"></TitleSection>

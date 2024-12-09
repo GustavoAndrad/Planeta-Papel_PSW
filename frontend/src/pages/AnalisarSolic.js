@@ -39,7 +39,7 @@ export default function AnalisarSolic(){
     }
 
     return(<>
-        <Link to="/cliente/solicitacoes">
+        <Link to="/gerente/solicitacoes">
             <BotaoRetorno/>
         </Link>
         <TitleSection sectionName={formatSectionName("Analisar Solicitação")} img="/images/reciclagem.png"/>

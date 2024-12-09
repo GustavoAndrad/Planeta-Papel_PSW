@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function CardSolic({id, cliente, isOpen, onClick}){
+export default function CardSolicC({id, cliente, isOpen, onClick}){
     if(isOpen){
         return(
         <div onClick={()=>onClick(id)} className="cursor-pointer w-full pb-10 min-w-[300px] mt-5 flex flex-col bg-white rounded-3xl border-2 border-accentBlue">
@@ -10,7 +10,7 @@ function CardSolic({id, cliente, isOpen, onClick}){
             </div>
 
             <div className="w-full h-70 mt-10 flex justify-center items-center">
-                <Link to={`/gerente/analisar/${id}`}>   
+                <Link to={`/cliente/acompanhar/${id}`}>   
                     <button type="button" className="min-w-[250px] hover:bg-secondaryBlue max-w-[300px] bg-primaryBlue text-white focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-full text-xl px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                         Acompanhar Solicitação</button>
                 </Link>
@@ -29,5 +29,3 @@ function CardSolic({id, cliente, isOpen, onClick}){
     </>
     )
 }
-
-export default CardSolic

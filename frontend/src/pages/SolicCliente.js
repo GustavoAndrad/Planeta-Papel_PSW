@@ -1,9 +1,21 @@
 import { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchSolicitacoes, solicSelectors } from "../redux/solicitacoesSlice";
+import { Link } from "react-router-dom";
 
 import SectionName from "../components/PedidosGerente/TitleSection"
-import CardSolic from "../components/SolicCliente/CardSolic"
+import CardSolicC from "../components/SolicCliente/CardSolicC"
+import BotaoAzul from "../components/BotaoAzul";
+
+    /*
+    *
+    *    
+    *
+    *       FILTRAR PARA APENAS AS SOLICITAÇÕES DO CLIENTE
+    * 
+    * 
+    * 
+    */
 
 export default function SolicCliente(){
     const dispatch = useDispatch();
@@ -31,14 +43,18 @@ export default function SolicCliente(){
     if (solicStatus === "failed") {
         return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Erro ao carregar informações das Solicitacoes.</div>;
     }
-
+    
     return(
         <>
-            <SectionName sectionName={"Gerenciar Solicitacoes"} img={"/images/reciclagem.png"}></SectionName>
+            <p>FILTRAR PARA APENAS AS SOLICITAÇÕES DO CLIENTE</p>
+            <SectionName sectionName={"Ver Solicitacoes"} img={"/images/reciclagem.png"}></SectionName>
+            <Link to="/cliente/solicitar">
+                <BotaoAzul type={"button"} text={"Nova Solicitação"}/>
+            </Link>
 
             {solic.map((item) => {
                 return (
-                    <CardSolic
+                    <CardSolicC
                         key={item.id}
                         id={item.id}
                         cliente={item.cliente}
