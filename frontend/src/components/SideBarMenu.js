@@ -1,7 +1,8 @@
 import {useState, useEffect, useRef} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-export default function SideBarMenu(){
+export default function SideBarMenu(props){
+    const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
 
     const sidebarRef = useRef(null);
@@ -28,6 +29,15 @@ export default function SideBarMenu(){
         };
       }, [isOpen]);
 
+
+    const handleLogout = ()=>{
+      localStorage.removeItem("id");
+      localStorage.removeItem("gerente")
+      navigate("/");
+      // eslint-disable-next-line no-restricted-globals
+      location.reload();
+    }
+
     return(
         <>
         <div>
@@ -49,22 +59,60 @@ export default function SideBarMenu(){
               <div className="p-12 pt-10 text-center space-y-7 text-xl">
                 <h1 className="text-3xl font-bold">MENU</h1>
 
-                <hr />
-                        <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/login"> 👤 Login </Link></ul>
-                        <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/dados-cliente"> 👤 Meu Perfil </Link></ul>
-                        <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/carrinho"> 🛒 Carrinho </Link> </ul>
-                        <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/assinar_plano"> 💸 Planos Mensais </Link> </ul>
-                        <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/cliente/pedidos"> 📦 Pedidos </Link></ul>
-                        <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/solic_reciclagem"> ♻ Reciclagem</Link> </ul>
-                        <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/gerente/planos"> 💸 ADMIN PLANO </Link> </ul>
+                {
+                  props.usuario? 
+                    (props.usuario.isGerente ? 
+                      <>
+                      <span className='text-md text-black font-bold'>
+                        Portal do Gerente
+                      </span>
+
+                        <hr />
+                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/gerente/criar-produto"> 📓 Criar Produto </Link> </ul>
+                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/gerente/criar-plano"> 🌱 Criar Plano </Link> </ul>
+                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/carrinho"> 🛒 Carrinho </Link> </ul>
+                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/gerente/planos"> 💸 Planos Mensais </Link> </ul>
+                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/gerente/pedidos"> 📦 Pedidos </Link></ul>
+                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/gerente/analisar"> ♻ Reciclagem</Link> </ul>
+                        <hr />
+
+                        <ul onClick={handleLogout} className="text-white font-bold cursor-pointer hover:text-red-700">
+                          ❌ Logout 
+                        </ul>
+
+                      </> 
+                      
+                      :
+                      
+                      <>
+                        <hr />
+                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/carrinho"> 🛒 Carrinho </Link> </ul>
+                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/cliente/planos"> 💸 Planos Mensais </Link> </ul>
+                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/cliente/pedidos"> 📦 Pedidos </Link></ul>
+                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/cliente/solicitacao"> ♻ Reciclagem</Link> </ul>
+                        <hr />
+
+                        <ul onClick={handleLogout} className="text-white font-bold cursor-pointer hover:text-red-700">
+                          ❌ Logout 
+                        </ul>
+
+                      </>
+                    )
+
+                  :
+                  <>
+                    <hr />
+                        <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/login"> 🛒 Carrinho </Link> </ul>
+                        <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/login"> 💸 Planos Mensais </Link> </ul>
+                        <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/login"> 📦 Pedidos </Link></ul>
+                        <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/login"> ♻ Reciclagem</Link> </ul>
                         
-                        <hr/>
+                    <hr/>
 
-                <hr />
+                        <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/login"> 👤 Login </Link></ul>
+                  </>
+                }
 
-                <ul className="text-white font-bold cursor-pointer hover:text-red-700">
-                  <a href="/login_cliente"> ❌ Logout </a>
-                </ul>
               </div>
             </div>
           </div>

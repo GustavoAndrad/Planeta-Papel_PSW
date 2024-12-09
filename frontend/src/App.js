@@ -26,6 +26,8 @@ import AlteraProduto from "./pages/AlterarProduto"
 import CadastroCliente from "./pages/CadastroCliente";
 import EditarExcluirCliente from "./pages/EditarExcluirCliente";
 import Login from "./pages/Login";
+import AssinarPlano from "./pages/AssinarPlano";
+import PlanosCliente from "./pages/PlanosCliente";
 
 function App() {
   return (
@@ -41,6 +43,8 @@ function App() {
             <Route path="/carrinho" element={<Carrinho />} />
             <Route path="/informacoes-pedido/:id" element={<PedidoCliente />} />
             <Route path="/cliente/pedidos" element={<PedidosCliente />} />
+            <Route path="/cliente/plano/:id" element={<AssinarPlano />} />
+            <Route path="/cliente/planos/" element={<PlanosCliente />} />
             <Route path="/cliente/solicitacao" element={<SolicReciclagem />} />
             <Route path="/cliente/acompanhar/:id" element={<AcompSolic />} />
             <Route path="/pagamento" element={<Pagamento />} />

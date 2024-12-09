@@ -1,5 +1,5 @@
-import { useDispatch, useSelector } from "react-redux"; // Importando useSelector e useDispatch
-import { fetchUsers, userSelectors } from "../redux/usuarioSlice"; // Importando a ação fetchUsers
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUsers, userSelectors } from "../redux/usuarioSlice";
 import LoginCliente from "../components/Login/LoginCliente";
 import { useState, useEffect } from "react";
 import LoginGerente from "../components/Login/LoginGerente";
@@ -60,6 +60,8 @@ function Login() {
         } else {
           createSession()
           navigate("/"); // Navegação para a página principal dos clientes
+          // eslint-disable-next-line no-restricted-globals
+          location.reload();
         }
       } else {
         console.log("Usuário ou senha inválidos");
@@ -73,6 +75,8 @@ function Login() {
      if(usuario.codigoSeguranca === securityCode && usuario.cpf === cpf ){
           createSession();
           navigate("/");
+          // eslint-disable-next-line no-restricted-globals
+          location.reload();
      } else{
         console.log(usuario)
      }
