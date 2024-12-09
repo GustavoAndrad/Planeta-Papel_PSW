@@ -50,7 +50,7 @@ export default function Caixa({ items, setItems, outros, setOutros, isCheck, tog
                     <div className="mt-3">
                         {items.map((item, index)=>(
                             <div key={index} className="content-center">
-                                <input id={index} name={item.nome} type="checkbox"  value={item.nome} onClick={()=>toggleCheck(index)}/>
+                                <input id={index} name={item.nome} type="checkbox"  value={item.nome} onChange={()=>toggleCheck(index)}/>
                                 <label htmlFor={item.nome} className="font-semibold pl-2 ">{item.nome}</label>
                                 
                                 <div className={`${(isCheck[index])? "px-6 py-1": "invisible h-0"}`}>

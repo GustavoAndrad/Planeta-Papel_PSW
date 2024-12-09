@@ -11,10 +11,10 @@ export default function CaixaMod({ isCheckMod, toggleCheckMod }){
             <div className="w-full min-w-[200px] h-full flex justify-start px-6">
                 <div className="mt-3">
                     <div className="content-center">
-                        <input type="checkbox" checked={isCheckMod === "endereco"} onClick={() => toggleCheckMod("endereco")}/>
+                        <input type="checkbox" checked={isCheckMod === "endereco"} onChange={() => toggleCheckMod("endereco")}/>
                         <label className="font-semibold pl-2 ">Coletar no meu endereço</label>
                         <br/>
-                        <input type="checkbox" checked={isCheckMod === "loja"} onClick={() => toggleCheckMod("loja")}/>
+                        <input type="checkbox" checked={isCheckMod === "loja"} onChange={() => toggleCheckMod("loja")}/>
                         <label className="font-semibold pl-2 ">Vou levar à loja</label>
                     </div>
                 </div>
