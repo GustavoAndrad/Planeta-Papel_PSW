@@ -1,31 +1,10 @@
 import Box from "../components/Solicitacao/Box";
 import TitleSection from "../components/PedidosGerente/TitleSection";
-import { useParams } from "react-router-dom";
+import BotaoRetorno from "../components/BotaoRetorno";
+import { useParams, Link } from "react-router-dom";
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { fetchSolicitacoes, solicSelectors} from "../redux/solicitacoesSlice"
-
-const info = {
-    solicitaçao:{
-        cliente: "NomeNome",
-        items:[
-            {nome:"Folhas/Cadernos", qtd:"20 und"},
-            {nome:"Cartolina", qtd:"2kg"}
-        ],
-        outros:[
-            {nome:"Jornal",qtd:"30 und"},
-            {nome:"Jornal",qtd:"30 und"}
-        ],
-        modalidade: "Coleta Residencial",
-        data: "xx/xx/xxxx"
-    },
-    analise:{
-        data: "xx/xx/xxxx",
-        status: true,
-        dataLimite: "xx/xx/xxxx"
-    }
-
-}
 
 function formatSectionName(name){
     return name.padEnd(34, '.');
@@ -57,6 +36,9 @@ export default function AcompSolic(){
     }
 
     return(<>
+        <Link to="/gerente/solicitacoes">
+            <BotaoRetorno/>
+        </Link>
         <TitleSection sectionName={formatSectionName("Acompanhar Solicitação")} img="/images/reciclagem.png"></TitleSection>
         
         <div className="px-4 pb-4">

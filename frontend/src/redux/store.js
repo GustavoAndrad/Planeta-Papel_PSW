@@ -1,16 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit'
-import planoReducer from './planoSlice'
+import planoSlice from './planoSlice'
 import produtosSlice from './produtoSlice'
-import carrinhoReducer from './carrinhoSlice'
+import carrinhoSlice from './carrinhoSlice'
 import usuarioSlice from "./usuarioSlice"
 import solicitacoesSlice from './solicitacoesSlice'
 
 
 const store = configureStore({
     reducer:{
-        planos: planoReducer,
+        planos: planoSlice,
         produtos: produtosSlice,
-        carrinho: carrinhoReducer,
+        carrinho: carrinhoSlice,
         users: usuarioSlice,
         solicitacoes: solicitacoesSlice,
     },

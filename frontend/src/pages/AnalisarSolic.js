@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { fetchSolicitacoes, solicSelectors} from "../redux/solicitacoesSlice"
 
 import Box from '../components/Solicitacao/Box';
 import BoxResultado from '../components/Solicitacao/BoxResultado';
 import TitleSection from '../components/PedidosGerente/TitleSection';
+import BotaoRetorno from '../components/BotaoRetorno';
 
 function formatSectionName(name){
     return name.padEnd(34, '.');
@@ -38,6 +39,9 @@ export default function AnalisarSolic(){
     }
 
     return(<>
+        <Link to="/cliente/solicitacoes">
+            <BotaoRetorno/>
+        </Link>
         <TitleSection sectionName={formatSectionName("Analisar Solicitação")} img="/images/reciclagem.png"/>
         
         <div className="px-4 pb-4">

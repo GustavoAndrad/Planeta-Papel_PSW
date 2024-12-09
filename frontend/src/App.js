@@ -28,6 +28,8 @@ import EditarExcluirCliente from "./pages/EditarExcluirCliente";
 import Login from "./pages/Login";
 import AssinarPlano from "./pages/AssinarPlano";
 import PlanosCliente from "./pages/PlanosCliente";
+import SolicGerente from "./pages/SolicGerente";
+import SolicCliente from "./pages/SolicCliente";
 
 function App() {
   return (
@@ -45,7 +47,8 @@ function App() {
             <Route path="/cliente/pedidos" element={<PedidosCliente />} />
             <Route path="/cliente/plano/:id" element={<AssinarPlano />} />
             <Route path="/cliente/planos/" element={<PlanosCliente />} />
-            <Route path="/cliente/solicitacao" element={<SolicReciclagem />} />
+            <Route path="/cliente/solicitacoes" element={<SolicCliente />} />
+            <Route path="/cliente/solicitar" element={<SolicReciclagem />} />
             <Route path="/cliente/acompanhar/:id" element={<AcompSolic />} />
             <Route path="/pagamento" element={<Pagamento />} />
 
@@ -53,6 +56,7 @@ function App() {
             <Route path="/gerente/pedido" element={<CancelarPedido />} />
             <Route path="/gerente/planos" element={<PlanosGerente />} />
             <Route path="/gerente/editar-plano/:id" element={<EditarPlano />} />
+            <Route path="/gerente/solicitacoes" element={<SolicGerente />} />
             <Route path="/gerente/analisar/:id" element={<AnalisarSolic />} />
             <Route path="/gerente/criar-plano" element={<CriarPlano />} />
             <Route path="/gerente/criar-produto" element={<CriarProduto />} />
