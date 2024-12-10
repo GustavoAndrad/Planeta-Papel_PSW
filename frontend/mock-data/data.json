@@ -558,14 +558,6 @@
       "categoria": "Papel"
     },
     {
-      "id": "2ae9",
-      "nome": "teste",
-      "preco": 1,
-      "descricao": "yt",
-      "qnt_disponivel": 4,
-      "categoria": "Cartolina"
-    },
-    {
       "id": "08dd",
       "nome": "teste",
       "preco": 8,
@@ -755,11 +747,11 @@
         }
       ],
       "modalidade": "Coleta Residencial",
-      "data": "08/12/2024",
+      "data": "xx/xx/xxxx",
       "analise": {
-        "data": "09/12/2024",
-        "status": false,
-        "motivoNegacao": "motivo motivo espaço\nmotivo"
+        "data": "xx/xx/xxxx",
+        "status": true,
+        "dataLimite": "xx/xx/xxxx"
       }
     },
     {
@@ -777,13 +769,8 @@
           "qtd": "30"
         }
       ],
-      "modalidade": "Coleta Residencial",
-      "data": "09/12/2024",
-      "analise": {
-        "data": "09/12/2024",
-        "status": true,
-        "dataLimite": "16/12/2024"
-      }
+      "modalidade": "endereco",
+      "data": "09/12/2024"
     }
   ],
   "pedidos": [
