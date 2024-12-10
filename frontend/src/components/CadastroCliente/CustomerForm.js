@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Importando useNavigate
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { createUser } from '../../redux/usuarioSlice';
 import InputField from '../InputField';
 import BotaoAzul from '../BotaoAzul';
 
@@ -12,31 +14,46 @@ const CustomerForm = () => {
     address: '',
     complement: '',
     zipCode: '',
-    password: '', // Adicionando o campo de senha
+    password: '',
+    isGerente: false,
+    plano: null,  // O valor inicial do plano é null
   });
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate(); // Inicializando o hook de navegação
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const { fullName, email, phone, neighborhood, address, zipCode, password } = formData;
+
+    // Verifica se todos os campos obrigatórios estão preenchidos
     if (!fullName || !email || !phone || !neighborhood || !address || !zipCode || !password) {
       setError('Por favor, preencha todos os campos obrigatórios!');
       return;
     }
 
     setError('');
-    console.log('Cadastro realizado com sucesso:', formData);
+    setLoading(true);
 
-    // Redirecionar para a tela de login
-    navigate('/login');
+    try {
+      // Despacha a ação para criar o usuário no estado com o campo plano como null
+      await dispatch(createUser(formData)).unwrap();
+      console.log('Usuário cadastrado com sucesso!');
+      navigate('/login'); // Redireciona para a tela de login após o cadastro
+    } catch (err) {
+      console.error('Erro ao cadastrar usuário:', err);
+      setError('Houve um problema ao cadastrar o usuário. Tente novamente.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -92,7 +109,7 @@ const CustomerForm = () => {
           onChange={handleChange}
         />
         <InputField
-          type="password" // Campo de senha com tipo apropriado
+          type="password"
           name="password"
           placeholder="Senha"
           value={formData.password}
@@ -101,11 +118,10 @@ const CustomerForm = () => {
 
         {error && <p className="text-red-600 text-sm mb-4">{error}</p>}
 
-        <BotaoAzul text="Cadastrar" type="submit" />
+        <BotaoAzul text={loading ? 'Cadastrando...' : 'Cadastrar'} type="submit" disabled={loading} />
       </form>
     </div>
   );
 };
 
 export default CustomerForm;
-
