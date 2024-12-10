@@ -1,11 +1,25 @@
 import {useState, useEffect, useRef} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { carrinhoSelectors, fetchCarrinho } from "../redux/carrinhoSlice";
 
 export default function SideBarMenu(props){
     const navigate = useNavigate();
+    const dispatch = useDispatch()
+
     const [isOpen, setIsOpen] = useState(false);
 
     const sidebarRef = useRef(null);
+
+    const carrinho = useSelector(carrinhoSelectors.selectAll);
+    const carrinhoStatus = useSelector(state => state.carrinho.status);
+  
+    
+    useEffect(()=>{
+      if(carrinhoStatus === "idle"){
+        dispatch(fetchCarrinho())
+      }
+    }, [dispatch,carrinhoStatus]);
 
     const toggleSidebar = () => {
         setIsOpen(!isOpen);
@@ -72,7 +86,7 @@ export default function SideBarMenu(props){
                             <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/gerente/criar-plano"> 🌱 Criar Plano </Link> </ul>
                             <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/gerente/planos"> 💸 Planos Mensais </Link> </ul>
                             <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/gerente/pedidos"> 📦 Pedidos </Link></ul>
-                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/gerente/analisar"> ♻ Reciclagem</Link> </ul>
+                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/gerente/solicitacoes"> ♻ Reciclagem</Link> </ul>
                         <hr />
 
                         <ul onClick={handleLogout} className="text-white font-bold cursor-pointer hover:text-red-700">
@@ -86,10 +100,10 @@ export default function SideBarMenu(props){
                       <>
                         <hr />
                             <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/dados-cliente"> 👤 Meu Perfil </Link></ul>
-                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/carrinho"> 🛒 Carrinho </Link> </ul>
+                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/carrinho"> 🛒 Carrinho  <span>({carrinho.length})</span></Link> </ul>
                             <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/cliente/planos"> 💸 Planos Mensais </Link> </ul>
                             <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/cliente/pedidos"> 📦 Pedidos </Link></ul>
-                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/cliente/solicitacao"> ♻ Reciclagem</Link> </ul>
+                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/cliente/solicitacoes"> ♻ Reciclagem</Link> </ul>
                         <hr />
 
                         <ul onClick={handleLogout} className="text-white font-bold cursor-pointer hover:text-red-700">

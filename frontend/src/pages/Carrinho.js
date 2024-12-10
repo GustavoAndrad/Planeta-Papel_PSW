@@ -64,10 +64,13 @@ function Carrinho(){
     return(
         <>
 
-            <div className="flex items-center mb-6 gap-3">
-                <img src="images/carrinho.png" alt="" className="size-8"/>
-                <h1 className="text-2xl font-semibold text-secondaryBlue">{formatSectionName("Carrinho")}</h1>
-            </div>
+      <div className="overflow-hidden w-full flex items-center mb-6 gap-3">
+        <img src="images/arquivo.png" alt="" className="size-8" />
+        <h1 className="w-auto text-2xl font-semibold text-secondaryBlue whitespace-nowrap">
+          Carrinho
+        </h1>
+        <div className="w-full h-full border-b-4 border-dotted border-secondaryBlue text-transparent"></div>
+      </div>
             
             {carrinho.map((item)=>(
                 <CarrinhoCard 
