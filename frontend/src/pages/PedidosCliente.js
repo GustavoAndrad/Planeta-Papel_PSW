@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPedidos, pedidoSelectors } from "../redux/pedidoSlice";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +9,8 @@ import TitleSection from "../components/PedidosGerente/TitleSection";
 function PedidosCliente() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const [userId, setUserId] = useState(() => localStorage.getItem("id"));
     const pedidos = useSelector(pedidoSelectors.selectAll);
     const status = useSelector((state) => state.pedidos.status);
 
@@ -23,6 +25,9 @@ function PedidosCliente() {
         navigate(`/informacoes-pedido/${pedidoId}`); // Navega para a rota com o ID do pedido
     };
 
+
+    const pedidosUser = pedidos.filter((pedido) => pedido.userId === userId);
+
     return (
         <>
             {/* Título da seção */}
@@ -34,10 +39,10 @@ function PedidosCliente() {
             
             {/* Lista de pedidos */}
             {status === "fulfilled" && pedidos.length > 0 ? (
-                pedidos.map((pedido) => (
+                pedidosUser.map((pedido) => (
                     <Pedido
                         key={pedido.id}
-                        cancelled={false} // Ajuste conforme necessário (Exemplo: verificar se o pedido foi cancelado)
+                        cancelled={pedido.isCancelado} // Ajuste conforme necessário (Exemplo: verificar se o pedido foi cancelado)
                         data={pedido.date} // Data do pedido
                         valor={pedido.prods.reduce((acc, prod) => acc + parseFloat(prod.prodTotal), 0)} // Soma dos valores dos produtos
                         onClick={() => handlePedidoClick(pedido.id)} // Passa a função de clique

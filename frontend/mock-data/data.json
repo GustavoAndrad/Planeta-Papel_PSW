@@ -630,58 +630,7 @@
       ]
     }
   ],
-  "carrinho": [
-    {
-      "id": "0d5b",
-      "prodId": "1",
-      "qtd": 1
-    },
-    {
-      "id": "bf04",
-      "prodId": "10",
-      "qtd": 1
-    },
-    {
-      "id": "9c72",
-      "prodId": "5",
-      "qtd": 1
-    },
-    {
-      "id": "acf6",
-      "prodId": "2",
-      "qtd": 1
-    },
-    {
-      "id": "c747",
-      "prodId": "1",
-      "qtd": 1
-    },
-    {
-      "id": "2498",
-      "prodId": "17",
-      "qtd": 1
-    },
-    {
-      "id": "bbed",
-      "prodId": "19",
-      "qtd": 1
-    },
-    {
-      "id": "3e62",
-      "prodId": "1",
-      "qtd": 1
-    },
-    {
-      "id": "4529",
-      "prodId": "4",
-      "qtd": 1
-    },
-    {
-      "id": "e50d",
-      "prodId": "3",
-      "qtd": 1
-    }
-  ],
+  "carrinho": [],
   "users": [
     {
       "id": "1",
@@ -774,11 +723,12 @@
         }
       ],
       "date": "26/02/2023",
-      "met": "PIX"
+      "met": "PIX",
+      "isCancelado": false
     },
     {
       "id": "3",
-      "userId": "2",
+      "userId": "3",
       "prods": [
         {
           "prodName": "BBB",
@@ -787,7 +737,8 @@
         }
       ],
       "date": "24/02/2023",
-      "met": "Cartão de Crédito"
+      "met": "Cartão de Crédito",
+      "isCancelado": true
     }
   ]
 }

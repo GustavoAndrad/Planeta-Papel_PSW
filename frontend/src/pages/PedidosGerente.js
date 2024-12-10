@@ -12,6 +12,8 @@ function PedidosGerente() {
     const pedidos = useSelector(pedidoSelectors.selectAll);
     const status = useSelector((state) => state.pedidos.status);
 
+    console.log(pedidos)
+
     useEffect(() => {
         if (status === "idle") {
             dispatch(fetchPedidos());
@@ -37,7 +39,7 @@ function PedidosGerente() {
                 pedidos.map((pedido) => (
                     <Pedido
                         key={pedido.id}
-                        cancelled={false} // Ajuste conforme necessário (Exemplo: verificar se o pedido foi cancelado)
+                        cancelled={pedido.isCancelado} // Ajuste conforme necessário (Exemplo: verificar se o pedido foi cancelado)
                         data={pedido.date} // Data do pedido
                         valor={pedido.prods.reduce((acc, prod) => acc + parseFloat(prod.prodTotal), 0)} // Soma dos valores dos produtos
                         onClick={() => handlePedidoClick(pedido.id)} // Passa a função de clique
