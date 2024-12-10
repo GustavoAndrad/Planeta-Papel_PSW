@@ -52,6 +52,13 @@ function PedidosCliente() {
                 // Mensagem quando não há pedidos
                 <p>Nenhum pedido encontrado.</p>
             )}
+
+      <div className="bg-white shadow-md rounded-[20px] p-4 mt-4 mb-2" style={{ borderColor: "#1D437A" }}>
+        <p className="text-center text-[#2A5EAD] font-semibold mb-2">
+          Assim que o pagamento é confirmado seus pedidos são concluídos =)
+        </p>
+        <p className="text-center text-[#828282] mt-2">Em caso de dúvida ou cancelamento, ligue para +55 021 1234-5678</p>
+      </div>
         </>
     );
 }

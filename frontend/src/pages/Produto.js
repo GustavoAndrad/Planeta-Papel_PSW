@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { fetchProdutos, produtoSelectors } from "../redux/produtoSlice";
 import { addToCarrinho } from "../redux/carrinhoSlice";
 import Loader from "../components/Loader";
+import { toast } from 'react-toastify';
 
 function Produto() {
   const dispatch = useDispatch();
@@ -136,6 +137,7 @@ function Produto() {
                   onClick={() => {
                     if(isLogged){
                     dispatch(addToCarrinho({prodId: id, qtd: 1}))
+                    toast.info("Adicionado ao Carrinho")
                     }else{
                       navigate("/login");
                     }

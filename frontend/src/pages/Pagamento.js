@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import PaymentMethod from "../components/Pagamento/PaymentMethod";
 import PixDetails from "../components/Pagamento/PixDetails";
 import CreditCardDetails from "../components/Pagamento/CreditCardDetails";
-import { carrinhoSelectors, fetchCarrinho } from "../redux/carrinhoSlice";
+import { carrinhoSelectors, fetchCarrinho} from "../redux/carrinhoSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProdutos, selectProdutoByID } from "../redux/produtoSlice";
 import { createPedido } from "../redux/pedidoSlice";
@@ -86,6 +86,14 @@ const PaymentPage = () => {
     const isPlanoPayment = localStorage.getItem("planoPayment")
 
     const userId = localStorage.getItem("id");
+
+    if(paymentType==="CARTAO" && (cardData.cardNumber=== ""||
+      cardData.expirationDate=== ""||
+      cardData.cvv=== "" ||
+      cardData.cardHolder=== "")){
+        toast.error("Cartão inválido");
+        return
+      }
 
     if(paymentType){
       if(!isPlanoPayment){
