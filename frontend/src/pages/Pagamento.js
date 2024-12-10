@@ -83,9 +83,12 @@ const PaymentPage = () => {
   const handlePagamento = (e)=>{
     e.preventDefault()
 
+    const isPlanoPayment = localStorage.getItem("planoPayment")
+
     const userId = localStorage.getItem("id");
 
     if(paymentType){
+      if(!isPlanoPayment){
       const pedido = {
         userId,
         prods: [...itens],
@@ -97,6 +100,11 @@ const PaymentPage = () => {
       dispatch(createPedido(pedido))
       navigate("/cliente/pedidos")
       toast.success("Pedido realizado!");
+    }else{
+      localStorage.removeItem("planoPayment")
+      navigate("/cliente/pedidos")
+      toast.success("Plano assinado com sucesso!");  
+    }
     }
   }
 

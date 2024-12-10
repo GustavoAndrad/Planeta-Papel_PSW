@@ -561,6 +561,17 @@
       ],
       "qnt_disponivel": 0,
       "categoria": "Papel"
+    },
+    {
+      "id": "7dbd",
+      "nome": "Papel Colorset",
+      "preco": 25,
+      "descricao": "Pacote com 100 folhas colorset com 10 variações de cores",
+      "imagem": [
+        "/images/1733831457445.jpeg"
+      ],
+      "qnt_disponivel": 100,
+      "categoria": "Papel"
     }
   ],
   "planos": [
@@ -630,7 +641,18 @@
       ]
     }
   ],
-  "carrinho": [],
+  "carrinho": [
+    {
+      "id": "08b9",
+      "prodId": "7dbd",
+      "qtd": 4
+    },
+    {
+      "id": "43af",
+      "prodId": "11",
+      "qtd": 1
+    }
+  ],
   "users": [
     {
       "id": "1",
@@ -670,7 +692,7 @@
       "complemento": "123",
       "cep": "123",
       "isGerente": false,
-      "plano": "Post-it"
+      "plano": "A4"
     }
   ],
   "solicitacoes": [
@@ -752,6 +774,96 @@
       "date": "24/02/2023",
       "met": "Cartão de Crédito",
       "isCancelado": true
+    },
+    {
+      "id": "bda6",
+      "userId": "0136",
+      "prods": [],
+      "date": "10/12/2024",
+      "met": "CARTAO",
+      "cardDetails": {
+        "isCard": true,
+        "cardNumber": "",
+        "expirationDate": "",
+        "cvv": "",
+        "cardHolder": "",
+        "installments": "1x"
+      },
+      "isCancelado": false
+    },
+    {
+      "id": "9383",
+      "userId": "0136",
+      "prods": [],
+      "date": "10/12/2024",
+      "met": "CARTAO",
+      "cardDetails": {
+        "isCard": true,
+        "cardNumber": "",
+        "expirationDate": "",
+        "cvv": "",
+        "cardHolder": "",
+        "installments": "1x"
+      },
+      "isCancelado": false
+    },
+    {
+      "id": "7676",
+      "userId": "0136",
+      "prods": [
+        {
+          "prodId": "7dbd",
+          "prodName": "Papel Colorset",
+          "prodQt": 4,
+          "prodTotal": "100.00"
+        },
+        {
+          "prodId": "11",
+          "prodName": "Post-it Neon 76mm x 76mm - Bloco com 100 folhas",
+          "prodQt": 1,
+          "prodTotal": "13.90"
+        }
+      ],
+      "date": "10/12/2024",
+      "met": "PIX",
+      "cardDetails": {
+        "isCard": false,
+        "cardNumber": "",
+        "expirationDate": "",
+        "cvv": "",
+        "cardHolder": "",
+        "installments": "1x"
+      },
+      "isCancelado": false
+    },
+    {
+      "id": "7101",
+      "userId": "0136",
+      "prods": [
+        {
+          "prodId": "7dbd",
+          "prodName": "Papel Colorset",
+          "prodQt": 4,
+          "prodTotal": "100.00"
+        },
+        {
+          "prodId": "11",
+          "prodName": "Post-it Neon 76mm x 76mm - Bloco com 100 folhas",
+          "prodQt": 1,
+          "prodTotal": "13.90"
+        }
+      ],
+      "date": "10/12/2024",
+      "met": "PIX",
+      "cardDetails": {
+        "isCard": false,
+        "cardNumber": "",
+        "expirationDate": "",
+        "cvv": "",
+        "cardHolder": "",
+        "installments": "1x"
+      },
+      "isCancelado": false
     }
   ]
 }

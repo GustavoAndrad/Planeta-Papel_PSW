@@ -49,6 +49,8 @@ function InfoPlanoAssinar() {
             plano: nome,
         };
 
+        localStorage.setItem("planoPayment", true);
+
         // Dispara a ação de atualização do usuário
         dispatch(updateUser(updatedUser))
             .then(() => {
