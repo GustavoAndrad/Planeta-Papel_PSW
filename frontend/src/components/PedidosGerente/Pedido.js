@@ -9,7 +9,7 @@ function Pedido({ data, valor, cancelled, onClick }) {
             <div className="w-full min-w-[200px] h-full flex justify-between px-6 items-center">
                 <div>
                     <h1 className="text-xl font-bold text-primaryBlue">{data}</h1>
-                    <h2 className="font-bold text-sm">R${valor}</h2>
+                    <h2 className="font-bold text-md">R${valor}</h2>
                 </div>
                 <img src={img_src} className="size-10" alt=""></img>
             </div>

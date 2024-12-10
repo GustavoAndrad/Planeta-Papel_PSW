@@ -1,12 +1,12 @@
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPedidos, pedidoSelectors } from "../redux/pedidoSlice";
+import { useEffect } from "react";
 import StrokeLine from "../components/Catalogo/StrokeLine";
 import BoxResumo from "../components/PedidoCliente/BoxResumo";
 import WhiteBox from "../components/PedidoCliente/WhiteBox";
 import BotaoPedidos from "../components/PedidosGerente/BotaoPedidos";
 import TitleSection from "../components/PedidosGerente/TitleSection";
-import { useEffect } from "react";
 
 function PedidoCliente() {
     const dispatch = useDispatch()

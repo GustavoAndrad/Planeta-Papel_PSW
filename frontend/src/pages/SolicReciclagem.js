@@ -89,9 +89,10 @@ export default function SolicReciclagem(){
             <div className="flex items-center mb-6 gap-3">
                 <img src="/images/reciclagem.png" alt="" className="size-8"/>
                 <span>
-                    <h1 className="text-2xl font-semibold text-secondaryBlue">{formatSectionName("Solicitar Reciclagem")}</h1>
+                    <h1 className="text-2xl font-semibold text-secondaryBlue">Solicitar Reciclagem</h1>
                     <p className="text-sm font-semibold text-primaryBlue">Essa ação está sujeita  à validação</p>
                 </span>
+                <div className="w-full h-full border-b-4 border-dotted border-secondaryBlue text-transparent"></div>
             </div>
             <Caixa 
                 items={items}

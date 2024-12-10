@@ -4,8 +4,8 @@ function ItemPedido({nome, qt, total}) {
             <img src="/images/clipboard.png" className="size-20" alt=""/>
             <div>
                 <h1 className="text-2xl font-bold text-accentBlue">{nome}</h1>
-                <h2 className="font-bold text-sm">Quantidade: {qt}</h2>
-                <h2 className="font-bold text-sm">R$ {total}</h2>
+                <h2 className="font-bold text-md">Quantidade: {qt}</h2>
+                <h2 className="font-bold text-md">R$ {total}</h2>
             </div>
         </div>
     );
