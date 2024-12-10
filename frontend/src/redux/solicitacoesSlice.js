@@ -118,11 +118,11 @@ const solicitacaoSlice = createSlice({
   export default solicitacaoSlice.reducer;
   
   const selectSolicitacoesEntities = (state) => state.solicitacoes.entities;
-  const selectSolicitacoesIds = (state) => state.solicitacoes.ids;
   
-  export const selectSolicitacaoByID = createSelector(
-    [selectSolicitacoesEntities, selectSolicitacoesIds],
-    (entities, ids) => {
-      return ids.map(id => entities[id]).filter(Boolean);
+  export const selectSolicitacoesByCliente = createSelector(
+    [selectSolicitacoesEntities, (state, cliente) => cliente],
+    (entities, cliente) => {
+      // Filtra as solicitações com base no cliente
+      return Object.values(entities).filter(solicitacao => solicitacao.cliente === cliente);
     }
   );
