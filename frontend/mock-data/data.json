@@ -694,6 +694,11 @@
       "id": "e50d",
       "prodId": "3",
       "qtd": 1
+    },
+    {
+      "id": "30a6",
+      "prodId": "2",
+      "qtd": 1
     }
   ],
   "users": [
@@ -708,7 +713,7 @@
       "complemento": "Apartamento 45",
       "cep": "01000-000",
       "isGerente": false,
-      "plano": null
+      "plano": "Post-it"
     },
     {
       "id": "2",
