@@ -1,12 +1,12 @@
 import BotaoAzul from '../BotaoAzul';
 
 export default function ClientDataView({
-  name,
+  nome,
   email,
-  phone,
-  neighborhood,
-  address,
-  complement,
+  telefone,
+  bairro,
+  endereco,
+  complemento,
   cep,
   onEditClick,
 }) {
@@ -16,7 +16,7 @@ export default function ClientDataView({
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="flex items-center">
           <label className="text-lg font-bold text-[#2A5EAD] mr-2">Nome:</label>
-          <span className="text-lg font-semibold text-gray-800">{name}</span>
+          <span className="text-lg font-semibold text-gray-800">{nome}</span>
         </div>
 
         <div className="flex items-center">
@@ -26,22 +26,22 @@ export default function ClientDataView({
 
         <div className="flex items-center">
           <label className="text-lg font-bold text-[#2A5EAD] mr-2">Telefone:</label>
-          <span className="text-lg font-semibold text-gray-800">{phone}</span>
+          <span className="text-lg font-semibold text-gray-800">{telefone}</span>
         </div>
 
         <div className="flex items-center">
           <label className="text-lg font-bold text-[#2A5EAD] mr-2">Bairro:</label>
-          <span className="text-lg font-semibold text-gray-800">{neighborhood}</span>
+          <span className="text-lg font-semibold text-gray-800">{bairro}</span>
         </div>
 
         <div className="flex items-center">
           <label className="text-lg font-bold text-[#2A5EAD] mr-2">Endereço:</label>
-          <span className="text-lg font-semibold text-gray-800">{address}</span>
+          <span className="text-lg font-semibold text-gray-800">{endereco}</span>
         </div>
 
         <div className="flex items-center">
           <label className="text-lg font-bold text-[#2A5EAD] mr-2">Complemento:</label>
-          <span className="text-lg font-semibold text-gray-800">{complement}</span>
+          <span className="text-lg font-semibold text-gray-800">{complemento}</span>
         </div>
 
         <div className="flex items-center sm:col-span-2">

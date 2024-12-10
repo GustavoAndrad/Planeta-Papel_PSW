@@ -3,25 +3,25 @@ import InputField from '../InputField';
 import BotaoAzul from '../BotaoAzul';
 
 export default function EditForm({
-  name,
+  nome,
   email,
-  phone,
-  neighborhood,
-  address,
-  complement,
+  telefone,
+  bairro,
+  endereco,
+  complemento,
   cep,
   onSaveClick,
   onChange,
 }) {
   const handleSave = () => {
     onSaveClick({
-      name,
+      nome,
       email,
-      phone,
-      neighborhood,
-      address,
-      complement,
-      cep,
+      telefone,
+      bairro,
+      endereco,
+      complemento,
+      cep
     });
   };
 
@@ -29,9 +29,9 @@ export default function EditForm({
     <form>
       <InputField
         type="text"
-        name="name"
+        name="nome"
         placeholder="Nome Completo"
-        value={name}
+        value={nome}
         onChange={onChange}
       />
       <InputField
@@ -43,30 +43,30 @@ export default function EditForm({
       />
       <InputField
         type="text"
-        name="phone"
+        name="telefone"
         placeholder="Telefone"
-        value={phone}
+        value={telefone}
         onChange={onChange}
       />
       <InputField
         type="text"
-        name="neighborhood"
+        name="bairro"
         placeholder="Bairro"
-        value={neighborhood}
+        value={bairro}
         onChange={onChange}
       />
       <InputField
         type="text"
-        name="address"
+        name="endereco"
         placeholder="Endereço"
-        value={address}
+        value={endereco}
         onChange={onChange}
       />
       <InputField
         type="text"
-        name="complement"
+        name="complemento"
         placeholder="Complemento"
-        value={complement}
+        value={complemento}
         onChange={onChange}
       />
       <InputField

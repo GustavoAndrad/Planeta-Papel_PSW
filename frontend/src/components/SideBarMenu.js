@@ -55,13 +55,13 @@ export default function SideBarMenu(props){
     return(
         <>
         <div>
-          <a onClick={toggleSidebar}>
+          <span onClick={toggleSidebar}>
             <img
               className={`${isOpen ? "invisible" : "w-10 h-10"} cursor-pointer`}
               src="/images/menu.png"
               alt="Menu de Navegação"
             />
-          </a> 
+          </span> 
         </div>
 
         <div className={`z-50 absolute top-0 ${isOpen? "w-full h-full":"invisible"} flex justify-end bg-opacity-50`}>

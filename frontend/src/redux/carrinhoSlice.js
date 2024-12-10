@@ -19,7 +19,7 @@ export const fetchCarrinho = createAsyncThunk('carrinho/fetchCarrinho', async ()
 export const addToCarrinho = createAsyncThunk('carrinho/addCarrinho', async (novoItem, {getState}) => {
     try {
       const state = getState();
-      const carrinho = state.carrinho.entities; // Supondo que o carrinho esteja armazenado no estado global
+      const carrinho = state.carrinho.entities;
 
       // Verificar se o item já está no carrinho
       const itemExistente = Object.values(carrinho).find(item => item.prodId === novoItem.prodId);
@@ -71,25 +71,6 @@ export const carrinhoSlice = createSlice({
         status: 'idle'/* requisição ainda não foi feita*/
     }),
     reducers:{
-        /*
-        addCarrinho:(state, action) => {
-            state.push(action.payload);
-        },
-        updateQtdCarrinho: (state, action) => {
-            const { id, updated } = action.payload;
-            const index = state.findIndex(item => item.id === id);
-            if (index !== -1) {
-                state[index] = { ...state[index], qtd: updated };//esta certo??
-            }
-        },
-        removeCarrinho: (state, action) => {
-            const id = action.payload;
-            const index = state.findIndex(item => item.id === id);
-            if (index !== -1) {
-                state.splice(index, 1); 
-            }
-        }
-        */
     },
     extraReducers: (builder) => {
         builder
@@ -109,26 +90,21 @@ export const carrinhoSlice = createSlice({
             })
             // addToCarrinho
             .addCase(addToCarrinho.pending, (state) => {
-                //state.status = 'pending';
                 console.log(`[ ${(new Date()).toUTCString()} ] Adicionando novo item ao carrinho...`);
             })
             .addCase(addToCarrinho.fulfilled, (state, action) => {
-                //state.status = 'fulfilled'; 
                 carrinhoAdapter.addOne(state, action.payload);
                 console.log(`[ ${(new Date()).toUTCString()} ] Item adicionado com sucesso ao carrinho`);
             })
             .addCase(addToCarrinho.rejected, (state) => {
-                //state.status = 'rejected'; 
                 console.log(`[ ${(new Date()).toUTCString()} ] Falha ao adicionar item ao carrinho`);
             })
 
             // Update Carrinho
             .addCase(updateCarrinho.pending, (state) => {
-                //state.status = 'pending';
                 console.log(`[ ${(new Date()).toUTCString()} ] Atualizando item do carrinho...`);
             })
             .addCase(updateCarrinho.fulfilled, (state, action) => {
-                //state.status = 'fulfilled';
                 carrinhoAdapter.updateOne(state,{
                     id: action.payload.id,
                     changes: { qtd: action.payload.qtd }, // Atualiza a quantidade do item
@@ -136,22 +112,18 @@ export const carrinhoSlice = createSlice({
                 console.log(`[ ${(new Date()).toUTCString()} ] Carrinho atualizado com sucesso`);
             })
             .addCase(updateCarrinho.rejected, (state) => {
-                //state.status = 'rejected'; 
                 console.log(`[ ${(new Date()).toUTCString()} ] Falha ao atualizar carrinho`);
             })
 
             // Delete Carrinho
             .addCase(deleteCarrinho.pending, (state) => {
-                //state.status = 'pending';
                 console.log(`[ ${(new Date()).toUTCString()} ] Removendo item do carrinho...`);
             })
             .addCase(deleteCarrinho.fulfilled, (state, action) => {
-                //state.status = 'fulfilled'; 
                 carrinhoAdapter.removeOne(state, action.payload)
                 console.log(`[ ${(new Date()).toUTCString()} ] Item do Carrinho removido com sucesso`);
             })
             .addCase(deleteCarrinho.rejected, (state) => {
-                //state.status = 'rejected'; 
                 console.log(`[ ${(new Date()).toUTCString()} ] Falha ao remover item do carrinho`);
             });
     }

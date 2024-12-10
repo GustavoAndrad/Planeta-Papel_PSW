@@ -122,7 +122,4 @@ const userSlice = createSlice({
 
 export const userSelectors = userAdapter.getSelectors((state) => state.users);
 
-export const selectUserById = (state, userId) =>
-    userSelectors.selectById(state, userId);
-
 export default userSlice.reducer;

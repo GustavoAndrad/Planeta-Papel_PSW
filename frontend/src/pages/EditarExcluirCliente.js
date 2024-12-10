@@ -1,14 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUser, deleteUser, selectUserById } from '../redux/usuarioSlice';
+import { fetchUsers, updateUser, deleteUser, userSelectors } from '../redux/usuarioSlice';
 import ClientDataView from '../components/EditarExcluirCliente/ClientDataView';
 import EditForm from '../components/EditarExcluirCliente/EditForm';
 import DeleteAccountButton from '../components/EditarExcluirCliente/DeleteAccountButton';
+import { useParams, useNavigate } from 'react-router-dom';
 
-function DadosCliente({ userId }) {
+function DadosCliente({ /*userId*/ }) {
   const dispatch = useDispatch();
-  const clientData = useSelector((state) => selectUserById(state, userId));
+  const navigate = useNavigate();
+  
+  //const {id} = useParams();
+  //userId = id;
+
+  const userId = localStorage.getItem("id");
+  
+  const clientData = useSelector((state) => userSelectors.selectById(state, userId));
+  const clientStatus = useSelector((state) => state.users.status);
   const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    if (clientStatus === "idle") {
+        dispatch(fetchUsers());
+    }
+  }, [dispatch, clientStatus]);
+
+  const [formData, setFormData] = useState({
+    nome: '',
+    email: '',
+    telefone: '',
+    bairro: '',
+    endereco: '',
+    complemento: '',
+    cep: ''
+  });
+
+  useEffect(() => {
+    if (clientData) {
+      setFormData(clientData);
+    }
+  }, [clientData]);
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -31,12 +62,32 @@ function DadosCliente({ userId }) {
         alert('Conta excluída com sucesso!');
       })
       .catch(() => alert('Erro ao excluir a conta.'));
+    navigate("/");
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    clientData[name] = value; // Atualiza dados localmente
+
+    const updatedData = {
+      ...formData,
+      [name]: value
+    };
+
+    setFormData(updatedData);
   };
+
+  // Lidar com estados de carregamento ou erro
+  if (clientStatus === "pending") {
+    return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Carregando...</div>;
+  }
+
+  if (clientStatus === "failed") {
+    return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Erro ao carregar informações do Usuário.</div>;
+  }
+
+  if (!clientData) {
+    return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Usuário não encontrado.</div>;
+  }
 
   return (
     <div className="container mx-auto p-4">
@@ -64,12 +115,12 @@ function DadosCliente({ userId }) {
         <div className="mb-4">
           {!isEditing ? (
             <ClientDataView
-              {...clientData}
+              {...formData}
               onEditClick={handleEditClick}
             />
           ) : (
             <EditForm
-              {...clientData}
+              {...formData}
               onSaveClick={handleSaveClick}
               onChange={handleInputChange}
             />

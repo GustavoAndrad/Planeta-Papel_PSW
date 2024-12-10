@@ -5,12 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import BotaoAzul from "../BotaoAzul";
 import BotaoVermelho from "../BotaoVermelho";
 
-/*
-
-    ATUALIZAR NAVIGATE ( nos handlers ) QUANDO PÁGINA DE TODAS AS SOLICITAÇÕES GERENTE FOR CRIADA
-
-*/
-
 
 export default function BoxResultado({ solicitacaoId }) {
     const dispatch = useDispatch();
@@ -35,7 +29,7 @@ export default function BoxResultado({ solicitacaoId }) {
 
         // Atualiza a solicitação no Redux com o novo atributo 'analise'
         dispatch(updateSolicitacao({ id: solicitacaoId, analise }));
-        //navigate('gerente/solicitacoes')
+        navigate('gerente/solicitacoes')
     }
 
     // Função para reprovar a solicitação
@@ -53,7 +47,7 @@ export default function BoxResultado({ solicitacaoId }) {
 
         // Atualiza a solicitação no Redux com o novo atributo 'analise'
         dispatch(updateSolicitacao({ id: solicitacaoId, analise }));
-        //navigate('gerente/solicitacoes')
+        navigate('gerente/solicitacoes')
     }
 
     return (<>
