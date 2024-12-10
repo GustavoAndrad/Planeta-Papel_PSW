@@ -1,5 +1,6 @@
+import React from 'react';
+import InputField from '../InputField';
 import BotaoAzul from '../BotaoAzul';
-import { useState } from 'react';
 
 export default function EditForm({
   name,
@@ -12,106 +13,70 @@ export default function EditForm({
   onSaveClick,
   onChange,
 }) {
-  const [formData, setFormData] = useState({
-    name,
-    email,
-    phone,
-    neighborhood,
-    address,
-    complement,
-    cep,
-  });
-
-  const [errorMessage, setErrorMessage] = useState('');
-
-  const isFormValid = Object.values(formData).every(
-    (value) => value.trim() !== ''
-  );
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-
-    if (value.trim() !== '') {
-      setErrorMessage('');
-    }
-
-    if (onChange) onChange(event);
-  };
-
-  const handleSaveClick = () => {
-    if (isFormValid) {
-      onSaveClick(formData);
-    } else {
-      setErrorMessage('Todos os campos precisam estar preenchidos.');
-    }
+  const handleSave = () => {
+    onSaveClick({
+      name,
+      email,
+      phone,
+      neighborhood,
+      address,
+      complement,
+      cep,
+    });
   };
 
   return (
     <form>
-      <input
+      <InputField
         type="text"
         name="name"
-        value={formData.name}
-        onChange={handleInputChange}
-        className="border border-[#1D437A] p-2 rounded-[20px] w-full mb-4 pl-4"
+        placeholder="Nome Completo"
+        value={name}
+        onChange={onChange}
       />
-      <input
+      <InputField
         type="email"
         name="email"
-        value={formData.email}
-        onChange={handleInputChange}
-        className="border border-[#1D437A] p-2 rounded-[20px] w-full mb-4 pl-4"
+        placeholder="E-mail"
+        value={email}
+        onChange={onChange}
       />
-      <input
-        type="tel"
+      <InputField
+        type="text"
         name="phone"
-        value={formData.phone}
-        onChange={handleInputChange}
-        className="border border-[#1D437A] p-2 rounded-[20px] w-full mb-4 pl-4"
+        placeholder="Telefone"
+        value={phone}
+        onChange={onChange}
       />
-      <input
+      <InputField
         type="text"
         name="neighborhood"
-        value={formData.neighborhood}
-        onChange={handleInputChange}
-        className="border border-[#1D437A] p-2 rounded-[20px] w-full mb-4 pl-4"
+        placeholder="Bairro"
+        value={neighborhood}
+        onChange={onChange}
       />
-      <input
+      <InputField
         type="text"
         name="address"
-        value={formData.address}
-        onChange={handleInputChange}
-        className="border border-[#1D437A] p-2 rounded-[20px] w-full mb-4 pl-4"
+        placeholder="Endereço"
+        value={address}
+        onChange={onChange}
       />
-      <input
+      <InputField
         type="text"
         name="complement"
-        value={formData.complement}
-        onChange={handleInputChange}
-        className="border border-[#1D437A] p-2 rounded-[20px] w-full mb-4 pl-4"
+        placeholder="Complemento"
+        value={complement}
+        onChange={onChange}
       />
-      <input
+      <InputField
         type="text"
         name="cep"
-        value={formData.cep}
-        onChange={handleInputChange}
-        className="border border-[#1D437A] p-2 rounded-[20px] w-full mb-4 pl-4"
+        placeholder="CEP"
+        value={cep}
+        onChange={onChange}
       />
-
-      {errorMessage && (
-        <p className="text-red-500 text-sm mb-4">{errorMessage}</p>
-      )}
-
-      <BotaoAzul
-        text="Salvar"
-        onClick={handleSaveClick}
-        type="button"
-      />
+      <BotaoAzul text="Salvar" onClick={handleSave} type="button" />
     </form>
   );
 }
