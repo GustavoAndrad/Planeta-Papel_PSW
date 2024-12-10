@@ -30,10 +30,21 @@ import AssinarPlano from "./pages/AssinarPlano";
 import PlanosCliente from "./pages/PlanosCliente";
 import SolicGerente from "./pages/SolicGerente";
 import SolicCliente from "./pages/SolicCliente";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
     <>
+    <ToastContainer 
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="colored"
+    />
       <BrowserRouter>
         <Header />
 

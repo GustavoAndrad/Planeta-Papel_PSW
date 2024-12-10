@@ -3,6 +3,26 @@ import { useCallback, useEffect, useState } from "react";
 import BotaoAzul from "../BotaoAzul";
 import { useDispatch, useSelector } from "react-redux";
 import { createProduto, fetchProdutos, produtoSelectors } from "../../redux/produtoSlice";
+import * as Yup from 'yup';
+import { toast } from "react-toastify";
+
+const produtoValidationSchema = Yup.object().shape({
+  nome: Yup.string()
+    .required("O nome do produto é obrigatório.")
+    .min(3, "O nome deve ter pelo menos 3 caracteres."),
+  preco: Yup.number()
+    .required("O preço é obrigatório.")
+    .min(0.1, "O preço deve ser maior que zero."),
+  qnt_disponivel: Yup.number()
+    .required("A quantidade é obrigatória.")
+    .integer("A quantidade deve ser um número inteiro.")
+    .min(0, "A quantidade deve ser maior ou igual a zero."),
+  descricao: Yup.string()
+    .required("A descrição é obrigatória.")
+    .min(10, "A descrição deve ter pelo menos 10 caracteres."),
+  categoria: Yup.string()
+    .required("A categoria é obrigatória."),
+});
 
 function InfoProdutoCriar() {
   const dispatch = useDispatch();
@@ -86,13 +106,13 @@ function InfoProdutoCriar() {
       }
     });
   
-    if (formData.getAll("images").length === 0) {
-      console.error("Nenhuma imagem foi adicionada!");
-      return;
-    }
-  
     try {
-      console.log(formData)
+
+      if (formData.getAll("images").length === 0) {
+        console.error("Nenhuma imagem foi adicionada!");
+        throw new Error("Imagem sem adição. Imagem padrão será adicionada");
+      }
+    
       const response = await fetch("http://localhost:5000/upload", {
         method: "POST",
         body: formData,
@@ -101,7 +121,7 @@ function InfoProdutoCriar() {
       if (!response.ok) {
         const error = await response.json();
         console.error("Erro do servidor:", error.message || "Erro desconhecido");
-        return ["/images/prod.png"];
+        throw new Error("Erro ao adicionar imagens selecionadas. Imagem padrão será adicionada");
       }
   
       const data = await response.json();
@@ -109,6 +129,8 @@ function InfoProdutoCriar() {
       return data.paths.map((img) => img.url);
     } catch (error) {
       console.error("Erro ao fazer upload:", error);
+      toast.warning(error.message);
+
       return ["/images/prod.png"];
     }
   }
@@ -116,7 +138,7 @@ function InfoProdutoCriar() {
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    const paths = await processImage();
+    const paths = await processImage(); //retornar a imagem padrão quando falha em processar
     
     const produtoData = {
       nome,
@@ -126,6 +148,17 @@ function InfoProdutoCriar() {
       qnt_disponivel: parseInt(qnt),
       categoria,
     };
+
+    console.log(produtoData.imagem)
+
+    try{
+      await produtoValidationSchema.validate(produtoData, { abortEarly: false });
+    } catch(e){
+      e.inner.forEach((err) => {
+        toast.error(`${err.message}`);
+      });
+      return
+    }
 
     // Enviar os dados do produto para a store
     const prod = await dispatch(createProduto(produtoData));

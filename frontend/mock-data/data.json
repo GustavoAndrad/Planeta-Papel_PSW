@@ -2,16 +2,13 @@
   "produtos": [
     {
       "id": "1",
-      "nome": "Papel Sulfite A4 - 500 folhas",
-      "preco": 22.9,
-      "descricao": "Pacote com 500 folhas de papel sulfite A4, ideal para impressoras e copiadoras.",
+      "nome": "Folha A4",
+      "preco": 10,
+      "descricao": "Pacote com 5 folhas de papel sulfite A4",
       "imagem": [
-        "/images/prod.png",
-        "/images/prod.png",
-        "/images/prod.png",
-        "/images/arquivo.png"
+        "/images/prod.png"
       ],
-      "qnt_disponivel": 100,
+      "qnt_disponivel": 1,
       "categoria": "Papel"
     },
     {
@@ -31,7 +28,7 @@
     {
       "id": "3",
       "nome": "Papel Cartão - 25 folhas",
-      "preco": 18.9,
+      "preco": 1,
       "descricao": "Papel cartão resistente para uso em trabalhos manuais, scrapbooking e outros.",
       "imagem": [
         "/images/prod.png",
@@ -39,21 +36,7 @@
         "/images/prod.png",
         "/images/prod.png"
       ],
-      "qnt_disponivel": 60,
-      "categoria": "Papel"
-    },
-    {
-      "id": "4",
-      "nome": "Papel Reciclado A4 - 500 folhas",
-      "preco": 20.9,
-      "descricao": "Pacote com 500 folhas de papel reciclado A4, ideal para uso sustentável.",
-      "imagem": [
-        "/images/prod.png",
-        "/images/prod.png",
-        "/images/prod.png",
-        "/images/prod.png"
-      ],
-      "qnt_disponivel": 75,
+      "qnt_disponivel": 6,
       "categoria": "Papel"
     },
     {
@@ -566,6 +549,17 @@
         "/images/prod.png"
       ],
       "qnt_disponivel": 9,
+      "categoria": "Papel"
+    },
+    {
+      "id": "d698",
+      "nome": "Produto",
+      "preco": 6,
+      "descricao": "jqwqwqwqwqwq",
+      "imagem": [
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 0,
       "categoria": "Papel"
     }
   ],
