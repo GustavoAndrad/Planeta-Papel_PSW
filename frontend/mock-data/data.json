@@ -530,39 +530,6 @@
       "categoria": "Planner"
     },
     {
-      "id": "87c3",
-      "nome": "Produto",
-      "preco": 1,
-      "descricao": "oipjfoçief",
-      "imagem": [
-        "/images/prod.png"
-      ],
-      "qnt_disponivel": 2,
-      "categoria": "Papel"
-    },
-    {
-      "id": "08dd",
-      "nome": "teste",
-      "preco": 8,
-      "descricao": "UGHIU",
-      "imagem": [
-        "/images/prod.png"
-      ],
-      "qnt_disponivel": 9,
-      "categoria": "Papel"
-    },
-    {
-      "id": "d698",
-      "nome": "Produto",
-      "preco": 6,
-      "descricao": "jqwqwqwqwqwq",
-      "imagem": [
-        "/images/prod.png"
-      ],
-      "qnt_disponivel": 0,
-      "categoria": "Papel"
-    },
-    {
       "id": "7dbd",
       "nome": "Papel Colorset",
       "preco": 25,
@@ -729,7 +696,7 @@
     },
     {
       "id": "10d9",
-      "cliente": "IDCLIENTE?",
+      "cliente": "0136",
       "items": [
         {
           "nome": "Folhas/Cadernos",
@@ -743,7 +710,153 @@
         }
       ],
       "modalidade": "endereco",
-      "data": "09/12/2024"
+      "data": "09/12/2024",
+      "analise": {
+        "data": "10/12/2024",
+        "status": true,
+        "dataLimite": "24/12/2024"
+      }
+    },
+    {
+      "id": "d33f",
+      "cliente": "0136",
+      "items": [
+        {
+          "nome": "Folhas/Cadernos",
+          "qtd": "123"
+        }
+      ],
+      "outros": [
+        {
+          "nome": "werwe",
+          "qtd": "12313"
+        }
+      ],
+      "modalidade": "endereco",
+      "data": "10/12/2024",
+      "analise": {
+        "data": "10/12/2024",
+        "status": true,
+        "dataLimite": "17/12/2024"
+      }
+    },
+    {
+      "id": "8ce0",
+      "cliente": "0136",
+      "items": [
+        {
+          "nome": "Folhas/Cadernos",
+          "qtd": "123"
+        },
+        {
+          "nome": "Cartolina",
+          "qtd": "123"
+        }
+      ],
+      "outros": [
+        {
+          "nome": "e",
+          "qtd": "1"
+        }
+      ],
+      "modalidade": "endereco",
+      "data": "10/12/2024",
+      "analise": {
+        "data": "10/12/2024",
+        "status": false,
+        "motivoNegacao": "n"
+      }
+    },
+    {
+      "id": "9041",
+      "cliente": "0136",
+      "items": [
+        {
+          "nome": "Folhas/Cadernos",
+          "qtd": "123"
+        }
+      ],
+      "outros": [
+        {
+          "nome": ".",
+          "qtd": "1"
+        }
+      ],
+      "modalidade": "endereco",
+      "data": "10/12/2024",
+      "analise": {
+        "data": "10/12/2024",
+        "status": true,
+        "dataLimite": "25/12/2024"
+      }
+    },
+    {
+      "id": "1eac",
+      "cliente": "1",
+      "items": [
+        {
+          "nome": "Folhas/Cadernos",
+          "qtd": "23"
+        }
+      ],
+      "outros": [
+        {
+          "nome": ".",
+          "qtd": "0"
+        }
+      ],
+      "modalidade": "endereco",
+      "data": "10/12/2024",
+      "analise": {
+        "data": "10/12/2024",
+        "status": true,
+        "dataLimite": "24/12/2024"
+      }
+    },
+    {
+      "id": "8b58",
+      "cliente": "1",
+      "items": [
+        {
+          "nome": "Folhas/Cadernos",
+          "qtd": "123"
+        },
+        {
+          "nome": "Cartolina",
+          "qtd": "123"
+        }
+      ],
+      "outros": [
+        {
+          "nome": "asd",
+          "qtd": "1"
+        }
+      ],
+      "modalidade": "loja",
+      "data": "10/12/2024",
+      "analise": {
+        "data": "10/12/2024",
+        "status": false,
+        "motivoNegacao": "Perído de recesso"
+      }
+    },
+    {
+      "id": "93eb",
+      "cliente": "1",
+      "items": [
+        {
+          "nome": "Folhas/Cadernos",
+          "qtd": "123"
+        }
+      ],
+      "outros": [
+        {
+          "nome": "sd",
+          "qtd": "1"
+        }
+      ],
+      "modalidade": "endereco",
+      "data": "10/12/2024"
     }
   ],
   "pedidos": [

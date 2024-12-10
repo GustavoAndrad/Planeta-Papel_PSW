@@ -78,7 +78,7 @@ export default function SolicReciclagem(){
     
         dispatch(createSolicitacao(newSolicitacao));
     
-        navigate('/cliente/acompanhar');
+        navigate('/cliente/solicitacoes/');
     };
 
     return(

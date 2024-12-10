@@ -43,7 +43,8 @@ export default function AcompSolic(){
         
         <div className="px-4 pb-4">
             <Box info={solic} type={1}></Box>
-            <Box info={solic} type={2}></Box>
+            {solic.analise ? <Box info={solic} type={2}></Box> : 
+            <h1 className="text-2xl font-semibold text-cancelRed">A análise ainda não ocorreu</h1>}
         </div>
         
         <p className="text-sm font-semibold text-center">
