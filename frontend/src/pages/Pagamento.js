@@ -1,22 +1,104 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PaymentMethod from "../components/Pagamento/PaymentMethod";
 import PixDetails from "../components/Pagamento/PixDetails";
 import CreditCardDetails from "../components/Pagamento/CreditCardDetails";
+import { carrinhoSelectors, fetchCarrinho } from "../redux/carrinhoSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProdutos, selectProdutoByID } from "../redux/produtoSlice";
+import { createPedido } from "../redux/pedidoSlice";
+import { toast } from "react-toastify";
 
 const PaymentPage = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
   const [pixDetailsVisible, setPixDetailsVisible] = useState(false);
   const [cartaoDetailsVisible, setCartaoDetailsVisible] = useState(false);
+  const [paymentType, setPaymentType] = useState("");
+  const [cardData, setCardData] = useState({
+    cardNumber: "",
+    expirationDate: "",
+    cvv: "",
+    cardHolder: "",
+    installments: "1x",
+  });
 
-  const navigate = useNavigate();
+  const carrinho = useSelector(carrinhoSelectors.selectAll);
+  const carrinhoStatus = useSelector(state => state.carrinho.status);
+  const produtosId = carrinho.map(item=>item.prodId);
+  const produtosSelecionados = useSelector(state => selectProdutoByID(state, produtosId));
+  const prodStatus = useSelector(state => state.produtos.status);
+
+  
+  useEffect(()=>{
+    if(carrinhoStatus === "idle"){
+        dispatch(fetchCarrinho())
+    }
+    if(prodStatus === "idle"){
+        dispatch(fetchProdutos()) 
+    }
+}, [dispatch, prodStatus, carrinhoStatus]);
+
 
   const toggleDetails = (type) => {
     if (type === "pix") {
       setPixDetailsVisible(!pixDetailsVisible);
+      setCartaoDetailsVisible(false);
+      setPaymentType("PIX")
     } else if (type === "cartao") {
       setCartaoDetailsVisible(!cartaoDetailsVisible);
+      setPixDetailsVisible(false);
+      setPaymentType("CARTAO")
+
     }
   };
+
+  const itens = carrinho.map(item => {
+    const produto = produtosSelecionados.find(prod => prod.id === item.prodId);
+    
+    if (produto) {
+      return {
+        prodId: produto.id,
+        prodName: produto.nome,
+        prodQt: item.qtd,
+        prodTotal: (item.qtd * produto.preco).toFixed(2)
+      };
+    }
+  
+    return null; // Caso não encontre o produto correspondente
+  }).filter(Boolean); // Remove os nulls, caso existam
+
+
+  function formatarDataAtual() {
+    const agora = new Date();
+  
+    const dia = String(agora.getDate()).padStart(2, '0'); // Adiciona zero à esquerda, se necessário
+    const mes = String(agora.getMonth() + 1).padStart(2, '0'); // getMonth() retorna de 0 a 11
+    const ano = agora.getFullYear();
+  
+    return `${dia}/${mes}/${ano}`;
+  }
+
+  const handlePagamento = (e)=>{
+    e.preventDefault()
+
+    const userId = localStorage.getItem("id");
+
+    if(paymentType){
+      const pedido = {
+        userId,
+        prods: [...itens],
+        date: formatarDataAtual(),
+        met: paymentType,
+        cardDetails: {isCard:(paymentType==="CARTAO"), ...cardData},
+        isCancelado: false
+      }
+      dispatch(createPedido(pedido))
+      navigate("/cliente/pedidos")
+      toast.success("Pedido realizado!");
+    }
+  }
 
   const handleGoHome = () => {
     navigate("/");
@@ -41,11 +123,16 @@ const PaymentPage = () => {
       </div>
 
       <PaymentMethod label="Pix" id="pix" onClick={() => toggleDetails("pix")}>
-        {pixDetailsVisible && <PixDetails />}
+        {pixDetailsVisible && <PixDetails handlePagamento={handlePagamento}/>}
       </PaymentMethod>
 
       <PaymentMethod label="Cartão de Crédito" id="cartao" onClick={() => toggleDetails("cartao")}>
-        {cartaoDetailsVisible && <CreditCardDetails />}
+        {cartaoDetailsVisible && 
+          <CreditCardDetails
+            cardData={cardData}
+            setCardData={setCardData}
+            handlePagamento={handlePagamento}
+          />}
       </PaymentMethod>
 
       <div className="bg-white shadow-md rounded-[20px] p-4 mt-4 mb-2" style={{ borderColor: "#1D437A" }}>

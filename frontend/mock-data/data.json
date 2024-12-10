@@ -630,7 +630,13 @@
       ]
     }
   ],
-  "carrinho": [],
+  "carrinho": [
+    {
+      "id": "7aeb",
+      "prodId": "6",
+      "qtd": 3
+    }
+  ],
   "users": [
     {
       "id": "1",

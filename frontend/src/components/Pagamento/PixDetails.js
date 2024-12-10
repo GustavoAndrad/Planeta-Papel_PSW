@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PixDetails = () => {
+const PixDetails = (props) => {
   return (
     <div id="pix-details">
       <p className="text-center text-[#828282] mt-4">
@@ -28,6 +28,12 @@ const PixDetails = () => {
           onClick={() => navigator.clipboard.writeText("1234 5678 9101 1121")}
         >
           Clique para copiar!
+        </p>
+        <p
+          className="text-[#2A56ED] cursor-pointer hover:underline mt-4"
+          onClick={props.handlePagamento}
+        >
+          Já realizei pagamento!
         </p>
       </div>
     </div>
