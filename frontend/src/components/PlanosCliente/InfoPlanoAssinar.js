@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchPlanos, planoSelectors } from "../../redux/planoSlice";
 import { useState, useEffect } from "react";
 import BotaoAzul from "../BotaoAzul";
-import { selectUserById, updateUser, userSelectors } from "../../redux/usuarioSlice";
+import { updateUser, userSelectors } from "../../redux/usuarioSlice";
 import BotaoVermelho from "../BotaoVermelho";
 
 function InfoPlanoAssinar() {
@@ -106,7 +106,7 @@ function InfoPlanoAssinar() {
                 
             </form>
         </div>
-        {user.plano && (user.plano != nome) ? (
+        {user.plano && (user.plano !== nome) ? (
             <div className="bg-red-400 shadow-md rounded-[20px] border-2 p-4 mb-6">
                 <p className="text-xl font-semibold text-white">Atenção, assinar esse plano implica em cancelar a assinatura no plano atual!</p>
             </div>
