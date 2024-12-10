@@ -7,16 +7,16 @@ import BotaoAzul from '../BotaoAzul';
 
 const CustomerForm = () => {
   const [formData, setFormData] = useState({
-    fullName: '',
+    nome: '',
     email: '',
-    phone: '',
-    neighborhood: '',
-    address: '',
-    complement: '',
-    zipCode: '',
-    password: '',
+    senha: '',
+    telefone: '',
+    bairro: '',
+    endereco: '',
+    complemento: '',
+    cep: '',
     isGerente: false,
-    plano: null,  // O valor inicial do plano é null
+    plano: "Nenhum"
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -32,10 +32,10 @@ const CustomerForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { fullName, email, phone, neighborhood, address, zipCode, password } = formData;
+    const { nome, email, telefone, bairro, endereco, cep, senha } = formData;
 
     // Verifica se todos os campos obrigatórios estão preenchidos
-    if (!fullName || !email || !phone || !neighborhood || !address || !zipCode || !password) {
+    if (!nome || !email || !telefone || !bairro || !endereco || !cep || !senha) {
       setError('Por favor, preencha todos os campos obrigatórios!');
       return;
     }
@@ -61,9 +61,9 @@ const CustomerForm = () => {
       <form onSubmit={handleSubmit}>
         <InputField
           type="text"
-          name="fullName"
+          name="nome"
           placeholder="Nome Completo"
-          value={formData.fullName}
+          value={formData.nome}
           onChange={handleChange}
         />
         <InputField
@@ -75,44 +75,44 @@ const CustomerForm = () => {
         />
         <InputField
           type="text"
-          name="phone"
+          name="telefone"
           placeholder="Telefone"
-          value={formData.phone}
+          value={formData.telefone}
           onChange={handleChange}
         />
         <InputField
           type="text"
-          name="neighborhood"
+          name="bairro"
           placeholder="Bairro"
-          value={formData.neighborhood}
+          value={formData.bairro}
           onChange={handleChange}
         />
         <InputField
           type="text"
-          name="address"
+          name="endereco"
           placeholder="Endereço"
-          value={formData.address}
+          value={formData.endereco}
           onChange={handleChange}
         />
         <InputField
           type="text"
-          name="complement"
+          name="complemento"
           placeholder="Complemento"
-          value={formData.complement}
+          value={formData.complemento}
           onChange={handleChange}
         />
         <InputField
           type="text"
-          name="zipCode"
+          name="cep"
           placeholder="CEP"
-          value={formData.zipCode}
+          value={formData.cep}
           onChange={handleChange}
         />
         <InputField
           type="password"
-          name="password"
+          name="senha"
           placeholder="Senha"
-          value={formData.password}
+          value={formData.senha}
           onChange={handleChange}
         />
 
