@@ -1,10 +1,31 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import BotaoAzul from "../BotaoAzul";
 import BotaoVermelho from "../BotaoVermelho"
 import { useDispatch, useSelector } from "react-redux";
 import {deleteProduto, fetchProdutos, produtoSelectors, updateProduto } from "../../redux/produtoSlice";
 import Loader from "../Loader";
+import * as Yup from 'yup';
+import { toast } from "react-toastify";
+import BotaoRetorno from "../BotaoRetorno";
+
+const produtoValidationSchema = Yup.object().shape({
+  nome: Yup.string()
+    .required("O nome do produto é obrigatório.")
+    .min(3, "O nome deve ter pelo menos 3 caracteres."),
+  preco: Yup.number()
+    .required("O preço é obrigatório.")
+    .min(0.1, "O preço deve ser maior que zero."),
+  qnt_disponivel: Yup.number()
+    .required("A quantidade é obrigatória.")
+    .integer("A quantidade deve ser um número inteiro.")
+    .min(0, "A quantidade deve ser maior ou igual a zero."),
+  descricao: Yup.string()
+    .required("A descrição é obrigatória.")
+    .min(10, "A descrição deve ter pelo menos 10 caracteres."),
+  categoria: Yup.string()
+    .required("A categoria é obrigatória."),
+});
 
 
 function InfoProdutoEditarExcluir() {
@@ -100,12 +121,13 @@ function InfoProdutoEditarExcluir() {
       }
     });
   
-    if (formData.getAll("images").length === 0) {
-      console.error("Nenhuma imagem foi adicionada!");
-      return;
-    }
-  
     try {
+
+      if (formData.getAll("images").length === 0) {
+        console.error("Nenhuma imagem foi adicionada!");
+        throw new Error("Imagem sem adição. Imagem padrão será adicionada");
+      }
+    
       const response = await fetch("http://localhost:5000/upload", {
         method: "POST",
         body: formData,
@@ -114,7 +136,7 @@ function InfoProdutoEditarExcluir() {
       if (!response.ok) {
         const error = await response.json();
         console.error("Erro do servidor:", error.message || "Erro desconhecido");
-        return ["/images/prod.png"];
+        throw new Error("Erro ao adicionar imagens selecionadas. Imagem padrão será adicionada");
       }
   
       const data = await response.json();
@@ -122,6 +144,8 @@ function InfoProdutoEditarExcluir() {
       return data.paths.map((img) => img.url);
     } catch (error) {
       console.error("Erro ao fazer upload:", error);
+      toast.warning(error.message);
+
       return ["/images/prod.png"];
     }
   }
@@ -131,7 +155,13 @@ function InfoProdutoEditarExcluir() {
     e.preventDefault();
     // eslint-disable-next-line no-restricted-globals
     if(confirm("Alterar Permanentemente?")){
-      const paths = await processImage();
+      
+      let paths
+      if(imagens[0].file){
+        paths = await processImage(); //retornar a imagem padrão quando falha em processar
+      } else{
+        paths = produto.imagem
+      }
       
       const produtoData = {
         id,
@@ -142,8 +172,15 @@ function InfoProdutoEditarExcluir() {
         qnt_disponivel: parseInt(qnt),
         categoria,
       };
-  
-      // Enviar os dados do produto para a store
+
+      try{
+        await produtoValidationSchema.validate(produtoData, { abortEarly: false });
+      } catch(e){
+        e.inner.forEach((err) => {
+          toast.error(`${err.message}`);
+        });
+        return
+      }
       
       const prod = await dispatch(updateProduto(produtoData));
   
@@ -192,6 +229,10 @@ function InfoProdutoEditarExcluir() {
 
   return (
     <div className="bg-white shadow-md rounded-[20px] border-2 p-4 mb-6">
+
+      <Link to={`/produto/${id}`}>
+        <BotaoRetorno/> 
+      </Link> 
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -239,8 +280,8 @@ function InfoProdutoEditarExcluir() {
           ))}
         </select>
 
-        <span className="text-red-600 font-bold my-4">
-          Por segurança, as imagens não podem ser alteradas. Caso queira modificá-las, inicialize todas novamente
+        <span className="text-red-600 font-bold my-4 text-[0.7em] ml-3">
+          ⚡ Por segurança, as imagens não podem ser alteradas. Caso queira modificá-las, inicialize todas novamente
         </span>
 
         {/* Inputs para imagens */}

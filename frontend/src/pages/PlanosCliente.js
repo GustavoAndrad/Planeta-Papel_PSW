@@ -12,8 +12,10 @@ function PlanosCliente(){
     const planos = useSelector(planoSelectors.selectAll);
     const planoStatus = useSelector((state) => state.planos.status);
     const [openCardId, setOpenCardId] = useState(null);
+    
+    const id = localStorage.getItem('id');
 
-    const user = useSelector((state) => userSelectors.selectById(state, 1));
+    const user = useSelector((state) => userSelectors.selectById(state, id));
 
     function handleCardClick(id){
         setOpenCardId(openCardId === id ? null : id);
@@ -41,7 +43,7 @@ function PlanosCliente(){
 
             <div className="flex items-center gap-3 w-[300px]">
                 <h1 className="text-2xl font-semibold text-secondaryBlue">📦 Plano Atual: </h1>
-                <h1 className="text-2xl font-semibold">Nenhum</h1>
+                <h1 className="text-2xl font-semibold">{user.plano ? user.plano : 'Nenhum'}</h1>
             </div>
             
             {planos.map((item) => (
@@ -55,6 +57,7 @@ function PlanosCliente(){
                     desconto={item.desconto}
                     isOpen={openCardId === item.id}
                     onClick={handleCardClick}
+                    isSigned={user.plano === item.nome}
                 />
             ))}
         </>

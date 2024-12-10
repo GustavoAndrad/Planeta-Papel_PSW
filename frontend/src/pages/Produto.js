@@ -117,6 +117,18 @@ function Produto() {
             </div>
 
             <div className="flex gap-5">
+
+              {isGerente==='true'?  <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
+                <button
+                  type="button"
+                  title="Adicionar ao Carrinho"
+                  onClick={()=>{navigate(`/gerente/alterar-produto/${id}`)}}
+                  className="flex items-center justify-center py-2.5 px-5 text-sm text-white bg-secondaryBlue font-bold rounded-lg hover:bg-primaryBlue"
+                >
+                  🖋 Atualizar Dados
+                </button>
+              </div>
+              :
               <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
                 <button
                   type="button"
@@ -134,17 +146,8 @@ function Produto() {
                   🛒 Adicionar ao Carrinho
                 </button>
               </div>
-
-              {isGerente==='true' && <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
-                <button
-                  type="button"
-                  title="Adicionar ao Carrinho"
-                  onClick={()=>{navigate(`/gerente/alterar-produto/${id}`)}}
-                  className="flex items-center justify-center py-2.5 px-5 text-sm text-white bg-secondaryBlue font-bold rounded-lg hover:bg-primaryBlue"
-                >
-                  🖋 Atualizar Dados
-                </button>
-              </div>}
+              
+              }
             </div>
 
 

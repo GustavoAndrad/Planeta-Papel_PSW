@@ -70,7 +70,6 @@ export default function SideBarMenu(props){
                         <hr />
                             <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/gerente/criar-produto"> 📓 Criar Produto </Link> </ul>
                             <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/gerente/criar-plano"> 🌱 Criar Plano </Link> </ul>
-                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/carrinho"> 🛒 Carrinho </Link> </ul>
                             <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/gerente/planos"> 💸 Planos Mensais </Link> </ul>
                             <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/gerente/pedidos"> 📦 Pedidos </Link></ul>
                             <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/gerente/analisar"> ♻ Reciclagem</Link> </ul>
@@ -86,6 +85,7 @@ export default function SideBarMenu(props){
                       
                       <>
                         <hr />
+                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/dados-cliente"> 👤 Meu Perfil </Link></ul>
                             <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/carrinho"> 🛒 Carrinho </Link> </ul>
                             <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/cliente/planos"> 💸 Planos Mensais </Link> </ul>
                             <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/cliente/pedidos"> 📦 Pedidos </Link></ul>

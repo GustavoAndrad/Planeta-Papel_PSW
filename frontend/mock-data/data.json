@@ -2,16 +2,13 @@
   "produtos": [
     {
       "id": "1",
-      "nome": "Papel Sulfite A4 - 500 folhas",
-      "preco": 22.9,
-      "descricao": "Pacote com 500 folhas de papel sulfite A4, ideal para impressoras e copiadoras.",
+      "nome": "Folha A4",
+      "preco": 10,
+      "descricao": "Pacote com 5 folhas de papel sulfite A4",
       "imagem": [
-        "/images/prod.png",
-        "/images/prod.png",
-        "/images/prod.png",
-        "/images/arquivo.png"
+        "/images/prod.png"
       ],
-      "qnt_disponivel": 100,
+      "qnt_disponivel": 1,
       "categoria": "Papel"
     },
     {
@@ -31,7 +28,7 @@
     {
       "id": "3",
       "nome": "Papel Cartão - 25 folhas",
-      "preco": 18.9,
+      "preco": 1,
       "descricao": "Papel cartão resistente para uso em trabalhos manuais, scrapbooking e outros.",
       "imagem": [
         "/images/prod.png",
@@ -39,21 +36,7 @@
         "/images/prod.png",
         "/images/prod.png"
       ],
-      "qnt_disponivel": 60,
-      "categoria": "Papel"
-    },
-    {
-      "id": "4",
-      "nome": "Papel Reciclado A4 - 500 folhas",
-      "preco": 20.9,
-      "descricao": "Pacote com 500 folhas de papel reciclado A4, ideal para uso sustentável.",
-      "imagem": [
-        "/images/prod.png",
-        "/images/prod.png",
-        "/images/prod.png",
-        "/images/prod.png"
-      ],
-      "qnt_disponivel": 75,
+      "qnt_disponivel": 6,
       "categoria": "Papel"
     },
     {
@@ -558,14 +541,6 @@
       "categoria": "Papel"
     },
     {
-      "id": "2ae9",
-      "nome": "teste",
-      "preco": 1,
-      "descricao": "yt",
-      "qnt_disponivel": 4,
-      "categoria": "Cartolina"
-    },
-    {
       "id": "08dd",
       "nome": "teste",
       "preco": 8,
@@ -574,6 +549,17 @@
         "/images/prod.png"
       ],
       "qnt_disponivel": 9,
+      "categoria": "Papel"
+    },
+    {
+      "id": "d698",
+      "nome": "Produto",
+      "preco": 6,
+      "descricao": "jqwqwqwqwqwq",
+      "imagem": [
+        "/images/prod.png"
+      ],
+      "qnt_disponivel": 0,
       "categoria": "Papel"
     }
   ],
@@ -664,6 +650,36 @@
       "id": "acf6",
       "prodId": "2",
       "qtd": 1
+    },
+    {
+      "id": "c747",
+      "prodId": "1",
+      "qtd": 1
+    },
+    {
+      "id": "2498",
+      "prodId": "17",
+      "qtd": 1
+    },
+    {
+      "id": "bbed",
+      "prodId": "19",
+      "qtd": 1
+    },
+    {
+      "id": "3e62",
+      "prodId": "1",
+      "qtd": 1
+    },
+    {
+      "id": "4529",
+      "prodId": "4",
+      "qtd": 1
+    },
+    {
+      "id": "e50d",
+      "prodId": "3",
+      "qtd": 1
     }
   ],
   "users": [
@@ -678,7 +694,7 @@
       "complemento": "Apartamento 45",
       "cep": "01000-000",
       "isGerente": false,
-      "plano": null
+      "plano": "Post-it"
     },
     {
       "id": "2",
@@ -720,11 +736,11 @@
         }
       ],
       "modalidade": "Coleta Residencial",
-      "data": "08/12/2024",
+      "data": "xx/xx/xxxx",
       "analise": {
-        "data": "09/12/2024",
-        "status": false,
-        "motivoNegacao": "motivo motivo espaço\nmotivo"
+        "data": "xx/xx/xxxx",
+        "status": true,
+        "dataLimite": "xx/xx/xxxx"
       }
     },
     {
@@ -742,13 +758,8 @@
           "qtd": "30"
         }
       ],
-      "modalidade": "Coleta Residencial",
-      "data": "09/12/2024",
-      "analise": {
-        "data": "09/12/2024",
-        "status": true,
-        "dataLimite": "16/12/2024"
-      }
+      "modalidade": "endereco",
+      "data": "09/12/2024"
     }
   ],
   "pedidos": [

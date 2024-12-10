@@ -41,48 +41,33 @@ function SearchBar(props) {
     <>
       <form className="w-full max-w-[1200px] mx-auto">
         <div className="flex">
-          <button
-            id="dropdown-button"
-            data-dropdown-toggle="dropdown"
-            className="bg-secondaryBlue border-accentBlue flex-shrink-0 z-[5] inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
-            type="button"
-          >
-            <span className="text-white font-bold">Procurar em</span>
-            <svg
-              className="w-2.5 h-2.5 ms-2.5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 10 6"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="m1 1 4 4 4-4"
-              />
-            </svg>
-          </button>
 
-          <div id="dropdown" className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-            <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-button">
-              {props.categorias.map((categoria) => {
-                return (
-                  <li
-                    key={categoria}
-                    onClick={() => handleCategoryChange(categoria)}
-                  >
-                    <button
-                      type="button"
-                      className="inline-flex w-full px-4 py-2 hover:text-primaryBlue dark:hover:bg-gray-600 dark:hover:text-white"
-                    >
-                      {categoria}
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
+          <div className="relative inline-block">
+            <select
+              className="bg-secondaryBlue appearance-none text-white font-bold border-accentBlue flex-shrink-0 z-[5] inline-flex items-center py-2.5 px-4 text-sm text-center border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:border-gray-600"
+              onChange={(e) => handleCategoryChange(e.target.value)}
+            >
+              {props.categorias.map((categoria) => (
+                <option
+                  key={categoria}
+                  value={categoria}
+                  className="hover:text-primaryBlue dark:bg-gray-600 dark:text-gray-200"
+                >
+                  {"⚙ "+categoria}
+                </option>
+              ))}
+            </select>
+
+              <svg
+                className="absolute top-1/2 left-[87%] w-4 h-4 text-white transform -translate-y-1/2 pointer-events-none"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+              
           </div>
 
           <div className="relative w-full">

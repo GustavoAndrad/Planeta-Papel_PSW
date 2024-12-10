@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchSolicitacoes, solicSelectors } from "../redux/solicitacoesSlice";
+import { fetchSolicitacoes, selectSolicitacoesByCliente } from "../redux/solicitacoesSlice";
 import { Link } from "react-router-dom";
 
 import SectionName from "../components/PedidosGerente/TitleSection"
@@ -11,7 +11,7 @@ import BotaoAzul from "../components/BotaoAzul";
     *
     *    
     *
-    *       FILTRAR PARA APENAS AS SOLICITAÇÕES DO CLIENTE
+    *       BUSCAR CLIENTE 
     * 
     * 
     * 
@@ -19,8 +19,8 @@ import BotaoAzul from "../components/BotaoAzul";
 
 export default function SolicCliente(){
     const dispatch = useDispatch();
-
-    const solic = useSelector(solicSelectors.selectAll);
+    const cliente = "IDCLIENTE?"; //fixo     BUSCAR NO BACKEND
+    const solic = useSelector((state)=>selectSolicitacoesByCliente(state,cliente));
     const solicStatus = useSelector((state) => state.solicitacoes.status);
     const [openCardId, setOpenCardId] = useState(null);
 
@@ -46,7 +46,6 @@ export default function SolicCliente(){
     
     return(
         <>
-            <p>FILTRAR PARA APENAS AS SOLICITAÇÕES DO CLIENTE</p>
             <SectionName sectionName={"Ver Solicitacoes"} img={"/images/reciclagem.png"}></SectionName>
             <Link to="/cliente/solicitar">
                 <BotaoAzul type={"button"} text={"Nova Solicitação"}/>
