@@ -16,7 +16,7 @@ const CustomerForm = () => {
     complemento: '',
     cep: '',
     isGerente: false,
-    plano: "Nenhum"
+    plano: null
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);

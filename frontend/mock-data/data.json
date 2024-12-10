@@ -658,6 +658,19 @@
       "cpf": "000.000.000-00",
       "codigoSeguranca": "123456",
       "isGerente": true
+    },
+    {
+      "id": "0136",
+      "nome": "Erick Andrade",
+      "email": "erick@gmail.com",
+      "senha": "1234",
+      "telefone": "212121",
+      "bairro": "Xerem",
+      "endereco": "123",
+      "complemento": "123",
+      "cep": "123",
+      "isGerente": false,
+      "plano": "Post-it"
     }
   ],
   "solicitacoes": [
