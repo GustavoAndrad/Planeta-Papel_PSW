@@ -1,4 +1,6 @@
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { pedidoSelectors } from "../redux/pedidoSlice";
 import StrokeLine from "../components/Catalogo/StrokeLine";
 import BoxResumo from "../components/PedidoCliente/BoxResumo";
 import WhiteBox from "../components/PedidoCliente/WhiteBox";
@@ -6,26 +8,22 @@ import BotaoPedidos from "../components/PedidosGerente/BotaoPedidos";
 import TitleSection from "../components/PedidosGerente/TitleSection";
 
 function PedidoCliente() {
+    const { id } = useParams();
+    const pedido = useSelector((state) => pedidoSelectors.selectById(state, id));
 
-    const info = {prods: [{prodName: "PRODUTO 1", prodQt: 12, prodTotal: "123"},
-        {prodName: "PRODUTO 2", prodQt: 12, prodTotal: "123"},
-        {prodName: "PRODUTO 3", prodQt: 12, prodTotal: "123"}
-    ],
-    date: "12/12/1212",
-    met: "PIX",
-    tot: "123"};
+    if (!pedido) {
+        return <p>Pedido não encontrado.</p>;
+    }
 
-    //const { id } = useParams();
-    //const info = useSelector((state) => pedidoSelectors.selectById(state, id))
+    const total = pedido.prods.reduce((acc, prod) => acc + parseFloat(prod.prodTotal), 0);
 
-    return(
+    return (
         <>
             <TitleSection sectionName={"Informações do Pedido"} img={"/images/check.png"} />
             <StrokeLine />
-            <WhiteBox itemPedidos={info.prods}>
-            </WhiteBox>
-            <BoxResumo data={info.date} metodo={info.met} total={info.tot}></BoxResumo>
-            <BotaoPedidos isCancelar={false}></BotaoPedidos>
+            <WhiteBox itemPedidos={pedido.prods} />
+            <BoxResumo data={pedido.date} metodo={pedido.met} total={total} />
+            <BotaoPedidos isCancelar={false} />
         </>
     );
 }

@@ -664,36 +664,6 @@
       "id": "acf6",
       "prodId": "2",
       "qtd": 1
-    },
-    {
-      "id": "c747",
-      "prodId": "1",
-      "qtd": 1
-    },
-    {
-      "id": "2498",
-      "prodId": "17",
-      "qtd": 1
-    },
-    {
-      "id": "bbed",
-      "prodId": "19",
-      "qtd": 1
-    },
-    {
-      "id": "3e62",
-      "prodId": "1",
-      "qtd": 1
-    },
-    {
-      "id": "4529",
-      "prodId": "4",
-      "qtd": 1
-    },
-    {
-      "id": "e50d",
-      "prodId": "3",
-      "qtd": 1
     }
   ],
   "users": [
@@ -783,21 +753,30 @@
   ],
   "pedidos": [
     {
-      "id": "1",
+      "id": "2",
+      "userId": "1",
       "prods": [
         {
           "prodName": "AAA",
           "prodQt": "4",
           "prodTotal": "132"
-        },
+        }
+      ],
+      "date": "26/02/2023",
+      "met": "PIX"
+    },
+    {
+      "id": "3",
+      "userId": "2",
+      "prods": [
         {
           "prodName": "BBB",
-          "prodQt": "4",
-          "prodTotal": "132"
+          "prodQt": "2",
+          "prodTotal": "50"
         }
       ],
       "date": "24/02/2023",
-      "met": "PIX"
+      "met": "Cartão de Crédito"
     }
   ]
 }
