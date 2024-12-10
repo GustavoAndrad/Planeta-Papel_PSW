@@ -7,7 +7,7 @@ function AssinarPlano(){
 
     return(
         <>
-        <Link to="/gerente/planos">
+        <Link to="/cliente/planos">
             <BotaoRetorno/>
         </Link>
         <TitleSection sectionName={"Assinar Plano Mensal"} img={"/images/assinatura.png"}></TitleSection>
