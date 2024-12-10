@@ -19,7 +19,7 @@ import BotaoAzul from "../components/BotaoAzul";
 
 export default function SolicCliente(){
     const dispatch = useDispatch();
-    const cliente = "IDCLIENTE?"; //fixo     BUSCAR NO BACKEND
+    const cliente = localStorage.getItem("id");
     const solic = useSelector((state)=>selectSolicitacoesByCliente(state,cliente));
     const solicStatus = useSelector((state) => state.solicitacoes.status);
     const [openCardId, setOpenCardId] = useState(null);

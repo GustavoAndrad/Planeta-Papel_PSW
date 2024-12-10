@@ -69,7 +69,7 @@ export default function SolicReciclagem(){
         const outrosValidados = ultimoItem.nome !== "" ? outros : outros.slice(0, outros.length - 1);
 
         const newSolicitacao = {  
-            cliente: "IDCLIENTE?",
+            cliente: localStorage.getItem("id"),
             items: items.filter((_, index) => isCheck[index]),
             outros: outrosValidados.map(item => ({ nome: item.nome, qtd: item.qtd })),
             modalidade: isCheckMod,
