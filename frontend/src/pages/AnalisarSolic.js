@@ -46,7 +46,7 @@ export default function AnalisarSolic(){
         
         <div className="px-4 pb-4">
             <Box info={solic} type={1}/>
-            <BoxResultado solicitacaoId={id}/>
+            {solic.analise ? <Box info={solic} type={2}/> : <BoxResultado solicitacaoId={id}/>}
         </div>
     </>)
 }

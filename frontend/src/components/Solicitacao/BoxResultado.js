@@ -35,7 +35,7 @@ export default function BoxResultado({ solicitacaoId }) {
 
         // Atualiza a solicitação no Redux com o novo atributo 'analise'
         dispatch(updateSolicitacao({ id: solicitacaoId, analise }));
-        //navigate('gerente/solicitacoes')
+        //navigate('gerente/solicitacoes');
     }
 
     // Função para reprovar a solicitação
@@ -53,7 +53,7 @@ export default function BoxResultado({ solicitacaoId }) {
 
         // Atualiza a solicitação no Redux com o novo atributo 'analise'
         dispatch(updateSolicitacao({ id: solicitacaoId, analise }));
-        //navigate('gerente/solicitacoes')
+        //navigate('gerente/solicitacoes');
     }
 
     return (<>
