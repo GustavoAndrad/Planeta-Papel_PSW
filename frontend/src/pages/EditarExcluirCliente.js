@@ -4,15 +4,17 @@ import { fetchUsers, updateUser, deleteUser, userSelectors } from '../redux/usua
 import ClientDataView from '../components/EditarExcluirCliente/ClientDataView';
 import EditForm from '../components/EditarExcluirCliente/EditForm';
 import DeleteAccountButton from '../components/EditarExcluirCliente/DeleteAccountButton';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import userValidationSchema from '../YupSchema/userSchema';
+import { toast } from "react-toastify";
 
-function DadosCliente({ /*userId*/ }) {
+
+function DadosCliente() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   
   //const {id} = useParams();
   //userId = id;
-
   const userId = localStorage.getItem("id");
   
   const clientData = useSelector((state) => userSelectors.selectById(state, userId));
@@ -45,7 +47,17 @@ function DadosCliente({ /*userId*/ }) {
     setIsEditing(true);
   };
 
-  const handleSaveClick = (updatedData) => {
+  const handleSaveClick = async (updatedData) => {
+    
+    try{
+      await userValidationSchema.validate(updatedData, { abortEarly: false });
+    } catch(e){
+      e.inner.forEach((err) => {
+        toast.error(`${err.message}`);
+      });
+      return
+    }
+
     dispatch(updateUser({ ...clientData, ...updatedData }))
       .unwrap()
       .then(() => {

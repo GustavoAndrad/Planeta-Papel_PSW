@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchPlanos, createPlano, planoSelectors } from "../../redux/planoSlice"
 import { useState, useEffect } from "react";
 import BotaoAzul from "../BotaoAzul";
+import planoValidationSchema from "../../YupSchema/planoSchema";
+import { toast } from 'react-toastify';
 
 function InfoPlanoCriar(){
     const dispatch = useDispatch();
@@ -64,7 +66,7 @@ function InfoPlanoCriar(){
             setBeneficios([...beneficios,""])
     }
 
-    function handleSubmit(e){
+    const handleSubmit = async (e) => {
         e.preventDefault();
         
         const ultimoItem = beneficios[beneficios.length - 1];
@@ -77,6 +79,16 @@ function InfoPlanoCriar(){
             desconto,
             beneficios: ultimoItem!==""? beneficios: beneficios.slice(0, beneficios.length - 1),
         };
+
+        try{
+            await planoValidationSchema.validate(newPlano, { abortEarly: false });
+          } catch(e){
+            e.inner.forEach((err) => {
+              toast.error(`${err.message}`);
+            });
+            return
+          }
+
         dispatch(createPlano(newPlano));
     
         navigate('/gerente/planos');

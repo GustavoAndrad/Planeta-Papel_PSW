@@ -10,7 +10,7 @@ function PedidosCliente() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [userId, setUserId] = useState(() => localStorage.getItem("id"));
+    const [userId] = useState(() => localStorage.getItem("id"));
     const pedidos = useSelector(pedidoSelectors.selectAll);
     const status = useSelector((state) => state.pedidos.status);
 

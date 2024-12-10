@@ -2,6 +2,8 @@ import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import { createSolicitacao } from "../redux/solicitacoesSlice"
 import { useDispatch } from "react-redux";
+import solicValidationSchema from "../YupSchema/solicSchema";
+import { toast } from "react-toastify";
 
 import Caixa from "../components/Solicitacao/SolicRecic/Caixa";
 import CaixaMod from "../components/Solicitacao/SolicRecic/CaixaMod";
@@ -17,10 +19,6 @@ const startItems = [
 const startOutros = [
     {nome: "", qtd:""}
 ]
-
-function formatSectionName(name){
-    return name.padEnd(34, '.');
-}
 
 export default function SolicReciclagem(){
     const dispatch = useDispatch();
@@ -43,27 +41,8 @@ export default function SolicReciclagem(){
         setIsCheckMod(isCheckMod === value ? null : value);
     };
 
-    function handleSubmit(e){
+    const handleSubmit = async (e)=>{
         e.preventDefault();
-
-        if (!isCheckMod) {
-            alert("Por favor, selecione uma modalidade de coleta.");
-            return; // Não envia a solicitação se a modalidade não estiver selecionada
-        }
-        
-        const invalidItems = items.filter(item => {
-            return isCheck[items.indexOf(item)] && (!item.qtd || item.qtd.trim() === "");
-        });
-        if (invalidItems.length > 0) {
-            alert("Por favor, preencha a quantidade de todos os itens selecionados.");
-            return; // Não envia a solicitação se algum item não estiver preenchido corretamente
-        }
-
-        const invalidOutros = outros.filter(item => !item.nome.trim() || !item.qtd.trim());
-        if (invalidOutros.length > 0) {
-            alert("Por favor, preencha o nome e a quantidade de todos os itens 'Outros'.");
-            return; // Não envia a solicitação se algum item 'Outro' não estiver preenchido corretamente
-        }
 
         const ultimoItem = outros[outros.length - 1];        
         const outrosValidados = ultimoItem.nome !== "" ? outros : outros.slice(0, outros.length - 1);
@@ -75,10 +54,18 @@ export default function SolicReciclagem(){
             modalidade: isCheckMod,
             data: new Date().toLocaleDateString("pt-BR"),  
         };
-    
+
+        try{
+            await solicValidationSchema.validate(newSolicitacao, { abortEarly: false });
+          } catch(e){
+            e.inner.forEach((err) => {
+              toast.error(`${err.message}`);
+            });
+            return
+          }
         dispatch(createSolicitacao(newSolicitacao));
     
-        navigate('/cliente/solicitacoes/');
+        navigate('/cliente/solicitacoes');
     };
 
     return(

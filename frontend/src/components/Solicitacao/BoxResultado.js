@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateSolicitacao } from '../../redux/solicitacoesSlice';
 import { useNavigate } from 'react-router-dom';
+import { toast } from "react-toastify";
+
 import BotaoAzul from "../BotaoAzul";
 import BotaoVermelho from "../BotaoVermelho";
 
@@ -16,7 +18,7 @@ export default function BoxResultado({ solicitacaoId }) {
     function handleAprovar() {
         const dataLimite = document.getElementById('data-coleta').value;
         if (!dataLimite) {
-            alert("Por favor, informe a data limite.");
+            toast.error("Por favor, informe a data limite.");
             return;
         }
         const dataLimiteFormatada = new Date(dataLimite + "T00:00:00").toLocaleDateString('pt-BR');
@@ -29,14 +31,14 @@ export default function BoxResultado({ solicitacaoId }) {
 
         // Atualiza a solicitação no Redux com o novo atributo 'analise'
         dispatch(updateSolicitacao({ id: solicitacaoId, analise }));
-        navigate('gerente/solicitacoes')
+        navigate('/gerente/solicitacoes')
     }
 
     // Função para reprovar a solicitação
     function handleReprovar() {
         const motivo = document.getElementById('motivo').value;
         if (!motivo) {
-            alert("Por favor, informe o motivo da negação.");
+            toast.error("Por favor, informe o motivo da negação.");
             return;
         }
         const analise = {
@@ -47,7 +49,7 @@ export default function BoxResultado({ solicitacaoId }) {
 
         // Atualiza a solicitação no Redux com o novo atributo 'analise'
         dispatch(updateSolicitacao({ id: solicitacaoId, analise }));
-        navigate('gerente/solicitacoes')
+        navigate('/gerente/solicitacoes')
     }
 
     return (<>

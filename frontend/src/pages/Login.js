@@ -1,23 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers, userSelectors } from "../redux/usuarioSlice";
 import LoginCliente from "../components/Login/LoginCliente";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import LoginGerente from "../components/Login/LoginGerente";
 import { useNavigate } from "react-router-dom";
-import * as Yup from 'yup';
+import { loginRestrictValidationSchema, loginValidationSchema } from "../YupSchema/loginSchema";
 import { toast } from 'react-toastify';
 
-// Validação com Yup
-const loginValidationSchema = Yup.object({
-  email: Yup.string().email("Email inválido").required("Email é obrigatório"),
-  password: Yup.string().min(4, "A senha deve ter pelo menos 4 caracteres").required("Senha é obrigatória"),
-});
-
-const loginRestrictValidationSchema = Yup.object({
-  cpf: Yup.string().min(14, "Formato de CPF inválido").required("CPF é obrigatório"),
-  securityCode: Yup.string().min(6, "Formato de código inválido").required("Código é obrigatório")
-});
-
+ 
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -34,9 +24,9 @@ function Login() {
   const [gerentesIds, setGerentesIds] = useState([]);
 
   // Função para pegar IDs dos gerentes
-  const getGerentes = () => {
+  const getGerentes = useCallback(() => {
     return usuarios.filter(usuario => usuario.isGerente).map(usuario => usuario.id);
-  };
+  },[usuarios]); 
 
   // Disparando a busca de usuários quando o componente é montado
   useEffect(() => {
@@ -46,7 +36,7 @@ function Login() {
   // Atualizando os IDs dos clientes e gerentes quando os usuários mudam
   useEffect(() => {
     setGerentesIds(getGerentes());
-  }, [usuarios]);
+  }, [getGerentes]);
 
   // Função para buscar usuário por email
   const usuarioByEmail = (email) => {

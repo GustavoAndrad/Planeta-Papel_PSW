@@ -4,6 +4,8 @@ import { fetchPlanos, updatePlano, deletePlano, planoSelectors } from "../../red
 import { useState, useEffect } from "react";
 import BotaoVermelho from "../BotaoVermelho";
 import BotaoAzul from "../BotaoAzul";
+import planoValidationSchema from "../../YupSchema/planoSchema";
+import { toast } from 'react-toastify';
 
 function InfoPlanoEditar(){
     const {id} = useParams();
@@ -73,7 +75,7 @@ function InfoPlanoEditar(){
             setBeneficios([...beneficios,""])
     }
 
-    function handleSubmit(e){
+    const handleSubmit = async (e) => {
         e.preventDefault();
         
         const ultimoItem = beneficios[beneficios.length - 1];
@@ -86,7 +88,16 @@ function InfoPlanoEditar(){
             desconto,
             beneficios: ultimoItem!==""? beneficios: beneficios.slice(0, beneficios.length - 1),
         };
-        
+
+        try{
+            await planoValidationSchema.validate(updatedPlano, { abortEarly: false });
+          } catch(e){
+            e.inner.forEach((err) => {
+              toast.error(`${err.message}`);
+            });
+            return
+          }
+
         dispatch(updatePlano(updatedPlano));
     
         navigate('/gerente/planos');

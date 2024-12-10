@@ -8,10 +8,6 @@ import BoxResultado from '../components/Solicitacao/BoxResultado';
 import TitleSection from '../components/PedidosGerente/TitleSection';
 import BotaoRetorno from '../components/BotaoRetorno';
 
-function formatSectionName(name){
-    return name.padEnd(34, '.');
-}
-
 
 export default function AnalisarSolic(){
     const {id} = useParams();
@@ -42,7 +38,7 @@ export default function AnalisarSolic(){
         <Link to="/gerente/solicitacoes">
             <BotaoRetorno/>
         </Link>
-        <TitleSection sectionName={formatSectionName("Analisar Solicitação")} img="/images/reciclagem.png"/>
+        <TitleSection sectionName={"Analisar Solicitação"} img="/images/reciclagem.png"/>
         
         <div className="px-4 pb-4">
             <Box info={solic} type={1}/>

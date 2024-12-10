@@ -6,9 +6,6 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { fetchSolicitacoes, solicSelectors} from "../redux/solicitacoesSlice"
 
-function formatSectionName(name){
-    return name.padEnd(34, '.');
-}
 
 export default function AcompSolic(){
     const {id} = useParams();
@@ -39,7 +36,7 @@ export default function AcompSolic(){
         <Link to="/cliente/solicitacoes">
             <BotaoRetorno/>
         </Link>
-        <TitleSection sectionName={formatSectionName("Acompanhar Solicitação")} img="/images/reciclagem.png"></TitleSection>
+        <TitleSection sectionName={"Acompanhar Solicitação"} img="/images/reciclagem.png"></TitleSection>
         
         <div className="px-4 pb-4">
             <Box info={solic} type={1}></Box>

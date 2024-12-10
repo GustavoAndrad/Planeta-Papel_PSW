@@ -4,6 +4,9 @@ import { useDispatch } from 'react-redux';
 import { createUser } from '../../redux/usuarioSlice';
 import InputField from '../InputField';
 import BotaoAzul from '../BotaoAzul';
+import userValidationSchema from '../../YupSchema/userSchema';
+import { toast } from "react-toastify";
+
 
 const CustomerForm = () => {
   const [formData, setFormData] = useState({
@@ -32,12 +35,13 @@ const CustomerForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { nome, email, telefone, bairro, endereco, cep, senha } = formData;
-
-    // Verifica se todos os campos obrigatórios estão preenchidos
-    if (!nome || !email || !telefone || !bairro || !endereco || !cep || !senha) {
-      setError('Por favor, preencha todos os campos obrigatórios!');
-      return;
+    try{
+      await userValidationSchema.validate(formData, { abortEarly: false });
+    } catch(e){
+      e.inner.forEach((err) => {
+        toast.error(`${err.message}`);
+      });
+      return
     }
 
     setError('');

@@ -9,10 +9,6 @@ import BotaoAzul from "../components/BotaoAzul";
 import BotaoBranco from "../components/BotaoBranco";
 
 
-function formatSectionName(name){
-    return name.padEnd(34, '.');
-}
-
 function Carrinho(){
     const dispatch = useDispatch();
 
