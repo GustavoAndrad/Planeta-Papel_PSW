@@ -149,7 +149,6 @@ function InfoProdutoCriar() {
       categoria,
     };
 
-    console.log(produtoData.imagem)
 
     try{
       await produtoValidationSchema.validate(produtoData, { abortEarly: false });

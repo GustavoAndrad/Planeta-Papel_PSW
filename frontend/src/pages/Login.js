@@ -4,83 +4,116 @@ import LoginCliente from "../components/Login/LoginCliente";
 import { useState, useEffect } from "react";
 import LoginGerente from "../components/Login/LoginGerente";
 import { useNavigate } from "react-router-dom";
+import * as Yup from 'yup';
+import { toast } from 'react-toastify';
+
+// Validação com Yup
+const loginValidationSchema = Yup.object({
+  email: Yup.string().email("Email inválido").required("Email é obrigatório"),
+  password: Yup.string().min(4, "A senha deve ter pelo menos 4 caracteres").required("Senha é obrigatória"),
+});
+
+const loginRestrictValidationSchema = Yup.object({
+  cpf: Yup.string().min(14, "Formato de CPF inválido").required("CPF é obrigatório"),
+  securityCode: Yup.string().min(6, "Formato de código inválido").required("Código é obrigatório")
+});
 
 function Login() {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-  
-    const [isGerente, setIsGerente] = useState(false);
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [cpf, setCpf] = useState("");
-    const [securityCode, setSecurityCode] = useState("");
-    const [usuario, setUsuario] = useState({});
-  
-    // Pegando todos os usuários da store com o useSelector
-    const usuarios = useSelector((state) => userSelectors.selectAll(state));
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  const [isGerente, setIsGerente] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [securityCode, setSecurityCode] = useState("");
+  const [usuario, setUsuario] = useState({});
   
-    // Estado para armazenar IDs dos gerentes
-    const [gerentesIds, setGerentesIds] = useState([]);
-  
-    // Função para pegar IDs dos gerentes
-    const getGerentes = () => {
-      return usuarios.filter(usuario => usuario.isGerente).map(usuario => usuario.id);
-    };
-  
-    // Disparando a busca de usuários quando o componente é montado
-    useEffect(() => {
-      dispatch(fetchUsers());
-    }, [dispatch]);
-  
-    // Atualizando os IDs dos clientes e gerentes quando os usuários mudam
-    useEffect(() => {
-      setGerentesIds(getGerentes());
-    }, [usuarios]);
-  
-    // Função para buscar usuário por email
-    const usuarioByEmail = (email) => {
-      return usuarios.find((usuario) => usuario.email === email);
-    };
 
-    const createSession = ()=>{
-        localStorage.setItem("id", usuario.id);
-        localStorage.setItem("gerente", usuario.isGerente);
-    }
-  
-    const handleLogin = (e) => {
-      e.preventDefault();
-      console.log("Verificando Login...");
-  
-      setUsuario(usuarioByEmail(email));
+  const usuarios = useSelector((state) => userSelectors.selectAll(state));
+  const [gerentesIds, setGerentesIds] = useState([]);
+
+  // Função para pegar IDs dos gerentes
+  const getGerentes = () => {
+    return usuarios.filter(usuario => usuario.isGerente).map(usuario => usuario.id);
+  };
+
+  // Disparando a busca de usuários quando o componente é montado
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, [dispatch]);
+
+  // Atualizando os IDs dos clientes e gerentes quando os usuários mudam
+  useEffect(() => {
+    setGerentesIds(getGerentes());
+  }, [usuarios]);
+
+  // Função para buscar usuário por email
+  const usuarioByEmail = (email) => {
+    return usuarios.find((usuario) => usuario.email === email);
+  };
+
+  const handleEmailChange = (email)=>{
+    setEmail(email);
+    const user = usuarioByEmail(email);
+    setUsuario(user)
+  }
+
+  const createSession = () => {
+    localStorage.setItem("id", usuario.id);
+    localStorage.setItem("gerente", usuario.isGerente);
+    toast.success("Sessão iniciada!")
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      // Validação com Yup
+      await loginValidationSchema.validate({ email, password}, { abortEarly: false });
 
       if (usuario && usuario.senha === password) {
         if (gerentesIds.includes(usuario.id)) {
           setIsGerente(true);
         } else {
-          createSession()
+          createSession();
           navigate("/"); // Navegação para a página principal dos clientes
           // eslint-disable-next-line no-restricted-globals
           location.reload();
         }
       } else {
-        console.log("Usuário ou senha inválidos");
-        // Lógica de erro de autenticação, por exemplo, exibir mensagem de erro
+        toast.error("Usuário ou senha inválidos");
       }
-    };
+    } catch (e) {
+      e.inner.forEach((err) => {
+        toast.error(`${err.message}`);
+      });
+    }
+  };
 
-  const handleLoginRestrito = (e) => {
+  const handleLoginRestrito = async (e) => {
     e.preventDefault();
-     console.log("Validando chaves de acesso...");
-     if(usuario.codigoSeguranca === securityCode && usuario.cpf === cpf ){
-          createSession();
-          navigate("/");
-          // eslint-disable-next-line no-restricted-globals
-          location.reload();
-     } else{
-        console.log(usuario)
-     }
-  }
+
+    try {
+      // Validação com Yup para gerentes
+      await loginValidationSchema.validate({ email, password}, { abortEarly: false });
+
+      await loginRestrictValidationSchema.validate({cpf, securityCode}, { abortEarly: false });
+
+      if (usuario.codigoSeguranca === securityCode && usuario.cpf === cpf) {
+        createSession();
+        navigate("/");
+        // eslint-disable-next-line no-restricted-globals
+        location.reload();
+      } else {
+        toast.error("Código de segurança ou CPF incorretos");
+      }
+    } catch (e) {
+      e.inner.forEach((err) => {
+        toast.error(`${err.message}`);
+      });
+    }
+  };
 
   return (
     <section className="dark:bg-gray-900 h-auto">
@@ -100,7 +133,7 @@ function Login() {
               handleLogin={handleLogin}
               email={email}
               password={password}
-              setEmail={setEmail}
+              setEmail={handleEmailChange}
               setPassword={setPassword}
             />
           )}
