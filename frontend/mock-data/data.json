@@ -755,11 +755,11 @@
         }
       ],
       "modalidade": "Coleta Residencial",
-      "data": "xx/xx/xxxx",
+      "data": "08/12/2024",
       "analise": {
-        "data": "xx/xx/xxxx",
-        "status": true,
-        "dataLimite": "xx/xx/xxxx"
+        "data": "09/12/2024",
+        "status": false,
+        "motivoNegacao": "motivo motivo espaço\nmotivo"
       }
     },
     {
@@ -777,8 +777,13 @@
           "qtd": "30"
         }
       ],
-      "modalidade": "endereco",
-      "data": "09/12/2024"
+      "modalidade": "Coleta Residencial",
+      "data": "09/12/2024",
+      "analise": {
+        "data": "09/12/2024",
+        "status": true,
+        "dataLimite": "16/12/2024"
+      }
     }
   ],
   "pedidos": [

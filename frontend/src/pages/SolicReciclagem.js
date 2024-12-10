@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import { createSolicitacao } from "../redux/solicitacoesSlice"
 import { useDispatch } from "react-redux";
@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import Caixa from "../components/Solicitacao/SolicRecic/Caixa";
 import CaixaMod from "../components/Solicitacao/SolicRecic/CaixaMod";
 import BotaoAzul from "../components/BotaoAzul";
+import BotaoRetorno from "../components/BotaoRetorno";
 
 
 const startItems = [
@@ -82,6 +83,9 @@ export default function SolicReciclagem(){
 
     return(
         <>
+            <Link to="/cliente/solicitacoes">
+                <BotaoRetorno/>
+            </Link>
             <div className="flex items-center mb-6 gap-3">
                 <img src="/images/reciclagem.png" alt="" className="size-8"/>
                 <span>

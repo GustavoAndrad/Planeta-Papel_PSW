@@ -4,7 +4,7 @@ function CardPlano({id, name, preco, duracao, desconto, beneficios, isOpen, onCl
     if(isOpen){
         return(
         <div onClick={()=>onClick(id)} className="cursor-pointer w-full pb-10 min-w-[300px] mt-5 flex flex-col bg-white rounded-3xl border-2 border-accentBlue">
-            <div className="w-full min-w-[200px] h-20 flex justify-between px-6 items-center border-b-red-400 border-b-2">
+            <div className="w-full min-w-[200px] h-[100px] flex justify-between px-6 items-center border-b-red-400 border-b-2">
                 <h1 className="text-xl font-bold text-primaryBlue">Plano {name}</h1>
                 <img className="size-7 cursor-pointer" src="/images/seta_baixo.png" alt=""/>
             </div>
@@ -53,7 +53,7 @@ function CardPlano({id, name, preco, duracao, desconto, beneficios, isOpen, onCl
     return(
     <>
         <div onClick={()=>onClick(id)} className="w-full h-[100px] min-w-[300px] mt-5 flex flex-col bg-white rounded-3xl border-2 border-accentBlue">
-            <div className="w-full min-w-[200px] h-full flex justify-between px-6 items-center">
+            <div className="w-full min-w-[200px] h-[100px] flex justify-between px-6 items-center">
                 <h1 className="text-xl font-bold text-primaryBlue">Plano {name}</h1>
                 <img className="size-7 cursor-pointer" src="/images/seta_baixo.png" alt=""/>
             </div>

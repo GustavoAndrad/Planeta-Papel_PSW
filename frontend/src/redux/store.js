@@ -1,19 +1,20 @@
-import { configureStore } from '@reduxjs/toolkit'
-import planoReducer from './planoSlice'
-import produtosSlice from './produtoSlice'
-import carrinhoReducer from './carrinhoSlice'
-import usuarioSlice from "./usuarioSlice"
-import solicitacoesSlice from './solicitacoesSlice'
-
+import { configureStore } from '@reduxjs/toolkit';
+import planoSlice from './planoSlice';
+import produtosSlice from './produtoSlice';
+import carrinhoSlice from './carrinhoSlice';
+import usuarioSlice from "./usuarioSlice";
+import solicitacoesSlice from './solicitacoesSlice';
+import pedidoSlice from './pedidoSlice';
 
 const store = configureStore({
-    reducer:{
-        planos: planoReducer,
+    reducer: {
+        planos: planoSlice,
         produtos: produtosSlice,
-        carrinho: carrinhoReducer,
+        carrinho: carrinhoSlice,
         users: usuarioSlice,
         solicitacoes: solicitacoesSlice,
+        pedidos: pedidoSlice,
     },
-})
+});
 
-export default store
+export default store;

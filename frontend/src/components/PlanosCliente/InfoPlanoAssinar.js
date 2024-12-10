@@ -4,6 +4,7 @@ import { fetchPlanos, planoSelectors } from "../../redux/planoSlice";
 import { useState, useEffect } from "react";
 import BotaoAzul from "../BotaoAzul";
 import { selectUserById, updateUser, userSelectors } from "../../redux/usuarioSlice";
+import BotaoVermelho from "../BotaoVermelho";
 
 function InfoPlanoAssinar() {
     const { id } = useParams();
@@ -12,9 +13,9 @@ function InfoPlanoAssinar() {
 
     const plano = useSelector(state => planoSelectors.selectById(state, id));
     const planoStatus = useSelector((state) => state.planos.status);
-    
-    // Pega apenas o usuário de id 1 para fins de teste
-    const user = useSelector(state => userSelectors.selectById(state, 1));
+
+    const idUser = localStorage.getItem('id');
+    const user = useSelector(state => userSelectors.selectById(state, idUser));
 
     // Carregar os planos ao montar o componente, se necessário
     useEffect(() => {
@@ -52,13 +53,25 @@ function InfoPlanoAssinar() {
         dispatch(updateUser(updatedUser))
             .then(() => {
                 // Ação concluída, redireciona para outra página ou força atualização do estado
-                navigate('/cliente/planos');
+                navigate('/pagamento');
             })
             .catch((error) => {
                 console.error('Erro ao atualizar usuário:', error);
                 alert('Erro ao atualizar usuário. Por favor, tente novamente.'); // Exibe mensagem de erro ao usuário
             });
     };
+
+    function handleCancelPlan(){
+        
+        let updatedUser = {
+            ...user,
+            plano: null
+        }
+        
+        dispatch(updateUser(updatedUser)).then(() => {
+            navigate('/cliente/planos');
+        })
+    }
 
     // Lidar com estados de carregamento ou erro
     if (planoStatus === "pending") {
@@ -74,6 +87,7 @@ function InfoPlanoAssinar() {
     }
 
     return (
+        <>
         <div className="bg-white shadow-md rounded-[20px] border-2 p-4 mb-6">
             <form onSubmit={handleSubmit}>
                 <h1 className="border border-accentBlue p-2 rounded-[20px] w-full mb-4 pl-4">{nome}</h1>
@@ -86,10 +100,20 @@ function InfoPlanoAssinar() {
                         <h1 className="border border-accentBlue p-2 w-fit pl-4">{item}</h1>
                     </div>
                 ))}
-
-                <BotaoAzul onClick={handleSubmit} type={"submit"} text={"Confirmar Assinatura"}></BotaoAzul>
+                {nome === user.plano ? 
+                (<BotaoVermelho onClick={handleCancelPlan} type={"submit"} text={"Cancelar Assinatura"}></BotaoVermelho>):
+                (<BotaoAzul onClick={handleSubmit} type={"submit"} text={"Confirmar Assinatura"}></BotaoAzul>)}
+                
             </form>
         </div>
+        {user.plano && (user.plano != nome) ? (
+            <div className="bg-red-400 shadow-md rounded-[20px] border-2 p-4 mb-6">
+                <p className="text-xl font-semibold text-white">Atenção, assinar esse plano implica em cancelar a assinatura no plano atual!</p>
+            </div>
+        ) : (
+            <></>
+        )}
+        </>
     );
 }
 

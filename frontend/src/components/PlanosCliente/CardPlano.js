@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function CardPlano({id, name, preco, duracao, desconto, beneficios, isOpen, onClick}){
+function CardPlano({id, name, preco, duracao, desconto, beneficios, isOpen, onClick, isSigned}){
     if(isOpen){
         return(
         <div onClick={()=>onClick(id)} className="cursor-pointer w-full pb-10 min-w-[300px] mt-5 flex flex-col bg-white rounded-3xl border-2 border-accentBlue">
@@ -43,8 +43,13 @@ function CardPlano({id, name, preco, duracao, desconto, beneficios, isOpen, onCl
 
             <div className="w-full h-70 mt-10 flex justify-center items-center">
                 <Link to={`/cliente/plano/${id}`}>   
-                    <button type="button" className="min-w-[250px] hover:bg-secondaryBlue w-3/4 bg-primaryBlue text-white focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-full text-2xl px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                    {isSigned ? (
+                        <button type="button" className="min-w-[250px] hover:bg-secondaryBlue w-3/4 bg-primaryBlue text-white focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-full text-2xl px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                        Ver plano</button>
+                    ) : (
+                        <button type="button" className="min-w-[250px] hover:bg-secondaryBlue w-3/4 bg-primaryBlue text-white focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-full text-2xl px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                         Assinar plano</button>
+                    )}
                 </Link>
             </div>
         </div>
