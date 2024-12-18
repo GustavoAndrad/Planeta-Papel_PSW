@@ -38,6 +38,7 @@ const CustomerForm = () => {
       case "cep":
         value = mascaraCEP(value);
         break;
+      default:
     }
 
     const updatedData = {

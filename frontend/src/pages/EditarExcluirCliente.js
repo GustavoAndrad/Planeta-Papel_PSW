@@ -88,6 +88,7 @@ function DadosCliente() {
       case "cep":
         value = mascaraCEP(value);
         break;
+      default:
     }
 
     const updatedData = {
