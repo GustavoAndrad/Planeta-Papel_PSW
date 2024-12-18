@@ -47,6 +47,7 @@ export default function EditForm({
         placeholder="Telefone"
         value={telefone}
         onChange={onChange}
+        maxLength={15}
       />
       <InputField
         type="text"
@@ -75,6 +76,7 @@ export default function EditForm({
         placeholder="CEP"
         value={cep}
         onChange={onChange}
+        maxLength={9}
       />
       <BotaoAzul text="Salvar" onClick={handleSave} type="button" />
     </form>

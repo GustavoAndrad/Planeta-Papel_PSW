@@ -6,6 +6,7 @@ import InputField from '../InputField';
 import BotaoAzul from '../BotaoAzul';
 import userValidationSchema from '../../YupSchema/userSchema';
 import { toast } from "react-toastify";
+import { mascaraCEP, mascaraTelefone } from '../../Mascaras';
 
 
 const CustomerForm = () => {
@@ -28,8 +29,23 @@ const CustomerForm = () => {
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    let { name, value } = e.target;
+
+    switch(name){
+      case "telefone":
+        value = mascaraTelefone(value); 
+        break; 
+      case "cep":
+        value = mascaraCEP(value);
+        break;
+    }
+
+    const updatedData = {
+      ...formData,
+      [name]: value
+    };
+
+    setFormData(updatedData);
   };
 
   const handleSubmit = async (e) => {
@@ -83,6 +99,7 @@ const CustomerForm = () => {
           placeholder="Telefone"
           value={formData.telefone}
           onChange={handleChange}
+          maxLength={15}
         />
         <InputField
           type="text"
@@ -111,6 +128,7 @@ const CustomerForm = () => {
           placeholder="CEP"
           value={formData.cep}
           onChange={handleChange}
+          maxLength={9}
         />
         <InputField
           type="password"

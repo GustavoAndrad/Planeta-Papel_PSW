@@ -7,6 +7,7 @@ import DeleteAccountButton from '../components/EditarExcluirCliente/DeleteAccoun
 import { useNavigate } from 'react-router-dom';
 import userValidationSchema from '../YupSchema/userSchema';
 import { toast } from "react-toastify";
+import { mascaraCEP, mascaraTelefone } from '../Mascaras';
 
 
 function DadosCliente() {
@@ -78,7 +79,16 @@ function DadosCliente() {
   };
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    let { name, value } = e.target;
+
+    switch(name){
+      case "telefone":
+        value = mascaraTelefone(value); 
+        break; 
+      case "cep":
+        value = mascaraCEP(value);
+        break;
+    }
 
     const updatedData = {
       ...formData,

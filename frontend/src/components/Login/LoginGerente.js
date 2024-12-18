@@ -1,5 +1,12 @@
+import { mascaraCPF } from "../../Mascaras";
 
 function LoginGerente(props) {
+
+  const handleCPFchange = (e) => {
+    let value = e.target.value;
+    value = mascaraCPF(value);
+    props.setCpf(value);
+  }
 
   return (
     <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -19,14 +26,14 @@ function LoginGerente(props) {
           htmlFor="cpf"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
-          CPF (com pontos)
+          CPF
         </label>
         <input
           type="text"
           name="cpf"
           id="cpf"
           value={props.cpf}
-          onChange={(e) => props.setCpf(e.target.value)}
+          onChange={handleCPFchange}
           placeholder="000.000.000-00"
           className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           required

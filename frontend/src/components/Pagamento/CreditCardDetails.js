@@ -1,10 +1,29 @@
 import React, { useState } from 'react';
+import { mascaraCVV, mascaraCartao, mascaraData } from '../../Mascaras';
 
 const CreditCardDetails = ({ cardData, setCardData, handlePagamento }) => {
   const [error, setError] = useState("");
 
   const handleChange = (field, value) => {
-    setCardData({ ...cardData, [field]: value });
+    
+    switch(field){
+          case "cardNumber":
+            value = mascaraCartao(value); 
+            break; 
+          case "expirationDate":
+            value = mascaraData(value);
+            break;
+          case "cvv":
+            value = mascaraCVV(value);
+            break;
+        }
+
+    const updatedData = {
+      ...cardData,
+      [field]: value
+    }
+
+    setCardData(updatedData);
   };
 
   return (
