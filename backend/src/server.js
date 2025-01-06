@@ -4,9 +4,12 @@
 const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
+const router = require("./router");
 const path = require('path');
 
 const app = express();
+app.use(express.json());
+app.use(router);
 
 // Configuração de CORS
 app.use(cors()); // Permite requisições de qualquer origem
@@ -24,7 +27,6 @@ const storage = multer.diskStorage({
   },
 });
 
-
 const upload = multer({ storage: storage });
 
 // Rota para o upload de arquivos
@@ -41,8 +43,9 @@ app.post('/upload', upload.array('images'), (req, res) => {
   res.status(200).json({ paths: filePaths });
 });
 
+const porta = 5000;
+const host = "localhost";
 
-
-app.listen(5000, () => {
-  console.log('Servidor rodando na porta 5000');
+app.listen(porta, host, () => {
+  console.log(`Rodando em: ${host}:${porta}`);
 });
