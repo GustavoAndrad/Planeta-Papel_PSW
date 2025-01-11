@@ -1,81 +1,30 @@
-async function createPlano(nome, preco) {
-    try{
+const Plano = require('../models/Plano');
 
-        const plano = {
-            nome: "A4",
-            preco: 20
-        }
-
-        //Persistir plano
-
-        return "Plano cadastrado com sucesso"
-    }catch(error){
-        throw error;
-    }
+async function createPlano(data) {
+    return await Plano.create(data);
 }
 
 async function getPlanoById(id) {
-    try{
-        
-        //Consultar pedido pelo id
-
-        const plano = {
-            nome: "A4",
-            preco: 20
-        }
-
-        return plano;
-    }catch(error){
-        throw error;
-    }
+    const plano = await Plano.findById(id);
+    if (!plano) throw new Error('Plano não encontrado');
+    return plano;
 }
 
 async function getPlanos() {
-    try{
-        
-        //Consultar todos os usuários
-
-        const plano = {
-            nome: "A4",
-            preco: 20
-        }
-
-        const planos = [plano, plano, plano];
-
-        return planos;
-    }catch(error){
-        throw error;
-    }
+    const planos = await Plano.find();
+    return planos;
 }
 
 async function updatePlano(id, total) {
-    try{
-
-        //Consultar pelo id
-        
-        //Atualizar os dados
-        const atualizado = {
-            preco: total
-        }
-
-        //Persistir as alterações
-
-        return atualizado;
-
-    }catch(error){
-        throw error;
-    }
+    const planoAtualizado = await Plano.findByIdAndUpdate(id, data, { new: true, runValidators: true });
+    if (!planoAtualizado) throw new Error('Plano não encontrado');
+    return planoAtualizado;
 }
 
 async function deletePlano(id) {
-    try{
-        
-        //Remover plano
-
-        return "Plano deletado com sucesso"
-    }catch(error){
-        throw error;
-    }
+    const plano = await Plano.findByIdAndDelete(id);
+    if (!plano) throw new Error('Plano não encontrado');
+    return plano;
 }
 
 module.exports = {
