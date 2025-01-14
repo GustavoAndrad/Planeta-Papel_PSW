@@ -1,77 +1,27 @@
-async function createProduto(nome, preco) {
-    try{
+const Produto = require("../models/produto")
 
-        const produto = {
-            nome: "Papel",
-            preco: 20
-        }
-
-        //Persistir produto
-
-        return "Produto cadastrado com sucesso"
-    }catch(error){
-        throw error;
-    }
+async function createProduto(prodData) {
+    const produto = new Produto(prodData);
+    return await produto.save()
 }
 
 async function getProdutoById(id) {
-    try{
-
-        const produto = {
-            nome: "Papel",
-            preco: 20
-        }
-
-        return produto;
-    }catch(error){
-        throw error;
-    }
+    return await Produto.findById(id)
 }
 
 async function getProdutos() {
-    try{
-        
-        const produto = {
-            nome: "Papel",
-            preco: 20
-        }
-
-        const produtos = [produto, produto, produto];
-
-        return produtos;
-    }catch(error){
-        throw error;
-    }
+    return await Produto.find();
 }
 
-async function updateProduto(id, total) {
-    try{
-
-        //Consultar pelo id
-        
-        //Atualizar os dados
-        const atualizado = {
-            preco: total
-        }
-
-        //Persistir as alterações
-
-        return atualizado;
-
-    }catch(error){
-        throw error;
-    }
+async function updateProduto(id, prodData) {
+    await Produto.findByIdAndUpdate(id, prodData, {runValidators: true})
+    return "Produto atualizado com sucesso!"
 }
 
 async function deleteProduto(id) {
-    try{
-        
-        //Remover produto
+    await Produto.findByIdAndDelete(id)
+    return "Produto removido com sucesso!"
 
-        return "Produto deletado com sucesso"
-    }catch(error){
-        throw error;
-    }
 }
 
 module.exports = {
