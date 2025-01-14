@@ -17,8 +17,9 @@ async function createUsuario(req, res) {
             codigoSeguranca,
             plano,
         });
-        res.json({ status: true, message: response });
+        res.json({ status: true, message: "Usuário cadastrado com sucesso!", public_id: response._id });
     } catch (erro) {
+        console.error(erro)
         res.json({ status: false, message: erro.message });
     }
 }
@@ -29,6 +30,7 @@ async function readUsuarioById(req, res) {
         const response = await usuarioServices.getUsuarioById(id);
         res.json({ status: true, usuário: response });
     } catch (erro) {
+        console.error(erro)
         res.json({ status: false, message: erro.message });
     }
 }
@@ -38,6 +40,7 @@ async function readUsuarios(req, res) {
         const response = await usuarioServices.getUsuarios();
         res.json({ status: true, message: response });
     } catch (erro) {
+        console.error(erro)
         res.json({ status: false, message: erro.message });
     }
 }
@@ -45,7 +48,7 @@ async function readUsuarios(req, res) {
 async function updateUsuario(req, res) {
     try {
         const id = req.params.id;
-        const { nome, email, telefone, bairro, endereco, complemento, cep, isGerente, plano } = req.body;
+        const { nome, email, telefone, bairro, endereco, complemento, cep, plano } = req.body; //Informações que podem ser alteradas
         const response = await usuarioServices.updateUsuario(id, {
             nome,
             email,
@@ -54,11 +57,11 @@ async function updateUsuario(req, res) {
             endereco,
             complemento,
             cep,
-            isGerente,
-            plano,
+            plano
         });
         res.json({ status: true, message: response });
     } catch (erro) {
+        console.error(erro)
         res.json({ status: false, message: erro.message });
     }
 }
@@ -69,6 +72,7 @@ async function deleteUsuario(req, res) {
         const response = await usuarioServices.deleteUsuario(id);
         res.json({ status: true, message: response });
     } catch (erro) {
+        console.error(erro)
         res.json({ status: false, message: erro.message });
     }
 }

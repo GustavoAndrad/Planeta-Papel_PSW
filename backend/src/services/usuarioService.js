@@ -2,6 +2,11 @@ const bcrypt = require("bcrypt");
 const Usuario = require("../models/usuario.js");
 const Gerente = require("../models/gerente.js");
 
+/**
+ * Recebe o objeto e verifica se é um usuário ou gerente. Lida com os dois casos e armazena na mesma collection
+ * @param {*} userData 
+ * @returns {Proomisse<>} Usuário que foi criado
+< */
 async function createUsuario(userData) {
     // Gera o hash da senha fornecida
     const salt = bcrypt.genSaltSync();
@@ -13,13 +18,12 @@ async function createUsuario(userData) {
         delete userData.codigoSeguranca;
 
         const usuario = new Usuario(userData);
-        await usuario.save();
+        return await usuario.save();
     } else { // Salvando gerente
         const gerente = new Gerente(userData);
-        await gerente.save();
+        return await gerente.save();
     }
 
-    return "Usuário cadastrado com sucesso!";    
 }
 
 async function getUsuarioById(id) {
@@ -39,28 +43,20 @@ async function getUsuarios() {
 }
 
 async function updateUsuario(id, userData) {
-    try {
-        const usuario = await Usuario.findByIdAndUpdate(id, userData);
+    const usuario = await Usuario.findByIdAndUpdate(id, userData, {runValidators: true});
 
-        if (!usuario) throw new Error("Usuário não encontrado");
+    if (!usuario) throw new Error("Usuário não encontrado");
 
-        return "Usuário atualizado com sucesso!";
-    } catch (error) {
-        throw new Error("Erro ao atualizar o usuário: " + error.message);
-    }
+    return "Usuário atualizado com sucesso!";
 }
 
 
 async function deleteUsuario(id) {
-    try {
-        const usuario = await Usuario.findByIdAndDelete(id);
+    const usuario = await Usuario.findByIdAndDelete(id);
 
-        if (!usuario) throw new Error("Usuário não encontrado");
+    if (!usuario) throw new Error("Usuário não encontrado");
 
-        return "Usuário deletado com sucesso";
-    } catch (error) {
-        throw new Error("Erro ao deletar o usuário: " + error.message);
-    }
+    return "Usuário deletado com sucesso";
 }
 
 module.exports = {
