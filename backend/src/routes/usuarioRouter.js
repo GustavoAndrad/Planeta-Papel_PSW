@@ -2,7 +2,7 @@ const usuarioController = require("../controllers/usuarioController");
 
 /**
  * @description Define as rotas de usuário
- * @param {*} router - Rotador do express
+ * @param {*} router - Roteador do express
  */
 module.exports = (router) =>{
 

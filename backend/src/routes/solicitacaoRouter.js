@@ -2,7 +2,7 @@ const solicitacaoController = require("../controllers/solicitacoesController");
 
 /**
  * @description Define as rotas de solicitação
- * @param {*} router - Rotador do express
+ * @param {*} router - Roteador do express
  */
 module.exports = (router) =>{
 

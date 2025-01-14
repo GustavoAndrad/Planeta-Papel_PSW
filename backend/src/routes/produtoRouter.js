@@ -2,7 +2,7 @@ const produtoController = require("../controllers/produtoController");
 
 /**
  * @description Define as rotas de produto
- * @param {*} router - Rotador do express
+ * @param {*} router - Roteador do express
  */
 module.exports = (router) =>{
 

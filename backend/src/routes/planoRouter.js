@@ -2,7 +2,7 @@ const planoController = require("../controllers/planoController");
 
 /**
  * @description Define as rotas de plano
- * @param {*} router - Rotador do express
+ * @param {*} router - Roteador do express
  */
 module.exports = (router) =>{
 
