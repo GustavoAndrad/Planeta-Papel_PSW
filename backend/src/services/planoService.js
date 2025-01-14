@@ -1,4 +1,4 @@
-const Plano = require('../models/Plano');
+const Plano = require('../models/plano');
 
 async function createPlano(data) {
     return await Plano.create(data);

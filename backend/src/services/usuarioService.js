@@ -1,96 +1,65 @@
 const bcrypt = require("bcrypt");
+const Usuario = require("../models/usuario.js");
+const Gerente = require("../models/gerente.js");
 
-async function createUsuario(nome, idade, senha) {
-    try{
-        if(nome == null){
-            throw new Error("Name must not be null");
-        }
-        if(idade == null){
-            throw new Error("Age must not be null");
-        }
-        if(senha == null){
-            throw new Error("Password must not be null");
-        }
+async function createUsuario(userData) {
+    // Gera o hash da senha fornecida
+    const salt = bcrypt.genSaltSync();
+    userData.senha = bcrypt.hashSync(userData.senha, salt);
+    
+    if(!userData.isGerente){ // Salvando usuário
+        // Remove os campos específicos do gerente
+        delete userData.cpf;
+        delete userData.codigoSeguranca;
 
-        const salt = bcrypt.genSaltSync();
-        const hash = bcrypt.hashSync(senha, salt);
-
-        const usuario = {
-            nome: nome,
-            idade: idade,
-            senha: hash
-        }
-
-        //Persistir usuario
-
-        return "Usuário cadastrado com sucesso"
-    }catch(error){
-        throw error;
+        const usuario = new Usuario(userData);
+        await usuario.save();
+    } else { // Salvando gerente
+        const gerente = new Gerente(userData);
+        await gerente.save();
     }
+
+    return "Usuário cadastrado com sucesso!";    
 }
 
 async function getUsuarioById(id) {
-    try{
-        
-        //Consultar usuario pelo id
+    const user = await Usuario.findById(id).select('-senha');
 
-        const usuario = {
-            nome: "User",
-            idade: 20
-        }
+    if(!user) throw new Error("Usuário não encontrado");
 
-        return usuario;
-    }catch(error){
-        throw error;
+    return user;
+}
+
+async function getUsuarios() {
+    const usuarios = await Usuario.find({ isGerente: false }).select('-senha');
+
+    if(usuarios.length === 0) throw new Error("Usuário não encontrado");
+
+    return usuarios;
+}
+
+async function updateUsuario(id, userData) {
+    try {
+        const usuario = await Usuario.findByIdAndUpdate(id, userData);
+
+        if (!usuario) throw new Error("Usuário não encontrado");
+
+        return "Usuário atualizado com sucesso!";
+    } catch (error) {
+        throw new Error("Erro ao atualizar o usuário: " + error.message);
     }
 }
 
-async function getUsuarios(i) {
-    try{
-        
-        //Consultar todos os usuários
-
-        const usuario = {
-            nome: "User",
-            idade: 20
-        }
-
-        const usuarios = [usuario, usuario, usuario];
-
-        return usuarios;
-    }catch(error){
-        throw error;
-    }
-}
-
-async function update(id, nome, idade) {
-    try{
-
-        //Consultar pelo id
-        
-        //Atualizar os dados
-        const atualizado = {
-            nome: nome,
-            idade: idade,
-        }
-
-        //Persistir as alterações
-
-        return atualizado;
-
-    }catch(error){
-        throw error;
-    }
-}
 
 async function deleteUsuario(id) {
-    try{
-        
-        //Remover usuário pelo id;
+    try {
+        const usuario = await Usuario.findByIdAndDelete(id);
 
-        return "Usuário deletado com sucesso"
-    }catch(error){
-        throw error;
+        if (!usuario) throw new Error("Usuário não encontrado");
+
+        return "Usuário deletado com sucesso";
+    } catch (error) {
+        throw new Error("Erro ao deletar o usuário: " + error.message);
     }
 }
 
@@ -98,6 +67,6 @@ module.exports = {
     createUsuario,
     getUsuarios,
     getUsuarioById,
-    update,
+    updateUsuario,
     deleteUsuario
-}
+};
