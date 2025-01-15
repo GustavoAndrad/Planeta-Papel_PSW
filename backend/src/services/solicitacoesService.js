@@ -1,115 +1,27 @@
-async function createSolicitacao(modalidade, itens) {
-    try{
-        const solicitacao = {
-            modalidade: "Buscar na casa",
-            itens: [
-                {
-                    nome: "Papel",
-                    qt: "2kg"
-                },
-                {
-                    nome: "Papel",
-                    qt: "2kg"
-                },
-                {
-                    nome: "Papel",
-                    qt: "2kg"
-                }
-            ]
-        }
+const Solicitacao = require("../models/solicitacao")
 
-        //Persistir solicitacao
-
-        return "Solicitacao cadastrada com sucesso"
-    }catch(error){
-        throw error;
-    }
+async function createSolicitacao(solicData) {
+    const solic = new Solicitacao(solicData);
+    solic.data = new Date();
+    return await solic.save();
 }
 
 async function getSolicitacaoById(id) {
-    try{
-
-        const solicitacao = {
-            modalidade: "Buscar na casa",
-            itens: [
-                {
-                    nome: "Papel",
-                    qt: "2kg"
-                },
-                {
-                    nome: "Papel",
-                    qt: "2kg"
-                },
-                {
-                    nome: "Papel",
-                    qt: "2kg"
-                }
-            ]
-        }
-
-        return solicitacao;
-    }catch(error){
-        throw error;
-    }
+    return await Solicitacao.findById(id);
 }
 
 async function getSolicitacoes() {
-    try{
-        
-        const solicitacao = {
-            modalidade: "Buscar na casa",
-            itens: [
-                {
-                    nome: "Papel",
-                    qt: "2kg"
-                },
-                {
-                    nome: "Papel",
-                    qt: "2kg"
-                },
-                {
-                    nome: "Papel",
-                    qt: "2kg"
-                }
-            ]
-        }
-
-        const solicitacoes = [solicitacao, solicitacao, solicitacao];
-
-        return solicitacoes;
-    }catch(error){
-        throw error;
-    }
+    return await Solicitacao.find();
 }
 
-async function updateSolicitacao(id, itens) {
-    try{
-
-        //Consultar pelo id
-        
-        //Atualizar os dados
-        const atualizado = {
-            itens: itens
-        }
-
-        //Persistir as alterações
-
-        return atualizado;
-
-    }catch(error){
-        throw error;
-    }
+async function updateSolicitacao(id, solicData) {
+    await Solicitacao.findByIdAndUpdate(id, solicData, {runValidators: true})
+    return "Solicitação atualizada com sucesso!"
 }
 
 async function deleteSolicitacao(id) {
-    try{
-        
-        //Remover solicitacao
-
-        return "Solicitacao deletada com sucesso"
-    }catch(error){
-        throw error;
-    }
+    await Solicitacao.findByIdAndDelete(id);
+    return "Solicitação excluída com sucesso!"
 }
 
 module.exports = {

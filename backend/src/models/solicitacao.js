@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-// Schema do Pedido
-const pedidoSchema = new mongoose.Schema({
+// Schema da Solicitacao
+const solicSchema = new mongoose.Schema({
   cliente: { type: String, required: true },
   items: [
     {
@@ -25,7 +25,7 @@ const pedidoSchema = new mongoose.Schema({
 });
 
 // Criar o modelo com base no schema
-const Pedido = mongoose.model('Pedido', pedidoSchema);
+const Solicitacao = mongoose.model('Solicitacao', solicSchema);
 
 // Exportar o modelo
-module.exports = Pedido;
+module.exports = Solicitacao;
