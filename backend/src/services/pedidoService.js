@@ -1,120 +1,27 @@
-async function createPedido(produtos, total) {
-    try{
+const Pedido = require("../models/pedido")
 
-        const pedido = {
-            produtos: [
-                {
-                    nome: "Papel",
-                    preco: 10
-                },
-                {
-                    nome: "Post-it",
-                    preco: 10
-                },
-                {
-                    nome: "Cartolina",
-                    preco: 10
-                }
-            ],
-            total: 30
-        }
-
-        //Persistir pedido
-
-        return "Pedido cadastrado com sucesso"
-    }catch(error){
-        throw error;
-    }
+async function createPedido(pedidoData) {
+    const pedido = new Pedido(pedidoData);
+    pedido.data = new Date();
+    return await pedido.save();
 }
 
 async function getPedidoById(id) {
-    try{
-        
-        //Consultar pedido pelo id
-
-        const pedido = {
-            produtos: [
-                {
-                    nome: "Papel",
-                    preco: 10
-                },
-                {
-                    nome: "Post-it",
-                    preco: 10
-                },
-                {
-                    nome: "Cartolina",
-                    preco: 10
-                }
-            ],
-            total: 30
-        }
-
-        return pedido;
-    }catch(error){
-        throw error;
-    }
+    return await Pedido.findById(id);
 }
 
 async function getPedidos() {
-    try{
-        
-        //Consultar todos os usuários
-
-        const pedido = {
-            produtos: [
-                {
-                    nome: "Papel",
-                    preco: 10
-                },
-                {
-                    nome: "Post-it",
-                    preco: 10
-                },
-                {
-                    nome: "Cartolina",
-                    preco: 10
-                }
-            ],
-            total: 30
-        }
-
-        const pedidos = [pedido, pedido, pedido];
-
-        return pedidos;
-    }catch(error){
-        throw error;
-    }
+    return await Pedido.find();
 }
 
-async function updatePedido(id, total) {
-    try{
-
-        //Consultar pelo id
-        
-        //Atualizar os dados
-        const atualizado = {
-            total: total
-        }
-
-        //Persistir as alterações
-
-        return atualizado;
-
-    }catch(error){
-        throw error;
-    }
+async function updatePedido(id, pedidoData) {
+    await Pedido.findByIdAndUpdate(id, pedidoData, {runValidators: true})
+    return "Pedido atualizado com sucesso!"
 }
 
 async function deletePedido(id) {
-    try{
-        
-        //Remover pedido pelo id;
-
-        return "Pedido deletado com sucesso"
-    }catch(error){
-        throw error;
-    }
+    await Pedido.findByIdAndDelete(id);
+    return "Pedido excluído com sucesso!"
 }
 
 module.exports = {

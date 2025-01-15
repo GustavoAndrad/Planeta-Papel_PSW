@@ -2,9 +2,7 @@ const pedidoServices = require("../services/pedidoService");
 
 async function createPedido(req, res){
     try{
-        //Inserir as informações dos campos do pedido
-        const {produtos, total} = req.body;
-        const response = await pedidoServices.createPedido(produtos, total);
+        const response = await pedidoServices.createPedido(req.body);
         res.json({status: true, message: response})
     }catch(erro){
         res.json({status: false, message: erro.message})
@@ -13,8 +11,7 @@ async function createPedido(req, res){
 
 async function readPedidoById(req, res){
     try{
-        const id = req.params.id;
-        const response = await pedidoServices.getPedidoById(id);
+        const response = await pedidoServices.getPedidoById(req.params.id);
         res.json({status: true, message: response})
     }catch(erro){
         res.json({status: false, message: erro.message})
@@ -32,10 +29,7 @@ async function readPedidos(req, res){
 
 async function updatePedido(req, res){
     try{
-        //Inserir as informações dos campos do pedido
-        const id = req.params.id;
-        const total = req.body;
-        const response = await pedidoServices.updatePedido(id, total);
+        const response = await pedidoServices.updatePedido(req.params.id, req.body);
         res.json({status: true, message: response})
     }catch(erro){
         res.json({status: false, message: erro.message})
