@@ -1,5 +1,11 @@
 const mongoose = require("mongoose");
-const Plano = require("./plano.js");
+const Plano = require("./plano");
+
+/******* 
+          Usar Passport
+          passport-local-mongoose
+          1:27:20
+*******/
 
 const usuarioSchema = new mongoose.Schema({
   nome: {

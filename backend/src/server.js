@@ -2,6 +2,7 @@ require("dotenv/config");
 const express = require('express');
 const routes = require("./routes/index.js");
 const cors = require('cors');
+//const passport = require('passport');
 
 const app = express();
 
@@ -16,6 +17,7 @@ const connectToDatabase = require("../config/databaseConnection.js");
 
 app.use(express.json());
 app.use(cors());
+//app.use(passport.initialize());
 app.use(routes);
 
 const port = process.env.PORT;
