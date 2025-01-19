@@ -7,7 +7,7 @@ import { fetchUsers, userSelectors } from "../redux/usuarioSlice";
 function Header() {
   const dispatch = useDispatch();
 
-  const [userId, setUserId] = useState(() => localStorage.getItem("id"));
+  const [userId/*, setUserId*/] = useState(() => localStorage.getItem("id"));
   const usuario = useSelector((state) => userSelectors.selectById(state, userId));
 
   useEffect(() => {

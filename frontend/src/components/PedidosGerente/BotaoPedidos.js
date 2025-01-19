@@ -7,7 +7,7 @@ function BotaoPedidos({isCancelado, pedido}) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [isGerente, setIsGerente] = useState(() => localStorage.getItem("gerente"));
+    const [isGerente/*, setIsGerente*/] = useState(() => localStorage.getItem("gerente"));
     const redirect = (isGerente==="true") ? "/gerente/pedidos":"/cliente/pedidos";
 
     const handleCancel = async (e) => {

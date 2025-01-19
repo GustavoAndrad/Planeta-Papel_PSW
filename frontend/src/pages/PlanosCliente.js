@@ -36,7 +36,7 @@ function PlanosCliente(){
     if (planoStatus === "failed") {
         return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Erro ao carregar informações do plano.</div>;
     }
-
+    console.log(planos);
     return(
         <>
             <SectionName sectionName={"Assinar Plano"} img={"/images/assinatura.png"}></SectionName>
@@ -48,14 +48,14 @@ function PlanosCliente(){
             
             {planos.map((item) => (
                 <CardPlano 
-                    key={item.id}
-                    id={item.id}
+                    key={item._id}
+                    id={item._id}
                     name={item.nome} 
                     beneficios={item.beneficios} 
                     duracao={item.duracao} 
                     preco={item.preco} 
                     desconto={item.desconto}
-                    isOpen={openCardId === item.id}
+                    isOpen={openCardId === item._id}
                     onClick={handleCardClick}
                     isSigned={user.plano === item.nome}
                 />

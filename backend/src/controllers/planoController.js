@@ -2,8 +2,8 @@ const planoServices = require("../services/planoService");
 
 async function createPlano(req, res){
     try {
-        const savedPlano = await planoServices.createPlano(req.body);
-        res.json(savedPlano);
+        const response = await planoServices.createPlano(req.body);
+        res.json({status: true, message: response});
     } catch (erro) {
         res.json({ message: erro.message });
     }
@@ -12,8 +12,8 @@ async function createPlano(req, res){
 async function readPlanoById(req, res){
     try{
         const id = req.params.id
-        const plano = await planoServices.getPlanoById(id);
-        res.json(plano)
+        const response = await planoServices.getPlanoById(id);
+        res.json({status: true, message: response})
     }catch(erro){
         res.json({ message: erro.message })
     }
@@ -21,8 +21,8 @@ async function readPlanoById(req, res){
 
 async function readPlanos(req, res){
     try{
-        const planos = await planoServices.getPlanos();
-        res.json(planos)
+        const response = await planoServices.getPlanos();
+        res.json({status: true, message: response})
     }catch(erro){
         res.json({message: erro.message})
     }
@@ -30,8 +30,8 @@ async function readPlanos(req, res){
 
 async function updatePlano(req, res){
     try{
-        const plano = await planoServices.updatePedido(req.params.id, req.body);
-        res.json(plano)
+        const response = await planoServices.updatePedido(req.params.id, req.body);
+        res.json({status: true, message: response})
     }catch(erro){
         res.json({ message: erro.message })
     }
@@ -40,8 +40,8 @@ async function updatePlano(req, res){
 async function deletePlano(req, res){
     try{
         const id = req.params.id;
-        const plano = await planoServices.deletePlano(id);
-        res.json(plano)
+        const response = await planoServices.deletePlano(id);
+        res.json({status: true, message: response})
     }catch(erro){
         res.json({ message: erro.message })
     }
