@@ -27,8 +27,16 @@ async function createUsuario(userData, senha) {
 
         return await Usuario.register(usuario, senha);
       } else {
-        
+        // Remove os campos específicos do usuário
+        delete userData.plano
+
         const gerente = new Gerente(userData);
+
+        const validationError = gerente.validateSync();
+        if(validationError){
+            throw new Error(validationError)
+        };
+
         return await Gerente.register(gerente, senha);
     }
 

@@ -47,7 +47,7 @@ const usuarioSchema = new mongoose.Schema(
     plano: {
       type: String,
       required: function () {
-        return this.isGerente;
+        return !this.isGerente;
       },
       validate: {
         validator: async function (value) {

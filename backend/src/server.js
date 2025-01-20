@@ -7,12 +7,14 @@ const passport = require('passport');
 const app = express();
 
 const connectToDatabase = require("../config/databaseConnection.js");
+const populateDatabase = require("../config/populateDatabase.js");
 
 (async () => {
     const connected = await connectToDatabase();
     if (!connected) {
       process.exit(1);
     }
+    populateDatabase();
 })();
 
 app.use(express.json());

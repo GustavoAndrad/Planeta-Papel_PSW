@@ -29,7 +29,10 @@ function fileFilter(req, file, cb) {
     }
 }
 
-// Apaga uma única imagem
+/**
+ * Remove uma imagem do sistema de arquivos
+ * @param {*} imageName - nome da imagem
+ */
 function delete_image(imageName) {
     const imagePath = path.join(uploadPath, imageName);
 
@@ -42,11 +45,20 @@ function delete_image(imageName) {
     }
 }
 
-// Apaga múltiplas imagens
+/**
+ * Remove uma lista de imagens do sistema de arquivos
+ * @param {*} imageNames - nome da imagem
+ */
 function delete_images(imageNames) {
     imageNames.forEach(delete_image);
 }
 
+/**
+ * Modifica o nome d eum arquivo
+ * @param {*} file Arquivo
+ * @param {*} name Novo nome do arquivo
+ * @returns {String} nome do arquivo
+ */
 function rename_file(file, name) {
     const ext = path.extname(file.originalname);
     const newFileName = `${name}-${v4()}${ext}`;
@@ -58,6 +70,11 @@ function rename_file(file, name) {
     return newFileName;
 }
 
+/**
+ * Retorna o caminho completo de uma imagem no sistema de arquivos, caso ela exista
+ * @param {*} name Nome do Arquivo
+ * @returns 
+ */
 function get_image(name) {
     const imagePath = path.join(uploadPath, name); // Cria o caminho completo da imagem
 
