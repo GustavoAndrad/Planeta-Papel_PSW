@@ -6,7 +6,13 @@ const routesSolicitacao = require("./solicitacaoRouter");
 const routesProduto = require("./produtoRouter");
 const routesPlano = require("./planoRouter");
 const routesPedido = require("./pedidoRouter");
+const routesAuth = require("./authRoutes.js")
 
+router.get("/",(req,res)=>{
+    res.status(200).json({message: "Connection stablished!"})
+})
+
+routesAuth(router)
 routesUsuario(router);
 routesSolicitacao(router);
 routesProduto(router);

@@ -6,20 +6,42 @@ async function createProduto(prodData) {
 }
 
 async function getProdutoById(id) {
-    return await Produto.findById(id)
+    const prod = await Produto.findById(id);
+
+    if(!prod){
+        throw new Error("Produto não encontrado");
+    }
+
+    return prod;
 }
 
 async function getProdutos() {
-    return await Produto.find();
+    const prod = await Produto.find();
+
+    if(prod.length === 0){
+        throw new Error("Produto não encontrado");
+    }
+
+    return prod;
 }
 
 async function updateProduto(id, prodData) {
-    await Produto.findByIdAndUpdate(id, prodData, {runValidators: true})
+    const prod = await Produto.findByIdAndUpdate(id, prodData, {runValidators: true});
+
+    if(!prod){
+        throw new Error("Produto não encontrado");
+    }
+
     return "Produto atualizado com sucesso!"
 }
 
 async function deleteProduto(id) {
-    await Produto.findByIdAndDelete(id)
+    const prod = await Produto.findByIdAndDelete(id);
+    
+    if(!prod){
+        throw new Error("Produto não encontrado");
+    }
+    
     return "Produto removido com sucesso!"
 
 }

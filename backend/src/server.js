@@ -24,5 +24,5 @@ const port = process.env.PORT;
 const host = process.env.HOST;
 
 app.listen(port, host, () => {
-  console.log(`🚀 Servidor rodando em: ${host}:${port}`);
+  console.log(`🚀 Servidor rodando em: http://${host}:${port}`);
 });

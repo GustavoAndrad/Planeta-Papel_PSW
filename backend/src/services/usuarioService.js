@@ -1,16 +1,17 @@
-const bcrypt = require("bcrypt");
 const Usuario = require("../models/usuario.js");
 const Gerente = require("../models/gerente.js");
 
 /**
  * Recebe o objeto e verifica se é um usuário ou gerente. Lida com os dois casos e armazena na mesma collection
  * @param {*} userData 
- * @returns {Proomisse<>} Usuário que foi criado
+ * @param {String} senha
+ * @returns {Promisse<>} Usuário que foi criado
 < */
-async function createUsuario(userData) {
-    // Gera o hash da senha fornecida
-    const salt = bcrypt.genSaltSync();
-    userData.senha = bcrypt.hashSync(userData.senha, salt);
+async function createUsuario(userData, senha) {
+
+    if(!senha || senha.trim().length === 0){
+        throw new Error("A senha é obrigatória!")
+    }
     
     if(!userData.isGerente){ // Salvando usuário
         // Remove os campos específicos do gerente
@@ -18,10 +19,17 @@ async function createUsuario(userData) {
         delete userData.codigoSeguranca;
 
         const usuario = new Usuario(userData);
-        return await usuario.save();
-    } else { // Salvando gerente
+        
+        const validationError = usuario.validateSync();
+        if(validationError){
+            throw new Error(validationError)
+        };
+
+        return await Usuario.register(usuario, senha);
+      } else {
+        
         const gerente = new Gerente(userData);
-        return await gerente.save();
+        return await Gerente.register(gerente, senha);
     }
 
 }
@@ -44,6 +52,7 @@ async function getUsuarios() {
 
 async function updateUsuario(id, userData) {
     const usuario = await Usuario.findByIdAndUpdate(id, userData, {runValidators: true});
+    console.log(usuario)
 
     if (!usuario) throw new Error("Usuário não encontrado");
 

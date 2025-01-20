@@ -6,7 +6,6 @@ async function createUsuario(req, res) {
         const response = await usuarioServices.createUsuario({
             nome,
             email,
-            senha,
             telefone,
             bairro,
             endereco,
@@ -16,7 +15,7 @@ async function createUsuario(req, res) {
             cpf,
             codigoSeguranca,
             plano,
-        });
+        }, senha);
         res.json({ status: true, message: "Usuário cadastrado com sucesso!", public_id: response._id });
     } catch (erro) {
         console.error(erro)
@@ -26,7 +25,7 @@ async function createUsuario(req, res) {
 
 async function readUsuarioById(req, res) {
     try {
-        const id = req.params.id;
+        const id = req.user._id;
         const response = await usuarioServices.getUsuarioById(id);
         res.json({ status: true, usuário: response });
     } catch (erro) {
@@ -47,11 +46,10 @@ async function readUsuarios(req, res) {
 
 async function updateUsuario(req, res) {
     try {
-        const id = req.params.id;
-        const { nome, email, telefone, bairro, endereco, complemento, cep, plano } = req.body; //Informações que podem ser alteradas
+        const id = req.user._id;
+        const { nome, telefone, bairro, endereco, complemento, cep, plano } = req.body; //Informações que podem ser alteradas
         const response = await usuarioServices.updateUsuario(id, {
             nome,
-            email,
             telefone,
             bairro,
             endereco,
@@ -68,7 +66,7 @@ async function updateUsuario(req, res) {
 
 async function deleteUsuario(req, res) {
     try {
-        const id = req.params.id;
+        const id = req.user._id;
         const response = await usuarioServices.deleteUsuario(id);
         res.json({ status: true, message: response });
     } catch (erro) {
