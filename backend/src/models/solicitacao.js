@@ -22,7 +22,16 @@ const solicSchema = new mongoose.Schema({
     status: { type: Boolean },
     motivoNegacao: { type: String }
   }
-});
+},
+{ timestamps: true, toJSON: { virtuals: true, transform: docToJsonTransform }, toObject: { virtuals: true, transform: docToJsonTransform }, versionKey: false }
+);
+
+// Transforma o campo `_id` para `id` nas consultas
+function docToJsonTransform(doc, ret) {
+  ret.id = ret._id;
+  delete ret._id;
+  return ret;
+}
 
 // Criar o modelo com base no schema
 const Solicitacao = mongoose.model('Solicitacao', solicSchema);
