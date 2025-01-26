@@ -37,7 +37,14 @@ const produtoSchema = new mongoose.Schema({
     required: [true, "A categoria é obrigatória"], 
   },
 
-}, {timestamps: true, versionKey: false});
+}, { timestamps: true, toJSON: { virtuals: true, transform: docToJsonTransform }, toObject: { virtuals: true, transform: docToJsonTransform }, versionKey: false });
+
+// Transforma o campo `_id` para `id` nas consultas
+function docToJsonTransform(doc, ret) {
+  ret.id = ret._id;
+  delete ret._id;
+  return ret;
+}
 
 const Produto = mongoose.model('Produto', produtoSchema);
 
