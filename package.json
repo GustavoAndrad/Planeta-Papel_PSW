@@ -1,0 +1,13 @@
+{
+  "name": "planeta_papel",
+  "version": "1.0.0",
+  "description": "<div align=\"center\">",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "exec": "echo ⚙ Iniciando instalação e execução do backend... && start cmd /k \"cd backend && echo ⚙ Instalando dependências... && npm i && echo ⚙ Iniciando o backend... && npm start\" && echo ⚙ Iniciando instalação e execução do frontend... && start cmd /k \"cd frontend && echo ⚙ Instalando dependências... && npm i && echo ⚙ Iniciando o frontend... && npm start\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
