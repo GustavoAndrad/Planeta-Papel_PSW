@@ -20,6 +20,10 @@ function Produto() {
   const isGerente = localStorage.getItem('gerente');
   const isLogged = localStorage.getItem('id');
 
+  const produtoNoCarrinho = useSelector((state) =>
+    Object.values(state.carrinho.entities).find((item) => item.prodId === id)
+  );
+
   // Carregar os produtos ao montar o componente, se necessário
   useEffect(() => {
     if (prodStatus === "idle" || !produto) {
@@ -162,6 +166,16 @@ function Produto() {
                 </div>
               ) : (
                 <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
+                  {produtoNoCarrinho ? (
+                    <button
+                      type="button"
+                      title="Ir para o Carrinho"
+                      onClick={()=>navigate("/carrinho")}
+                      className="flex items-center justify-center py-2.5 px-5 text-sm text-white bg-green-600 font-bold rounded-lg hover:bg-green-700"
+                    >
+                      🛒 Ir para o Carrinho
+                    </button>
+                  ) : (
                   <button
                     type="button"
                     title="Adicionar ao Carrinho"
@@ -178,6 +192,7 @@ function Produto() {
                   >
                     🛒 Adicionar ao Carrinho
                   </button>
+                  )}
                 </div>
               )}
             </div>

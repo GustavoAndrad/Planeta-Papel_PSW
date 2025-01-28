@@ -1,4 +1,5 @@
 import { createEntityAdapter, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+const { v4: uuidv4 } = require('uuid');
 
 const carrinhoAdapter = createEntityAdapter({
     selectId: (item) => item.id,
@@ -6,9 +7,8 @@ const carrinhoAdapter = createEntityAdapter({
 
 export const fetchCarrinho = createAsyncThunk('carrinho/fetchCarrinho', async () => {
     try {
-      let response = await fetch(`${process.env.REACT_APP_API_URL}/carrinho`);
-      let carrinho = await response.json();
-      return carrinho;
+      const carrinho = localStorage.getItem('carrinho');
+      return carrinho ? JSON.parse(carrinho) : [];
       
     } catch (error) {
       console.log("Erro ao buscar carrinho", error);
@@ -24,15 +24,20 @@ export const addToCarrinho = createAsyncThunk('carrinho/addCarrinho', async (nov
       // Verificar se o item já está no carrinho
       const itemExistente = Object.values(carrinho).find(item => item.prodId === novoItem.prodId);
       if(itemExistente) throw new Error('Produto já adicionado ao carrinho');
+            
+      novoItem = {
+        id: uuidv4(),
+        ...novoItem
+      };
 
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/carrinho`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(novoItem),
-      });
+      const novoCarrinho = {
+        ...carrinho,
+        [novoItem.id]: novoItem
+      };
+      
+      localStorage.setItem('carrinho', JSON.stringify(novoCarrinho));
 
-      window.location="/carrinho"  
-      return await response.json();
+      return novoItem;
     } catch (error) {
       console.log('Erro ao adicionar produto no carrinho:', error);
       throw error;
@@ -41,12 +46,18 @@ export const addToCarrinho = createAsyncThunk('carrinho/addCarrinho', async (nov
 
 export const updateCarrinho = createAsyncThunk('carrinho/updateCarrinho', async (itemAtualizado) => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/carrinho/${itemAtualizado.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(itemAtualizado),
-      });
-      return await response.json();
+      const carrinho = JSON.parse(localStorage.getItem('carrinho')) || {};
+
+      if (!carrinho[itemAtualizado.id]) {
+        throw new Error('Produto não encontrado no carrinho');
+      }
+
+      carrinho[itemAtualizado.id].qtd = itemAtualizado.qtd;
+
+      localStorage.setItem('carrinho', JSON.stringify(carrinho));
+      console.log(carrinho);
+      return carrinho[itemAtualizado.id];
+      
     } catch (error) {
       console.log('Erro ao atualizar produto no carrinho:', error);
       throw error;
@@ -55,9 +66,12 @@ export const updateCarrinho = createAsyncThunk('carrinho/updateCarrinho', async 
 
 export const deleteCarrinho = createAsyncThunk('carrinho/deleteCarrinho', async (idProduto) => {
     try {
-      await fetch(`${process.env.REACT_APP_API_URL}/carrinho/${idProduto}`, {
-        method: 'DELETE',
-      });
+      const carrinho = JSON.parse(localStorage.getItem('carrinho')) || {};
+      
+      delete carrinho[idProduto];
+      console.log(carrinho)
+      localStorage.setItem('carrinho', JSON.stringify(carrinho));
+
       return idProduto;
     } catch (error) {
       console.log('Erro ao deletar produto do carrinho:', error);
@@ -105,11 +119,13 @@ export const carrinhoSlice = createSlice({
                 console.log(`[ ${(new Date()).toUTCString()} ] Atualizando item do carrinho...`);
             })
             .addCase(updateCarrinho.fulfilled, (state, action) => {
+              if (action.payload) {
                 carrinhoAdapter.updateOne(state,{
                     id: action.payload.id,
                     changes: { qtd: action.payload.qtd }, // Atualiza a quantidade do item
                   });
                 console.log(`[ ${(new Date()).toUTCString()} ] Carrinho atualizado com sucesso`);
+              }
             })
             .addCase(updateCarrinho.rejected, (state) => {
                 console.log(`[ ${(new Date()).toUTCString()} ] Falha ao atualizar carrinho`);
