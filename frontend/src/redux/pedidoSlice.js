@@ -6,7 +6,12 @@ const pedidoAdapter = createEntityAdapter({
 
 export const fetchPedidos = createAsyncThunk('pedidos/fetchPedidos', async () => {
   try {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/pedidos`);
+    const token = localStorage.getItem("token");
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/pedidos`, 
+      {
+        headers: {Authorization: `Bearer ${token}`}
+      }
+    );
     return await response.json();
   } catch (error) {
     console.error('Erro ao buscar pedidos:', error);
@@ -16,9 +21,12 @@ export const fetchPedidos = createAsyncThunk('pedidos/fetchPedidos', async () =>
 
 export const createPedido = createAsyncThunk('pedidos/createPedido', async (newPedido) => {
   try {
+    const token = localStorage.getItem("token");
     const response = await fetch(`${process.env.REACT_APP_API_URL}/pedidos`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+       },
       body: JSON.stringify(newPedido),
     });
     return await response.json();
@@ -30,9 +38,12 @@ export const createPedido = createAsyncThunk('pedidos/createPedido', async (newP
 
 export const updatePedido = createAsyncThunk('pedidos/updatePedido', async (updatedPedido) => {
   try {
+    const token = localStorage.getItem("token");
     const response = await fetch(`${process.env.REACT_APP_API_URL}/pedidos/${updatedPedido.id}`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+       },
       body: JSON.stringify(updatedPedido),
     });
     return await response.json();
@@ -44,8 +55,12 @@ export const updatePedido = createAsyncThunk('pedidos/updatePedido', async (upda
 
 export const deletePedido = createAsyncThunk('pedidos/deletePedido', async (pedidoId) => {
   try {
+    const token = localStorage.getItem("token");
     await fetch(`${process.env.REACT_APP_API_URL}/pedidos/${pedidoId}`, {
       method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
     });
     return pedidoId; 
   } catch (error) {

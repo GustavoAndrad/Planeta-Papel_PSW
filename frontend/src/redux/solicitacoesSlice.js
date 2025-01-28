@@ -6,7 +6,12 @@ const solicitacaoAdapter = createEntityAdapter({
 
 export const fetchSolicitacoes = createAsyncThunk('solicitacoes/fetchSolicitacoes', async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/solicitacoes`);
+      const token = localStorage.getItem("token");
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/solicitacoes`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       return await response.json();
     } catch (error) {
       console.log('Erro ao buscar produtos:', error);
@@ -16,9 +21,12 @@ export const fetchSolicitacoes = createAsyncThunk('solicitacoes/fetchSolicitacoe
   
   export const createSolicitacao = createAsyncThunk('solicitacoes/createSolicitacoes', async (novaSolicitacao) => {
     try {
+      const token = localStorage.getItem("token");
       const response = await fetch(`${process.env.REACT_APP_API_URL}/solicitacoes`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json' ,
+          Authorization: `Bearer ${token}`
+        },
         body: JSON.stringify(novaSolicitacao),
       });
       return await response.json();
@@ -30,9 +38,12 @@ export const fetchSolicitacoes = createAsyncThunk('solicitacoes/fetchSolicitacoe
   
   export const updateSolicitacao = createAsyncThunk('solicitacoes/updateSolicitacoes', async (solicitacoAtualizada) => {
     try {
+      const token = localStorage.getItem("token");
       const response = await fetch(`${process.env.REACT_APP_API_URL}/solicitacoes/${solicitacoAtualizada.id}`, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json' ,
+          Authorization: `Bearer ${token}`
+        },
         body: JSON.stringify(solicitacoAtualizada),
       });
       return await response.json();
@@ -44,8 +55,12 @@ export const fetchSolicitacoes = createAsyncThunk('solicitacoes/fetchSolicitacoe
   
   export const deleteSolicitacao = createAsyncThunk('solicitacoes/deleteSolicitacoes', async (idSolicitacao) => {
     try {
+      const token = localStorage.getItem("token");
       await fetch(`${process.env.REACT_APP_API_URL}/solicitacoes/${idSolicitacao}`, {
         method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       });
       return idSolicitacao;
     } catch (error) {

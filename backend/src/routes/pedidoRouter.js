@@ -1,4 +1,5 @@
 const pedidoController = require("../controllers/pedidoController");
+const {verifyUser} = require("../autenticate");
 
 /**
  * @description Define as rotas de pedido
@@ -7,10 +8,10 @@ const pedidoController = require("../controllers/pedidoController");
 module.exports = (router) =>{
 
     router
-        .get('/pedido', pedidoController.readPedidos)
-        .get('/pedido/:id', pedidoController.readPedidoById)
-        .post('/pedido', pedidoController.createPedido)
-        .patch('/pedido/:id', pedidoController.updatePedido)
-        .delete('/pedido/:id', pedidoController.deletePedido)
+        .get('/pedido', verifyUser, pedidoController.readPedidos)
+        .get('/pedido/:id', verifyUser, pedidoController.readPedidoById)
+        .post('/pedido', verifyUser, pedidoController.createPedido)
+        .patch('/pedido/:id', verifyUser, pedidoController.updatePedido)
+        .delete('/pedido/:id', verifyUser, pedidoController.deletePedido)
         
 }

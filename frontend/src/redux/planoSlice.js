@@ -18,9 +18,12 @@ export const fetchPlanos = createAsyncThunk('planos/fetchPlanos', async () => {
 
 export const createPlano = createAsyncThunk('planos/createPlano', async (novoPlano) => {
 try {
+    const token = localStorage.getItem("token");
     const response = await fetch(`${process.env.REACT_APP_API_URL}/planos`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+     },
     body: JSON.stringify(novoPlano),
     });
     return await response.json();
@@ -32,9 +35,12 @@ try {
 
 export const updatePlano = createAsyncThunk('planos/updatePlano', async (planoAtualizado) => {
 try {
+    const token = localStorage.getItem("token")
     const response = await fetch(`${process.env.REACT_APP_API_URL}/planos/${planoAtualizado.id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+         },
         body: JSON.stringify(planoAtualizado)
     });
     return await response.json();
@@ -46,8 +52,12 @@ try {
 
 export const deletePlano = createAsyncThunk('planos/deletePlano', async (idPlano) => {
     try {
+        const token = localStorage.getItem("token");
       await fetch(`${process.env.REACT_APP_API_URL}/planos/${idPlano}`, {
         method: 'DELETE',
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
       });
       return idPlano;
     } catch (error) {
