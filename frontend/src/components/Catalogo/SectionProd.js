@@ -98,6 +98,7 @@ function SectionProd(props) {
               navigate(`/produto/${produto.id}`);
             }}
             prodStandardImage={produto.imagem[0]}
+            prodID={produto.id}
             key={index}
             prodName={produto.nome}
             prodPrice={parseFloat(produto.preco)}

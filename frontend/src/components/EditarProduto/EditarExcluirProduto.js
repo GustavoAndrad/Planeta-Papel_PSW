@@ -1,57 +1,91 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import BotaoAzul from "../BotaoAzul";
-import BotaoVermelho from "../BotaoVermelho"
+import BotaoVermelho from "../BotaoVermelho";
 import { useDispatch, useSelector } from "react-redux";
-import {deleteProduto, fetchProdutos, produtoSelectors, updateProduto } from "../../redux/produtoSlice";
+import { deleteProduto, fetchProdutos, produtoSelectors, updateProduto } from "../../redux/produtoSlice";
 import Loader from "../Loader";
 import produtoValidationSchema from "../../YupSchema/produtoValidationSchema";
 import { toast } from "react-toastify";
 import BotaoRetorno from "../BotaoRetorno";
 
-
 function InfoProdutoEditarExcluir() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const { id } = useParams();
+
   const produto = useSelector((state) => produtoSelectors.selectById(state, id));
   const produtos = useSelector(produtoSelectors.selectAll);
   const prodStatus = useSelector((state) => state.produtos.status);
 
+  const [imagesCarregadas, setImagesCarregadas] = useState([]);
+  
   useEffect(() => {
     if (prodStatus === "idle") {
       dispatch(fetchProdutos());
     }
   }, [dispatch, prodStatus]);
 
+   useEffect(() => {
+      const loadImagesAsync = async () => {
+        const loadedImages = await Promise.all(
+          produto.imagem.map(async (img) => {
+            return await loadImage(img);
+          })
+        );
+        setImagesCarregadas(loadedImages);
+      };
+  
+      if (produto?.imagem) {
+        loadImagesAsync();
+      }
+    }, [produto]);
+
+    async function loadImage(imageName) {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/produtos/images/${imageName}`);
+        
+        if (!response.ok) {
+          throw new Error('Erro ao buscar a imagem');
+        }
+  
+        const blob = await response.blob();
+        return URL.createObjectURL(blob);
+      } catch (error) {
+        console.log(error.message);
+        return "/images/prod.png";
+      }
+    }
+
   const [nome, setNome] = useState("");
   const [preco, setPreco] = useState("");
   const [qnt, setQnt] = useState("");
   const [descricao, setDescricao] = useState("");
-  const [imagens, setImagens] = useState([{ file: null, preview: null }]);
+  const [imagens, setImagens] = useState(imagesCarregadas);
   const [categoria, setCategoria] = useState("");
 
-  // Atualizar os campos com o produto selecionado
+
   useEffect(() => {
     if (produto) {
       setNome(produto.nome || "");
       setPreco(produto.preco?.toString() || "");
-      setQnt(produto.qnt_disponivel?.toString() || "");
+      setQnt(produto.qntDisponivel?.toString() || "");
       setDescricao(produto.descricao || "");
       setCategoria(produto.categoria || "");
+      setImagens(produto.imagem || []); // Carrega imagens existentes do produto
+
+      
     }
   }, [produto]);
 
-
   const getCategorias = useCallback(() => {
-    const categorias = new Set(); // Usando Set para evitar duplicatas
+    const categorias = new Set();
     produtos.forEach((produto) => {
       if (produto.categoria) {
         categorias.add(produto.categoria);
       }
     });
-    return Array.from(categorias); // Converte Set para Array novamente
+    return Array.from(categorias);
   }, [produtos]);
 
   function handleImageChange(e, index) {
@@ -60,13 +94,33 @@ function InfoProdutoEditarExcluir() {
       const reader = new FileReader();
       reader.onload = () => {
         const updatedImagens = [...imagens];
-        updatedImagens[index] = { file, preview: reader.result }; // Atualiza com o arquivo e o preview
+        updatedImagens[index] = file.name;
         setImagens(updatedImagens);
+
+        const updatedImagensCarregadas = [...imagesCarregadas];
+        updatedImagensCarregadas[index] = URL.createObjectURL(file);
+        setImagesCarregadas(updatedImagensCarregadas)
       };
-      reader.readAsDataURL(file); // Gera o preview
+      reader.readAsDataURL(file);
     }
   }
 
+  function addImage() {
+    if (imagens.length < 4) {
+      // Adiciona um espaço vazio para a nova imagem
+      setImagens([...imagens, { file: null, preview: null }]);
+      // Atualiza o estado de imagens carregadas para manter consistência
+      setImagesCarregadas([...imagesCarregadas, null]);
+    }
+  }
+
+  function removeImage(index) {
+    const updatedImagens = imagens.filter((_, i) => i !== index);
+    const updatedImagensCarregadas = imagesCarregadas.filter((_, i) => i !== index);
+    setImagens(updatedImagens);
+    setImagesCarregadas(updatedImagensCarregadas)
+  }
+  
   function handlePrecoChange(e) {
     if (!isNaN(e)) {
       setPreco(e);
@@ -79,134 +133,80 @@ function InfoProdutoEditarExcluir() {
     }
   }
 
-  function addImage() {
-    if(imagens.length<4 && imagens[imagens.length-1].file){
-      setImagens([...imagens, { file: null, preview: null }]); // Adiciona um novo campo vazio
-    }
-  }
-
-  function removeImage(index) {
-    if(imagens.length>1){
-      const updatedImagens = imagens.filter((_, i) => i !== index);
-      setImagens(updatedImagens);
-    } else if(imagens.length===1){
-      setImagens([{ file: null, preview: null }]); // Adiciona um novo campo vazio
-    }
-  }
-
-  async function processImage(){
-    const formData = new FormData();
-  
-    imagens.forEach(({ file }) => {
-      if (file) {
-        formData.append("images", file); // Adiciona o arquivo ao FormData
-      }
-    });
-  
-    try {
-
-      if (formData.getAll("images").length === 0) {
-        console.error("Nenhuma imagem foi adicionada!");
-        throw new Error("Imagem sem adição. Imagem padrão será adicionada");
-      }
-    
-      const response = await fetch("http://localhost:5000/upload", {
-        method: "POST",
-        body: formData,
-      });
-  
-      if (!response.ok) {
-        const error = await response.json();
-        console.error("Erro do servidor:", error.message || "Erro desconhecido");
-        throw new Error("Erro ao adicionar imagens selecionadas. Imagem padrão será adicionada");
-      }
-  
-      const data = await response.json();
-
-      return data.paths.map((img) => img.url);
-    } catch (error) {
-      console.error("Erro ao fazer upload:", error);
-      toast.warning(error.message);
-
-      return ["/images/prod.png"];
-    }
-  }
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     // eslint-disable-next-line no-restricted-globals
-    if(confirm("Alterar Permanentemente?")){
-      
-      let paths
-      if(imagens[0].file){
-        paths = await processImage(); //retornar a imagem padrão quando falha em processar
-      } else{
-        paths = produto.imagem
-      }
-      
+    if (confirm("Alterar permanentemente?")) {
       const produtoData = {
         id,
         nome,
         preco: parseFloat(preco),
         descricao,
-        imagem: paths,
-        qnt_disponivel: parseInt(qnt),
+        qntDisponivel: parseInt(qnt),
         categoria,
       };
-
-      try{
-        await produtoValidationSchema.validate(produtoData, { abortEarly: false });
-      } catch(e){
-        e.inner.forEach((err) => {
-          toast.error(`${err.message}`);
-        });
-        return
-      }
+  
+      let filesImages = [];
       
-      const prod = await dispatch(updateProduto(produtoData));
+      // Usando Promise.all para garantir que todas as imagens sejam carregadas antes de prosseguir
+      const imagesPromises = imagesCarregadas.map(async (blobUrl, index) => {
+        try {
+          const response = await fetch(blobUrl);
+          const blob = await response.blob();
+          // Cria um objeto File a partir do Blob
+          const file = new File([blob], imagens[index], { type: blob.type });
+          filesImages.push(file);
+        } catch (error) {
+          console.error('Erro ao obter o Blob:', error);
+        }
+      });
   
-      // Limpar formulário após envio
-      setNome("");
-      setPreco("");
-      setDescricao("");
-      setCategoria("");
-      setImagens([]);
-      setQnt("");
+      await Promise.all(imagesPromises);
   
-      navigate(`/produto/${prod.payload.id}`);
+      try {
+        await produtoValidationSchema.validate(produtoData, { abortEarly: false });
+      } catch (e) {
+        e.inner.forEach((err) => toast.error(err.message));
+        return;
+      }
+  
+      try {
+        const prod = await dispatch(updateProduto({ produtoData, imagens: filesImages }));
+        if (prod.payload.status) {
+          navigate(`/produto/${id}`);
+          window.location.reload()
+        } else {
+          throw new Error(prod.payload.message);
+        }
+      } catch (e) {
+        toast.error(e.message);
+      }
     }
-
   };
 
-  const handleDeleteProduto = async ()=>{
+  const handleDeleteProduto = () => {
     // eslint-disable-next-line no-restricted-globals
-    if(confirm("Excluir PERMANENTEMENTE?")){
-
+    if (confirm("Excluir permanentemente?")) {
       dispatch(deleteProduto(id));
       navigate("/");
-    } else{
-      return
+      window.location.reload()
     }
-  }
+  };
 
-  // Lidar com estados de carregamento ou erro
   if (prodStatus === "pending") {
     return (
-      <>
       <div className="pt-24 w-full h-full flex items-center justify-center">
-        <Loader></Loader>
+        <Loader />
       </div>
-      </>
-    )
+    );
   }
-  
+
   if (prodStatus === "failed" || !produto) {
     return (
       <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10 text-center text-red-600 font-bold">
-        Erro ao carregar informações do produto<br></br> Código buscado: {id}
+        Erro ao carregar informações do produto<br /> Código buscado: {id}
       </div>
-    )
+    );
   }
 
   return (
@@ -263,15 +263,15 @@ function InfoProdutoEditarExcluir() {
         </select>
 
         <span className="text-red-600 font-bold my-4 text-[0.7em] ml-3">
-          ⚡ Por segurança, as imagens não podem ser alteradas. Caso queira modificá-las, inicialize todas novamente
+          ⚡ Imagens apagadas não podem ser recuperadas!
         </span>
 
         {/* Inputs para imagens */}
         <div className="mb-12 mt-2 gap-5 grid lg:grid-cols-4 sm:grid-cols-2 items-center">
-          {imagens.map((imagem, index) => (
+          {imagesCarregadas.map((img, index) => (
             <div key={index} className="relative">
 
-            {imagem.preview && (
+            {img && (
               <button
                 type="button"
                 onClick={() => removeImage(index)}
@@ -292,15 +292,15 @@ function InfoProdutoEditarExcluir() {
                 className="border border-accentBlue bg-white text-black p-2 rounded-[20px] w-full flex gap-8 justify-center items-center text-ellipsis overflow-hidden"
               >
 
-                {imagem.preview && (<>
+                {img && (<>
                   <img
                     className="size-20 border-blue-500 border-4 rounded-md"
-                    src={imagem.preview}
+                    src={img}
                     alt="Preview"
                   />
                   </>
                 )}
-                {imagem.file ? imagem.file.name : "📁 Selecionar imagem substituta"}
+                {img ? imagens[index] : "📁 Selecionar imagem substituta"}
               </button>
 
             </div>

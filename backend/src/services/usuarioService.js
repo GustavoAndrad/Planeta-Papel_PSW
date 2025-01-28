@@ -60,7 +60,6 @@ async function getUsuarios() {
 
 async function updateUsuario(id, userData) {
     const usuario = await Usuario.findByIdAndUpdate(id, userData, {runValidators: true});
-    console.log(usuario)
 
     if (!usuario) throw new Error("Usuário não encontrado");
 

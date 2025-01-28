@@ -15,6 +15,7 @@ function Catalogo() {
 
   // Informações consumidas
   const produtos = useSelector(produtoSelectors.selectAll);
+
   const prodStatus = useSelector((state) => state.produtos.status);
   const planos = useSelector(planoSelectors.selectAll);
   const planoStatus = useSelector((state) => state.planos.status);

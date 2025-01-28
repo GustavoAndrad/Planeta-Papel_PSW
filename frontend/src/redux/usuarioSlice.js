@@ -7,7 +7,44 @@ const userAdapter = createEntityAdapter({
 // Thunks para operações assíncronas com a API
 export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
   try {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/users`);
+    const token = localStorage.getItem("token");
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/users`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    return await response.json();
+  } catch (error) {
+    console.error('Erro ao buscar usuários:', error);
+    throw error;
+  }
+});
+
+export const fetchAllUsers = createAsyncThunk('users/fetchAllUsers', async () => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/users/all`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    console.log(response)
+    return await response.json();
+  } catch (error) {
+    console.error('Erro ao buscar usuários:', error);
+    throw error;
+  }
+});
+
+export const login = createAsyncThunk('/login', async (credentials) => {
+  try {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(credentials),
+    });
     return await response.json();
   } catch (error) {
     console.error('Erro ao buscar usuários:', error);
@@ -22,6 +59,7 @@ export const createUser = createAsyncThunk('users/createUser', async (newUser) =
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newUser),
     });
+
     return await response.json();
   } catch (error) {
     console.error('Erro ao criar usuário:', error);
@@ -31,11 +69,16 @@ export const createUser = createAsyncThunk('users/createUser', async (newUser) =
 
 export const updateUser = createAsyncThunk('users/updateUser', async (updatedUser) => {
   try {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${updatedUser.id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+    const token = localStorage.getItem("token");
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/users`, {
+      method: 'PATCH',
+      headers: { 
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
       body: JSON.stringify(updatedUser),
     });
+
     return await response.json();
   } catch (error) {
     console.error('Erro ao atualizar usuário:', error);
@@ -43,12 +86,16 @@ export const updateUser = createAsyncThunk('users/updateUser', async (updatedUse
   }
 });
 
-export const deleteUser = createAsyncThunk('users/deleteUser', async (userId) => {
+export const deleteUser = createAsyncThunk('users/deleteUser', async () => {
   try {
-    await fetch(`${process.env.REACT_APP_API_URL}/users/${userId}`, {
+    const token = localStorage.getItem("token");
+    await fetch(`${process.env.REACT_APP_API_URL}/users`, {
       method: 'DELETE',
+      headers: { 
+        Authorization: `Bearer ${token}`
+      },
     });
-    return userId; // Retorna o ID para remoção no estado
+    return localStorage.getItem("id"); // Retorna o ID para remoção no estado
   } catch (error) {
     console.error('Erro ao deletar usuário:', error);
     throw error;
@@ -67,16 +114,45 @@ const userSlice = createSlice({
       // Fetch users
       .addCase(fetchUsers.pending, (state) => {
         state.status = 'pending';
-        console.log(`[ ${(new Date()).toUTCString()} ] Carregando dados de usuários...`);
+        console.log(`[ ${(new Date()).toUTCString()} ] Carregando dados de usuário...`);
       })
       .addCase(fetchUsers.fulfilled, (state, action) => {
         state.status = 'fulfilled';
-        userAdapter.setAll(state, action.payload); // Adiciona todos os usuários
-        console.log(`[ ${(new Date()).toUTCString()} ] Dados de usuários carregados com sucesso`);
+        state.userLogged = action.payload.usuario;
+        console.log(`[ ${(new Date()).toUTCString()} ] Dados de usuário carregados com sucesso`);
       })
       .addCase(fetchUsers.rejected, (state) => {
         state.status = 'rejected';
+        console.log(`[ ${(new Date()).toUTCString()} ] Falha ao carregar dados de usuário`);
+      })
+
+      // Fetch all users
+      .addCase(fetchAllUsers.pending, (state) => {
+        state.status = 'pending';
+        console.log(`[ ${(new Date()).toUTCString()} ] Carregando dados de usuários...`);
+      })
+      .addCase(fetchAllUsers.fulfilled, (state, action) => {
+        state.status = 'fulfilled';
+        userAdapter.setAll(state, action.payload.message); // Adiciona todos os usuários
+        console.log(`[ ${(new Date()).toUTCString()} ] Dados de usuários carregados com sucesso`);
+      })
+      .addCase(fetchAllUsers.rejected, (state) => {
+        state.status = 'rejected';
         console.log(`[ ${(new Date()).toUTCString()} ] Falha ao carregar dados de usuários`);
+      })
+
+      // Login
+      .addCase(login.pending, (state) => {
+        state.status = 'pending';
+        console.log(`[ ${(new Date()).toUTCString()} ] Realizando login...`);
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.status = 'fulfilled';
+        console.log(`[ ${(new Date()).toUTCString()} ] Credenciais enviadas.`);
+      })
+      .addCase(login.rejected, (state) => {
+        state.status = 'rejected';
+        console.log(`[ ${(new Date()).toUTCString()} ] Falha ao enviar credenciais`);
       })
 
       // Create user
@@ -121,5 +197,7 @@ const userSlice = createSlice({
 });
 
 export const userSelectors = userAdapter.getSelectors((state) => state.users);
+
+export const selectUser = (state) => state.users.userLogged;
 
 export default userSlice.reducer;

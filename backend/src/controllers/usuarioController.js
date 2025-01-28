@@ -27,7 +27,7 @@ async function readUsuarioById(req, res) {
     try {
         const id = req.user._id;
         const response = await usuarioServices.getUsuarioById(id);
-        res.json({ status: true, usuário: response });
+        res.json({ status: true, usuario: response });
     } catch (erro) {
         console.error(erro)
         res.json({ status: false, message: erro.message });

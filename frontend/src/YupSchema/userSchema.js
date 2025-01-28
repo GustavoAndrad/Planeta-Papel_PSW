@@ -15,8 +15,7 @@ const userValidationSchema = Yup.object({
       .matches(
         /^\(\d{2}\) \d{5}-\d{4}$/,
         'Telefone inválido. O formato correto é (XX) XXXXX-XXXX'
-      ),
-  
+      ),  
     bairro: Yup.string()
       .required('Bairro é obrigatório')
       .min(3, 'O bairro deve ter pelo menos 3 caracteres')

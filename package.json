@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "exec": "echo ⚙ Iniciando instalação e execução do backend... && start cmd /k \"cd backend && echo ⚙ Instalando dependências... && npm i && echo ⚙ Iniciando o backend... && npm start\" && echo ⚙ Iniciando instalação e execução do frontend... && start cmd /k \"cd frontend && echo ⚙ Instalando dependências... && npm i && echo ⚙ Iniciando o frontend... && npm start\""
+    "exec": "echo ⚙ Iniciando instalação e execução do backend... && start cmd /k \"cd backend && echo ⚙ Instalando dependências... && npm i && echo ⚙ Iniciando o backend... && npm start\" && echo ⚙ Iniciando instalação e execução do frontend... && start cmd /k \"cd frontend && echo ⚙ Instalando dependências... && npm i && echo ⚙ Iniciando o frontend... && npm start\"",
+    "terminate": "taskkill /f /im node.exe"
   },
   "keywords": [],
   "author": "",

@@ -15,26 +15,60 @@ export const fetchProdutos = createAsyncThunk('produtos/fetchProdutos', async ()
   }
 });
 
-export const createProduto = createAsyncThunk('produtos/createProduto', async (novoProduto) => {
+export const createProduto = createAsyncThunk('produtos/createProduto', async ({produtoData, imagens}) => {
   try {
+    const formData = new FormData();
+
+    // Adiciona os arquivos de imagem (até 3)
+    imagens.forEach((image, index) => {
+      if (index < 4) {
+        formData.append('image', image.file); // 'image' é o nome do campo para as imagens
+      }
+    });
+
+    // Adiciona o JSON como uma string
+    formData.append('jsonData', JSON.stringify(produtoData));
+
+    const token = localStorage.getItem("token")
+
     const response = await fetch(`${process.env.REACT_APP_API_URL}/produtos`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(novoProduto),
+      body: formData,
+      headers: { 
+        Authorization: `Bearer ${token}`
+      },
     });
+
     return await response.json();
+  
   } catch (error) {
     console.log('Erro ao criar produto:', error);
     throw error;
   }
 });
 
-export const updateProduto = createAsyncThunk('produtos/updateProduto', async (produtoAtualizado) => {
+export const updateProduto = createAsyncThunk('produtos/updateProduto', async ({produtoData, imagens}) => {
   try {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/produtos/${produtoAtualizado.id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(produtoAtualizado),
+    const formData = new FormData();
+
+    // Adiciona os arquivos de imagem (até 3)
+    imagens.forEach((image, index) => {
+      if (index < 4) {
+        formData.append('image', image); // 'image' é o nome do campo para as imagens
+      }
+    });
+
+    // Adiciona o JSON como uma string
+    formData.append('jsonData', JSON.stringify(produtoData));
+
+    const token = localStorage.getItem("token")
+
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/produtos/${produtoData.id}`, {
+      method: 'PATCH',
+      body: formData,
+      headers: { 
+        Authorization: `Bearer ${token}`
+      },
     });
     return await response.json();
   } catch (error) {
@@ -45,8 +79,13 @@ export const updateProduto = createAsyncThunk('produtos/updateProduto', async (p
 
 export const deleteProduto = createAsyncThunk('produtos/deleteProduto', async (idProduto) => {
   try {
+    const token = localStorage.getItem("token")
+
     await fetch(`${process.env.REACT_APP_API_URL}/produtos/${idProduto}`, {
       method: 'DELETE',
+      headers: { 
+        Authorization: `Bearer ${token}`
+      },
     });
     return idProduto; // Retorna o ID para remoção no estado
   } catch (error) {
@@ -71,7 +110,7 @@ const produtoSlice = createSlice({
       })
       .addCase(fetchProdutos.fulfilled, (state, action) => {
         state.status = 'fulfilled';
-        produtoAdapter.setAll(state, action.payload); // Adiciona todos os produtos
+        produtoAdapter.setAll(state, action.payload.produtos); // Adiciona todos os produtos
         console.log(`[ ${(new Date()).toUTCString()} ] Dados de produtos carregados com sucesso`);
       })
       .addCase(fetchProdutos.rejected, (state) => {

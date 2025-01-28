@@ -8,9 +8,9 @@ const authorize = require("../authorize.js")
 module.exports = (router) =>{
 
     router
-        .get('/usuario/all', verifyUser, authorize, usuarioController.readUsuarios)
-        .get('/usuario', verifyUser, usuarioController.readUsuarioById)
-        .post('/usuario', usuarioController.createUsuario)
-        .patch('/usuario', verifyUser, usuarioController.updateUsuario)
-        .delete('/usuario', verifyUser, usuarioController.deleteUsuario)
+        .get('/users/all', verifyUser, authorize, usuarioController.readUsuarios)
+        .get('/users', verifyUser, usuarioController.readUsuarioById)
+        .post('/users', usuarioController.createUsuario)
+        .patch('/users', verifyUser, usuarioController.updateUsuario)
+        .delete('/users', verifyUser, usuarioController.deleteUsuario)
 }

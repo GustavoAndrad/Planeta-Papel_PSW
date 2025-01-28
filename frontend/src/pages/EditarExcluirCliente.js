@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUsers, updateUser, deleteUser, userSelectors } from '../redux/usuarioSlice';
+import { fetchUsers, updateUser, deleteUser, userSelectors, selectUser } from '../redux/usuarioSlice';
 import ClientDataView from '../components/EditarExcluirCliente/ClientDataView';
 import EditForm from '../components/EditarExcluirCliente/EditForm';
 import DeleteAccountButton from '../components/EditarExcluirCliente/DeleteAccountButton';
@@ -13,20 +13,15 @@ import { mascaraCEP, mascaraTelefone } from '../Mascaras';
 function DadosCliente() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
-  //const {id} = useParams();
-  //userId = id;
-  const userId = localStorage.getItem("id");
-  
-  const clientData = useSelector((state) => userSelectors.selectById(state, userId));
-  const clientStatus = useSelector((state) => state.users.status);
+
   const [isEditing, setIsEditing] = useState(false);
 
-  useEffect(() => {
-    if (clientStatus === "idle") {
-        dispatch(fetchUsers());
-    }
-  }, [dispatch, clientStatus]);
+  const clientData = useSelector(selectUser);
+  const clientStatus = useSelector((state) => state.users.status);
+ 
+   useEffect(() => {
+     dispatch(fetchUsers());
+   }, [dispatch]); 
 
   const [formData, setFormData] = useState({
     nome: '',
@@ -62,20 +57,26 @@ function DadosCliente() {
     dispatch(updateUser({ ...clientData, ...updatedData }))
       .unwrap()
       .then(() => {
-        alert('Dados atualizados com sucesso!');
+        toast.success('Dados atualizados com sucesso!');
         setIsEditing(false);
+        window.location.reload()
       })
-      .catch(() => alert('Erro ao atualizar os dados.'));
+      .catch((e) => toast.error(e.message));
   };
 
   const handleDeleteClick = () => {
-    dispatch(deleteUser(clientData.id))
-      .unwrap()
-      .then(() => {
-        alert('Conta excluída com sucesso!');
-      })
-      .catch(() => alert('Erro ao excluir a conta.'));
-    navigate("/");
+    // eslint-disable-next-line no-restricted-globals
+    if(confirm("Essa ação é irreversível!!! Tem certeza?")){
+      dispatch(deleteUser())
+        .unwrap()
+        .then(() => {
+          toast.success('Dados atualizados com sucesso!');
+          setIsEditing(false);
+          window.location.reload()
+        })
+        .catch((e) => toast.error(e.message));
+      navigate("/");
+    }
   };
 
   const handleInputChange = (e) => {

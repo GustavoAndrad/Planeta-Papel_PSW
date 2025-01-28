@@ -16,14 +16,14 @@ module.exports = (router) =>{
         .post('/produtos',
             verifyUser, 
             authorize, 
-            upload.array('image', 3),
+            upload.array('image', 4),
             produtoController.createProduto
         )
 
         .patch('/produtos/:id',
             verifyUser, 
             authorize, 
-            upload.array('image', 3), 
+            upload.array('image', 4), 
             produtoController.updateProduto
         )
 

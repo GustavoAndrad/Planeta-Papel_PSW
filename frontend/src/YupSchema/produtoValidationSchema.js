@@ -7,7 +7,7 @@ const produtoValidationSchema = Yup.object().shape({
     preco: Yup.number()
       .required("O preço é obrigatório.")
       .min(0.1, "O preço deve ser maior que zero."),
-    qnt_disponivel: Yup.number()
+    qntDisponivel: Yup.number()
       .required("A quantidade é obrigatória.")
       .integer("A quantidade deve ser um número inteiro.")
       .min(0, "A quantidade deve ser maior ou igual a zero."),

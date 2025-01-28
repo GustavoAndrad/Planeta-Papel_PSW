@@ -3,17 +3,18 @@ import SidebarMenu from "./SideBarMenu";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers, userSelectors } from "../redux/usuarioSlice";
+import { selectUser } from "../redux/usuarioSlice";
 
 function Header() {
   const dispatch = useDispatch();
 
-  const [userId/*, setUserId*/] = useState(() => localStorage.getItem("id"));
-  const usuario = useSelector((state) => userSelectors.selectById(state, userId));
+  const usuario = useSelector(selectUser)
 
   useEffect(() => {
     dispatch(fetchUsers());
   }, [dispatch]); 
     
+
   return (
     <>
       <header className="pl-2 pr-6 w-full h-28 bg-secondaryBlue fixed top-0 z-10 flex items-center justify-between border-b-accentBlue border-b-8">

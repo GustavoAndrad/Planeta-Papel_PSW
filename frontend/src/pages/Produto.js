@@ -15,7 +15,7 @@ function Produto() {
   const produto = useSelector(state => produtoSelectors.selectById(state, id));
   const prodStatus = useSelector((state) => state.produtos);
 
-  const [standardImage, setStandardImage] = useState(null);
+  const [images, setImages] = useState([]);
 
   const isGerente = localStorage.getItem('gerente');
   const isLogged = localStorage.getItem('id');
@@ -27,61 +27,91 @@ function Produto() {
     }
   }, [prodStatus, dispatch, produto]);
 
+  useEffect(() => {
+    const loadImagesAsync = async () => {
+      const loadedImages = await Promise.all(
+        produto.imagem.map(async (img) => {
+          return await loadImage(img);
+        })
+      );
+      setImages(loadedImages);
+    };
+
+    if (produto?.imagem) {
+      loadImagesAsync();
+    }
+  }, [produto]);
+
   // Lidar com estados de carregamento ou erro
   if (prodStatus === "pending") {
     return (
-      <>
       <div className="pt-24 w-full h-full flex items-center justify-center">
-        <Loader></Loader>
+        <Loader />
       </div>
-      </>
-    )
+    );
   }
-  
+
   if (prodStatus === "failed" || !produto) {
     return (
       <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10 text-center text-red-600 font-bold">
-        Erro ao carregar informações do produto<br></br> Código buscado: {id}
+        Erro ao carregar informações do produto<br /> Código buscado: {id}
       </div>
-    )
+    );
   }
 
   const { nome, preco, descricao, imagem } = produto;
 
-  const handleImageChange = (event) => {
-    const fullSrc = event.target.src;
-    const relativeSrc = fullSrc.replace(window.location.origin, "");
-    event.target.src = standardImage || imagem[0];
-    setStandardImage(relativeSrc);
-  };
+  async function loadImage(imageName) {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/produtos/images/${imageName}`);
+      
+      if (!response.ok) {
+        throw new Error('Erro ao buscar a imagem');
+      }
 
+      const blob = await response.blob();
+      return URL.createObjectURL(blob);
+    } catch (error) {
+      console.log(error.message);
+      return "/images/prod.png";
+    }
+  }
+  const handleImageChange = (event, index) => {
+    const newImages = [...images];
+    const clickedImage = newImages[index];
+    newImages[index] = images[0]; // Coloca a imagem principal na posição da miniatura
+    newImages[0] = clickedImage; // Coloca a imagem clicada como principal
+  
+    setImages(newImages);  // Atualiza o estado com as imagens trocadas
+  };
+  
   return (
     <section className="py-8 lg:h-[600px] bg-white md:py-16 dark:bg-gray-900 antialiased rounded-xl">
       <div className="max-w-screen-xl w-full px-4 mx-auto 2xl:px-0">
         <div className="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
 
-          {/** Seção de Imagens */}
+          {/* Seção de Imagens */}
           <div className="h-full w-full justify-center">
             <div className="w-full max-w-[700px] border-accentBlue border-2 rounded-xl shrink-0 flex justify-center items-center lg:max-w-lg mx-auto">
               <img
                 className="md:size-72 lg:size-96 block"
-                src={standardImage || imagem[0]}
+                src={ images[0] || "/images/prod.png"}
                 alt={`Imagem do produto ${nome}`}
               />
             </div>
 
-            {imagem.length > 1 && (
+            {images.length > 1 && (
               <div className="hidden w-full h-32 vs:visible vs:flex justify-center items-center pt-4">
                 <div className="grid grid-cols-3 h-full w-ful gap-6">
-                  {imagem.slice(1).map((img, index) => (
+                  {images.slice(1).map((img, index) => (
                     <div
                       key={index}
                       className="size-24 flex justify-center items-center border-accentBlue border-2 rounded-md cursor-pointer hover:border-primaryBlue hover:border-4"
                     >
                       <img
-                        onClick={handleImageChange}
+                        onClick={(e) => handleImageChange(e, index + 1)}
                         className="size-20 block"
-                        src={img}
+                        src={img || "/images/prod.png"}
                         alt={`Imagem ${index + 1} do produto`}
                       />
                     </div>
@@ -106,7 +136,7 @@ function Produto() {
             </div>
           </div>
 
-          {/** Informações do Produto */}
+          {/* Informações do Produto */}
           <div className="mt-6 sm:mt-16 lg:mt-0">
             <h1 className="text-xl font-semibold text-accentBlue sm:text-2xl dark:text-white">
               {nome}
@@ -119,39 +149,38 @@ function Produto() {
 
             <div className="flex gap-5">
 
-              {isGerente==='true'?  <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
-                <button
-                  type="button"
-                  title="Adicionar ao Carrinho"
-                  onClick={()=>{navigate(`/gerente/alterar-produto/${id}`)}}
-                  className="flex items-center justify-center py-2.5 px-5 text-sm text-white bg-secondaryBlue font-bold rounded-lg hover:bg-primaryBlue"
-                >
-                  🖋 Atualizar Dados
-                </button>
-              </div>
-              :
-              <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
-                <button
-                  type="button"
-                  title="Adicionar ao Carrinho"
-                  onClick={() => {
-                    if(isLogged){
-                    dispatch(addToCarrinho({prodId: id, qtd: 1}))
-                    toast.info("Adicionado ao Carrinho")
-                    }else{
-                      navigate("/login");
-                    }
-                    }
-                  }
-                  className="flex items-center justify-center py-2.5 px-5 text-sm text-white bg-primaryBlue font-bold rounded-lg hover:bg-secondaryBlue"
-                >
-                  🛒 Adicionar ao Carrinho
-                </button>
-              </div>
-              
-              }
+              {isGerente === 'true' ? (
+                <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
+                  <button
+                    type="button"
+                    title="Adicionar ao Carrinho"
+                    onClick={() => { navigate(`/gerente/alterar-produto/${id}`) }}
+                    className="flex items-center justify-center py-2.5 px-5 text-sm text-white bg-secondaryBlue font-bold rounded-lg hover:bg-primaryBlue"
+                  >
+                    🖋 Atualizar Dados
+                  </button>
+                </div>
+              ) : (
+                <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
+                  <button
+                    type="button"
+                    title="Adicionar ao Carrinho"
+                    onClick={() => {
+                      if (isLogged) {
+                        dispatch(addToCarrinho({ prodId: id, qtd: 1 }))                     
+                        
+                        toast.info("Adicionado ao Carrinho")
+                      } else {
+                        navigate("/login");
+                      }
+                    }}
+                    className="flex items-center justify-center py-2.5 px-5 text-sm text-white bg-primaryBlue font-bold rounded-lg hover:bg-secondaryBlue"
+                  >
+                    🛒 Adicionar ao Carrinho
+                  </button>
+                </div>
+              )}
             </div>
-
 
             <hr className="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
 

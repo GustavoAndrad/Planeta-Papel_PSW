@@ -54,6 +54,9 @@ const CustomerForm = () => {
 
     try{
       await userValidationSchema.validate(formData, { abortEarly: false });
+      if(!formData.senha || formData.senha.lengh<5){
+        throw new Error("Senha deve ser válida!")
+      }
     } catch(e){
       e.inner.forEach((err) => {
         toast.error(`${err.message}`);
@@ -64,13 +67,21 @@ const CustomerForm = () => {
     setError('');
     setLoading(true);
 
+    formData.plano = null;
+
     try {
       // Despacha a ação para criar o usuário no estado com o campo plano como null
-      await dispatch(createUser(formData)).unwrap();
-      console.log('Usuário cadastrado com sucesso!');
-      navigate('/login'); // Redireciona para a tela de login após o cadastro
+      const {status, message} = await dispatch(createUser(formData)).unwrap();
+
+      if(status){
+        toast.success("Cadastro bem sucedido!")
+        navigate('/login'); // Redireciona para a tela de login após o cadastro
+      } else{
+        toast.error(message)
+      }
     } catch (err) {
       console.error('Erro ao cadastrar usuário:', err);
+      toast.error("Falha ao cadastrar")
       setError('Houve um problema ao cadastrar o usuário. Tente novamente.');
     } finally {
       setLoading(false);
@@ -92,6 +103,13 @@ const CustomerForm = () => {
           name="email"
           placeholder="E-mail"
           value={formData.email}
+          onChange={handleChange}
+        />
+        <InputField
+          type="password"
+          name="senha"
+          placeholder="Senha"
+          value={formData.senha}
           onChange={handleChange}
         />
         <InputField
@@ -130,13 +148,6 @@ const CustomerForm = () => {
           value={formData.cep}
           onChange={handleChange}
           maxLength={9}
-        />
-        <InputField
-          type="password"
-          name="senha"
-          placeholder="Senha"
-          value={formData.senha}
-          onChange={handleChange}
         />
 
         {error && <p className="text-red-600 text-sm mb-4">{error}</p>}

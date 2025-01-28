@@ -79,61 +79,23 @@ function InfoProdutoCriar() {
     }
   }
 
-  async function processImage(){
-    const formData = new FormData();
-  
-    imagens.forEach(({ file }) => {
-      if (file) {
-        formData.append("images", file); // Adiciona o arquivo ao FormData
-      }
-    });
-  
-    try {
 
-      if (formData.getAll("images").length === 0) {
-        console.error("Nenhuma imagem foi adicionada!");
-        throw new Error("Imagem sem adição. Imagem padrão será adicionada");
-      }
-    
-      const response = await fetch("http://localhost:5000/upload", {
-        method: "POST",
-        body: formData,
-      });
-  
-      if (!response.ok) {
-        const error = await response.json();
-        console.error("Erro do servidor:", error.message || "Erro desconhecido");
-        throw new Error("Erro ao adicionar imagens selecionadas. Imagem padrão será adicionada");
-      }
-  
-      const data = await response.json();
-
-      return data.paths.map((img) => img.url);
-    } catch (error) {
-      console.error("Erro ao fazer upload:", error);
-      toast.warning(error.message);
-
-      return ["/images/prod.png"];
-    }
-  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    const paths = await processImage(); //retornar a imagem padrão quando falha em processar
-    
     const produtoData = {
       nome,
       preco: parseFloat(preco),
       descricao,
-      imagem: paths,
-      qnt_disponivel: parseInt(qnt),
+      qntDisponivel: parseInt(qnt),
       categoria,
     };
 
 
     try{
       await produtoValidationSchema.validate(produtoData, { abortEarly: false });
+    
     } catch(e){
       e.inner.forEach((err) => {
         toast.error(`${err.message}`);
@@ -141,8 +103,12 @@ function InfoProdutoCriar() {
       return
     }
 
-    // Enviar os dados do produto para a store
-    const prod = await dispatch(createProduto(produtoData));
+    try{
+      const prod = await dispatch(createProduto({produtoData, imagens}));
+      navigate(`/produto/${prod.payload.public_id}`);
+    } catch(e){
+      toast.error(e.message)
+    }
 
     // Limpar formulário após envio
     setNome('');
@@ -152,7 +118,6 @@ function InfoProdutoCriar() {
     setImagens([]);
     setQnt('');
 
-    navigate(`/produto/${prod.payload.id}`);
 
   };
   
@@ -197,7 +162,7 @@ function InfoProdutoCriar() {
           onChange={(e) => setCategoria(e.target.value)}
         >
           <option value="" disabled className="text-gray-400">
-            Selecione uma opção
+            Selecione a Categoria
           </option>
           
           {(getCategorias()).map((categoria,index)=>{

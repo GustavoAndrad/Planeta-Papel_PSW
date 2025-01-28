@@ -11,26 +11,42 @@ module.exports = (router) =>{
 
         passport.authenticate('local', { session: false }, (err, user, info) => {
 
-            if (err) {
-                throw new Error(err.message)
+            try{
+
+                if (err) {
+                    throw new Error(err.message)
+                }
+
+                // Se o usuário não for encontrado ou as credenciais estiverem erradas
+                if (!user) {
+                    throw new Error(info.message || 'Invalid Credentials')
+                }
+
+                if(user.isGerente){
+                    const {cpf, codigoSeguranca} = req.body;
+                    if(!cpf || !codigoSeguranca){
+                        throw new Error("Necessário verificação!")
+                    }
+
+                    if(user.cpf !== cpf || user.codigoSeguranca !== codigoSeguranca){
+                        throw new Error('Invalid Credentials')
+
+                    }
+                }
+
+                var token = authenticate.getToken({ _id: user._id });
+
+                res
+                    .setHeader('Content-Type', 'application/json')
+                    .status(200)
+                    .json({ status: true, token: token });
+
+            } catch(e){
+                res
+                    .setHeader('Content-Type', 'application/json')
+                    .status(401)
+                    .json({ status: false, error: e.message });
             }
-
-            // Se o usuário não for encontrado ou as credenciais estiverem erradas
-            if (!user) {
-                res.statusCode = 401;
-                res.setHeader('Content-Type', 'application/json');
-                return res.json({ 
-                    status: false, 
-                    error: info ? info.message : 'Invalid credentials'
-                });
-            }
-
-            var token = authenticate.getToken({ _id: user._id });
-
-            res
-                .setHeader('Content-Type', 'application/json')
-                .status(200)
-                .json({ status: true, token: token });
 
         })(req, res, next);  // Chama o Passport para realizar a autenticação
     });

@@ -47,6 +47,7 @@ export default function SideBarMenu(props){
     const handleLogout = ()=>{
       localStorage.removeItem("id");
       localStorage.removeItem("gerente")
+      localStorage.removeItem("token")
       navigate("/");
       // eslint-disable-next-line no-restricted-globals
       location.reload();

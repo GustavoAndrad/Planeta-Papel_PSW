@@ -41,7 +41,7 @@ export default function ClientDataView({
 
         <div className="flex items-center">
           <label className="text-lg font-bold text-[#2A5EAD] mr-2">Complemento:</label>
-          <span className="text-lg font-semibold text-gray-800">{complemento}</span>
+          <span className="text-lg font-semibold text-gray-800">{complemento || "- - -"}</span>
         </div>
 
         <div className="flex items-center sm:col-span-2">

@@ -7,5 +7,5 @@ export const loginValidationSchema = Yup.object({
   
 export const loginRestrictValidationSchema = Yup.object({
     cpf: Yup.string().min(14, "Formato de CPF inválido").required("CPF é obrigatório"),
-    securityCode: Yup.string().min(6, "Formato de código inválido").required("Código é obrigatório")
+    securityCode: Yup.string().min(5, "Formato de código inválido").required("Código é obrigatório")
 });

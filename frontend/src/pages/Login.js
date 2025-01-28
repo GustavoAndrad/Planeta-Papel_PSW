@@ -1,83 +1,82 @@
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers, userSelectors } from "../redux/usuarioSlice";
 import LoginCliente from "../components/Login/LoginCliente";
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import LoginGerente from "../components/Login/LoginGerente";
 import { useNavigate } from "react-router-dom";
 import { loginRestrictValidationSchema, loginValidationSchema } from "../YupSchema/loginSchema";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { fetchUsers, login} from "../redux/usuarioSlice";
 
- 
 function Login() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [isGerente, setIsGerente] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [cpf, setCpf] = useState("");
   const [securityCode, setSecurityCode] = useState("");
-  const [usuario, setUsuario] = useState({});
-  
 
-  const usuarios = useSelector((state) => userSelectors.selectAll(state));
-  const [gerentesIds, setGerentesIds] = useState([]);
+  const createSession = async () => {
+    try {
+      const response = await dispatch(
+        login({ email, senha: password, cpf, codigoSeguranca: securityCode })
+      );
+      const { status, token, error } = response.payload;
 
-  // Função para pegar IDs dos gerentes
-  const getGerentes = useCallback(() => {
-    return usuarios.filter(usuario => usuario.isGerente).map(usuario => usuario.id);
-  },[usuarios]); 
+      if (!status && error === "Necessário verificação!") {
+        toast.warn(error);
+        setIsGerente(true);
+        return;
+      }
 
-  // Disparando a busca de usuários quando o componente é montado
-  useEffect(() => {
-    dispatch(fetchUsers());
-  }, [dispatch]);
+      if (!status) {
+        throw new Error(error);
+      }
 
-  // Atualizando os IDs dos clientes e gerentes quando os usuários mudam
-  useEffect(() => {
-    setGerentesIds(getGerentes());
-  }, [getGerentes]);
+      // Armazan token no localStorage
+      localStorage.setItem("token", token);
 
-  // Função para buscar usuário por email
-  const usuarioByEmail = (email) => {
-    return usuarios.find((usuario) => usuario.email === email);
-  };
+      // Busca as informações do usuário
+      const responseUser = await dispatch(fetchUsers());
 
-  const handleEmailChange = (email)=>{
-    setEmail(email);
-    const user = usuarioByEmail(email);
-    setUsuario(user)
-  }
+      if (!responseUser.payload?.status) {
+        localStorage.removeItem("token");
+        throw new Error(responseUser.payload?.error || "Erro ao buscar usuário");
+      }
 
-  const createSession = () => {
-    localStorage.setItem("id", usuario.id);
-    localStorage.setItem("gerente", usuario.isGerente);
-    toast.success("Sessão iniciada!")
+      const usuario = responseUser.payload.usuario;
+
+      // Armazena os dados no localStorage
+      localStorage.setItem("id", usuario.id);
+      localStorage.setItem("gerente", usuario.isGerente);
+
+      return usuario;
+    } catch (e) {
+      toast.error(e.message);
+      return null;
+    }
   };
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
-      // Validação com Yup
-      await loginValidationSchema.validate({ email, password}, { abortEarly: false });
+      await loginValidationSchema.validate({ email, password }, { abortEarly: false });
 
-      if (usuario && usuario.senha === password) {
-        if (gerentesIds.includes(usuario.id)) {
+      const userData = await createSession();
+
+      if (userData) {
+        if (userData.isGerente) {
           setIsGerente(true);
         } else {
-          createSession();
-          navigate("/"); // Navegação para a página principal dos clientes
-          // eslint-disable-next-line no-restricted-globals
-          location.reload();
+          navigate("/");
+          window.location.reload(); // Força o recarregamento
+          toast.success("Sessão iniciada!");
         }
-      } else {
-        toast.error("Usuário ou senha inválidos");
       }
     } catch (e) {
-      e.inner.forEach((err) => {
-        toast.error(`${err.message}`);
-      });
+      e.inner?.forEach((err) => toast.error(`${err.message}`));
     }
   };
 
@@ -85,23 +84,19 @@ function Login() {
     e.preventDefault();
 
     try {
-      // Validação com Yup para gerentes
-      await loginValidationSchema.validate({ email, password}, { abortEarly: false });
+      await loginValidationSchema.validate({ email, password }, { abortEarly: false });
+      await loginRestrictValidationSchema.validate({ cpf, securityCode }, { abortEarly: false });
 
-      await loginRestrictValidationSchema.validate({cpf, securityCode}, { abortEarly: false });
+      const user = await createSession();
 
-      if (usuario.codigoSeguranca === securityCode && usuario.cpf === cpf) {
-        createSession();
+      if (user) {
         navigate("/");
-        // eslint-disable-next-line no-restricted-globals
-        location.reload();
-      } else {
-        toast.error("Código de segurança ou CPF incorretos");
+        window.location.reload();
+        toast.success("Sessão iniciada!");
+        toast.info("Você está logodo como gerente!")
       }
     } catch (e) {
-      e.inner.forEach((err) => {
-        toast.error(`${err.message}`);
-      });
+      e.inner?.forEach((err) => toast.error(`${err.message}`));
     }
   };
 
@@ -123,7 +118,7 @@ function Login() {
               handleLogin={handleLogin}
               email={email}
               password={password}
-              setEmail={handleEmailChange}
+              setEmail={setEmail}
               setPassword={setPassword}
             />
           )}

@@ -22,9 +22,9 @@ const produtoSchema = new mongoose.Schema({
     }],
     validate: {
         validator: function(arr) {
-            return (arr.length <= 3) && (arr.length>0);
+            return (arr.length <= 4) && (arr.length>0);
         },
-        message: 'Deve haver, nó maximo, 3 e imagen e, no mínimo, 1'
+        message: 'Deve haver, nó maximo, 3 e imagens e, no mínimo, 1'
     },
     required: true
   },
