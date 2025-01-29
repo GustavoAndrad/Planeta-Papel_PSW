@@ -49,6 +49,7 @@ const produtos = [
       "categoria": "Papel"
     }
 ]
+
 const planos = [
   {
     "id": "1",
@@ -80,11 +81,47 @@ const planos = [
     "beneficios": [
       "3Kg de Papel A4"
     ]
+  },
+  {
+    "id": "4",
+    "nome": "Planner",
+    "preco": 24.99,
+    "duracao": 3,
+    "desconto": 12,
+    "beneficios": [
+      "1 Convite para Tour de Reciclagem",
+      "Caixa misteriosa pequena"
+    ]
+  },
+  {
+    "id": "5",
+    "nome": "Sustentável",
+    "preco": 29.99,
+    "duracao": 6,
+    "desconto": 20,
+    "beneficios": [
+      "Doação de uma árvore plantada em seu nome",
+      "2 Convites para Tour de Reciclagem",
+      "Caixa misteriosa sustentável"
+    ]
+  },
+  {
+    "id": "6",
+    "nome": "Jumbo",
+    "preco": 119.99,
+    "duracao": 12,
+    "desconto": 25,
+    "beneficios": [
+      "5Kg de Papel A4",
+      "10 cadernos"
+    ]
   }
-];
+]
+
 module.exports = async () =>{
     try{
         const produtosExistentes = await Produto.find();
+        const planosExistentes = await Plano.find();
 
         if (produtosExistentes.length === 0) {
         // Se não houver produtos, insere os novos produtos
@@ -93,9 +130,6 @@ module.exports = async () =>{
         } else {
         console.log("✔ Produtos já estão no banco de dados.");
         }
-
-
-        const planosExistentes = await Plano.find();
 
         if (planosExistentes.length === 0) {
         // Se não houver planos, insere os novos planos
