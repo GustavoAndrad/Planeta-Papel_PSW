@@ -1,8 +1,7 @@
 import { createEntityAdapter, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-const { v4: uuidv4 } = require('uuid');
 
 const carrinhoAdapter = createEntityAdapter({
-    selectId: (item) => item.id,
+    selectId: (item) => item.prodId,
 });
 
 export const fetchCarrinho = createAsyncThunk('carrinho/fetchCarrinho', async () => {
@@ -25,14 +24,9 @@ export const addToCarrinho = createAsyncThunk('carrinho/addCarrinho', async (nov
       const itemExistente = Object.values(carrinho).find(item => item.prodId === novoItem.prodId);
       if(itemExistente) throw new Error('Produto já adicionado ao carrinho');
             
-      novoItem = {
-        id: uuidv4(),
-        ...novoItem
-      };
-
       const novoCarrinho = {
         ...carrinho,
-        [novoItem.id]: novoItem
+        [novoItem.prodId]: novoItem
       };
       
       localStorage.setItem('carrinho', JSON.stringify(novoCarrinho));
@@ -48,15 +42,15 @@ export const updateCarrinho = createAsyncThunk('carrinho/updateCarrinho', async 
     try {
       const carrinho = JSON.parse(localStorage.getItem('carrinho')) || {};
 
-      if (!carrinho[itemAtualizado.id]) {
+      if (!carrinho[itemAtualizado.prodId]) {
         throw new Error('Produto não encontrado no carrinho');
       }
 
-      carrinho[itemAtualizado.id].qtd = itemAtualizado.qtd;
+      carrinho[itemAtualizado.prodId].qtd = itemAtualizado.qtd;
 
       localStorage.setItem('carrinho', JSON.stringify(carrinho));
-      console.log(carrinho);
-      return carrinho[itemAtualizado.id];
+
+      return carrinho[itemAtualizado.prodId];
       
     } catch (error) {
       console.log('Erro ao atualizar produto no carrinho:', error);
@@ -69,7 +63,7 @@ export const deleteCarrinho = createAsyncThunk('carrinho/deleteCarrinho', async 
       const carrinho = JSON.parse(localStorage.getItem('carrinho')) || {};
       
       delete carrinho[idProduto];
-      console.log(carrinho)
+
       localStorage.setItem('carrinho', JSON.stringify(carrinho));
 
       return idProduto;
@@ -119,13 +113,11 @@ export const carrinhoSlice = createSlice({
                 console.log(`[ ${(new Date()).toUTCString()} ] Atualizando item do carrinho...`);
             })
             .addCase(updateCarrinho.fulfilled, (state, action) => {
-              if (action.payload) {
                 carrinhoAdapter.updateOne(state,{
                     id: action.payload.id,
                     changes: { qtd: action.payload.qtd }, // Atualiza a quantidade do item
                   });
                 console.log(`[ ${(new Date()).toUTCString()} ] Carrinho atualizado com sucesso`);
-              }
             })
             .addCase(updateCarrinho.rejected, (state) => {
                 console.log(`[ ${(new Date()).toUTCString()} ] Falha ao atualizar carrinho`);

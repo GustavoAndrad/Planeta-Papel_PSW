@@ -2,14 +2,14 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { deleteCarrinho, updateCarrinho } from '../redux/carrinhoSlice';
 
-export default function CarrinhoCard({ ParamQtd, id, produto, dispatch }){
+export default function CarrinhoCard({ ParamQtd, prodId, produto, dispatch }){
     const [qtd, setQtd] = useState(ParamQtd);
     const total = qtd * produto.preco; 
 
     const handleBlur = () => {
         if(qtd===0){
             setQtd(1);
-            dispatch(updateCarrinho({id, qtd: 1}));
+            dispatch(updateCarrinho({prodId, qtd: 1}));
         }
     };
 
@@ -20,7 +20,7 @@ export default function CarrinhoCard({ ParamQtd, id, produto, dispatch }){
         }
         if(value>=1){
             setQtd(value);
-            dispatch(updateCarrinho({id, qtd: value}))
+            dispatch(updateCarrinho({prodId, qtd: value}))
 
         }
     }
@@ -39,12 +39,12 @@ export default function CarrinhoCard({ ParamQtd, id, produto, dispatch }){
         
         setQtd(value);
         if(value !== qtd){
-            dispatch(updateCarrinho({id, qtd: value}));
+            dispatch(updateCarrinho({prodId, qtd: value}));
         }
     }
     function handleCardRemove(){
-        console.log("Excluindo produto com ID:", id);
-        dispatch(deleteCarrinho(id));
+        console.log("Excluindo produto com ID:", prodId);
+        dispatch(deleteCarrinho(prodId));
     }
 
     return (

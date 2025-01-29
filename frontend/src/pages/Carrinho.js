@@ -70,9 +70,9 @@ function Carrinho(){
             
             {carrinho.map((item)=>(
                 <CarrinhoCard 
-                    key={item.id}
+                    key={item.prodId}
                     ParamQtd={item.qtd}
-                    id={item.id} 
+                    prodId={item.prodId} 
                     produto={produtosIndexados[item.prodId]}
                     dispatch={dispatch}
                     />
