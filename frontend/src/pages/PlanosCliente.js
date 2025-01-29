@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPlanos, planoSelectors } from "../redux/planoSlice";
-import { userSelectors } from "../redux/usuarioSlice";
+import { selectUser } from "../redux/usuarioSlice";
 
 import SectionName from "../components/PedidosGerente/TitleSection"
 import CardPlano from "../components/PlanosCliente/CardPlano"
@@ -15,8 +15,8 @@ function PlanosCliente(){
     
     const id = localStorage.getItem('id');
 
-    const user = useSelector((state) => userSelectors.selectById(state, id));
-
+    const user = useSelector((state) => selectUser(state));
+    console.log("user", user);
     function handleCardClick(id){
         setOpenCardId(openCardId === id ? null : id);
     };
@@ -36,7 +36,7 @@ function PlanosCliente(){
     if (planoStatus === "failed") {
         return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Erro ao carregar informações do plano.</div>;
     }
-    console.log(planos);
+    console.log("planos",planos);
     return(
         <>
             <SectionName sectionName={"Assinar Plano"} img={"/images/assinatura.png"}></SectionName>
@@ -48,14 +48,14 @@ function PlanosCliente(){
             
             {planos.map((item) => (
                 <CardPlano 
-                    key={item._id}
-                    id={item._id}
+                    key={item.id}
+                    id={item.id}
                     name={item.nome} 
                     beneficios={item.beneficios} 
                     duracao={item.duracao} 
                     preco={item.preco} 
                     desconto={item.desconto}
-                    isOpen={openCardId === item._id}
+                    isOpen={openCardId === item.id}
                     onClick={handleCardClick}
                     isSigned={user.plano === item.nome}
                 />

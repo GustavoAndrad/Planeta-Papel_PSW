@@ -1,6 +1,7 @@
 require("dotenv/config");
 const Gerente = require("../src/models/gerente.js");
 const Produto = require('../src/models/produto.js');
+const Plano = require('../src/models/plano.js');
 
 /**
  * @description Popula o banco de dados com informações mockadas para desenvolvimento e testes. Faz apenas se os dados não forem duplicatas.
@@ -48,7 +49,39 @@ const produtos = [
       "categoria": "Papel"
     }
 ]
-
+const planos = [
+  {
+    "id": "1",
+    "nome": "Post-it",
+    "preco": 19.99,
+    "duracao": 31,
+    "desconto": 5,
+    "beneficios": [
+      "Caixa misteriosa pequena"
+    ]
+  },
+  {
+    "id": "2",
+    "nome": "A4",
+    "preco": "24.99",
+    "duracao": 6,
+    "desconto": 10,
+    "beneficios": [
+      "1 caderno",
+      "Caixa misteriosa média"
+    ]
+  },
+  {
+    "id": "3",
+    "nome": "Cartolina",
+    "preco": 39.99,
+    "duracao": 12,
+    "desconto": 20,
+    "beneficios": [
+      "3Kg de Papel A4"
+    ]
+  }
+];
 module.exports = async () =>{
     try{
         const produtosExistentes = await Produto.find();
@@ -60,6 +93,19 @@ module.exports = async () =>{
         } else {
         console.log("✔ Produtos já estão no banco de dados.");
         }
+
+
+        const planosExistentes = await Plano.find();
+
+        if (planosExistentes.length === 0) {
+        // Se não houver planos, insere os novos planos
+        await Plano.insertMany(planos);
+        console.log("📃 Planos inseridos no banco de dados!");
+        } else {
+        console.log("✔ Planos já estão no banco de dados.");
+        }
+
+
         if(!(await Gerente.findOne({email: process.env.ADMIN_EMAIL}))){
 
             const gerente = new Gerente({

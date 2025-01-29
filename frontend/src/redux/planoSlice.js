@@ -8,7 +8,7 @@ export const fetchPlanos = createAsyncThunk('planos/fetchPlanos', async () => {
     try {
       let response = await fetch(`${process.env.REACT_APP_API_URL}/planos`);
       let planos = await response.json();
-      return planos;
+      return planos.message;
       
     } catch (error) {
       console.log("Erro ao buscar planos", error);

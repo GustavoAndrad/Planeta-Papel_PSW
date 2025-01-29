@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchPlanos, planoSelectors } from "../../redux/planoSlice";
 import { useState, useEffect } from "react";
 import BotaoAzul from "../BotaoAzul";
-import { updateUser, userSelectors } from "../../redux/usuarioSlice";
+import { selectUser, updateUser } from "../../redux/usuarioSlice";
 import BotaoVermelho from "../BotaoVermelho";
 
 function InfoPlanoAssinar() {
@@ -14,8 +14,8 @@ function InfoPlanoAssinar() {
     const plano = useSelector(state => planoSelectors.selectById(state, id));
     const planoStatus = useSelector((state) => state.planos.status);
 
-    const idUser = localStorage.getItem('id');
-    const user = useSelector(state => userSelectors.selectById(state, idUser));
+    //const idUser = localStorage.getItem('id');
+    const user = useSelector(state => selectUser(state));
 
     // Carregar os planos ao montar o componente, se necessário
     useEffect(() => {
