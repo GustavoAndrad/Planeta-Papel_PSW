@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPlanos, planoSelectors } from "../redux/planoSlice";
-import { selectUser } from "../redux/usuarioSlice";
+import { fetchUsers, selectUser } from "../redux/usuarioSlice";
 
 import SectionName from "../components/PedidosGerente/TitleSection"
 import CardPlano from "../components/PlanosCliente/CardPlano"
@@ -14,7 +14,9 @@ function PlanosCliente(){
     const [openCardId, setOpenCardId] = useState(null);
 
     const user = useSelector((state) => selectUser(state));
+    const userStatus = useSelector((state) => state.planos.status);
     console.log("user", user);
+    console.log("staus", userStatus, planoStatus);
     function handleCardClick(id){
         setOpenCardId(openCardId === id ? null : id);
     };
@@ -24,14 +26,17 @@ function PlanosCliente(){
         if (planoStatus === "idle") {
             dispatch(fetchPlanos());
         }
-    }, [dispatch, planoStatus]);
+        if (userStatus === "idle") {
+            dispatch(fetchUsers());
+        }
+    }, [dispatch, planoStatus, userStatus]);
 
     // Lidar com estados de carregamento ou erro
-    if (planoStatus === "pending") {
+    if (planoStatus === "pending" || userStatus === "pending") {
         return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Carregando...</div>;
     }
     
-    if (planoStatus === "failed") {
+    if (planoStatus === "rejected") {
         return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Erro ao carregar informações do plano.</div>;
     }
     console.log("planos",planos);
@@ -41,7 +46,7 @@ function PlanosCliente(){
 
             <div className="flex items-center gap-3 w-[300px]">
                 <h1 className="text-2xl font-semibold text-secondaryBlue">📦 Plano Atual: </h1>
-                <h1 className="text-2xl font-semibold">{user.plano ? user.plano : 'Nenhum'}</h1>
+                <h1 className="text-2xl font-semibold">{user ? user.plano : 'Nenhum'}</h1>
             </div>
             
             {planos.map((item) => (
@@ -55,7 +60,7 @@ function PlanosCliente(){
                     desconto={item.desconto}
                     isOpen={openCardId === item.id}
                     onClick={handleCardClick}
-                    isSigned={user.plano === item.nome}
+                    isSigned={user ? user.plano === item.nome: ''}
                 />
             ))}
         </>
