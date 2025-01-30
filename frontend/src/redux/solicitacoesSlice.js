@@ -12,7 +12,8 @@ export const fetchSolicitacoes = createAsyncThunk('solicitacoes/fetchSolicitacoe
           Authorization: `Bearer ${token}`
         }
       });
-      return await response.json();
+      let solics = await response.json();
+      return solics.message;
     } catch (error) {
       console.log('Erro ao buscar produtos:', error);
       return [];

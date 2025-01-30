@@ -12,7 +12,8 @@ export const fetchPedidos = createAsyncThunk('pedidos/fetchPedidos', async () =>
         headers: {Authorization: `Bearer ${token}`}
       }
     );
-    return await response.json();
+    let pedidos = await response.json();
+    return pedidos.message;
   } catch (error) {
     console.error('Erro ao buscar pedidos:', error);
     throw error;

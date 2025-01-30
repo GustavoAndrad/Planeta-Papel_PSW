@@ -12,8 +12,6 @@ function PlanosCliente(){
     const planos = useSelector(planoSelectors.selectAll);
     const planoStatus = useSelector((state) => state.planos.status);
     const [openCardId, setOpenCardId] = useState(null);
-    
-    const id = localStorage.getItem('id');
 
     const user = useSelector((state) => selectUser(state));
     console.log("user", user);
