@@ -109,9 +109,18 @@ const solicitacaoSlice = createSlice({
           console.log(`[ ${(new Date()).toUTCString()} ] Atualizando solicitacao`);
         })
         .addCase(updateSolicitacao.fulfilled, (state, action) => {
-          solicitacaoAdapter.updateOne(state, action.payload);
-          console.log(`[ ${(new Date()).toUTCString()} ] Solicitacao atualizada com sucesso`);
-        })
+          console.log("Recebido no Redux:", action.payload);
+      
+          if (action.payload?.id) {
+              solicitacaoAdapter.updateOne(state, {
+                  id: action.payload.id,
+                  changes: action.payload
+              });
+              console.log("Solicitação atualizada no Redux");
+          } else {
+              console.error("Erro: Resposta da API não contém um ID válido.");
+          }
+      })
         .addCase(updateSolicitacao.rejected, (state) => {
           console.log(`[ ${(new Date()).toUTCString()} ] Falha ao atualizar solicitacao`);
         })

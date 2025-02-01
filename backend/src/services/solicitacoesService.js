@@ -15,8 +15,16 @@ async function getSolicitacoes() {
 }
 
 async function updateSolicitacao(id, solicData) {
-    await Solicitacao.findByIdAndUpdate(id, solicData, {runValidators: true})
-    return "Solicitação atualizada com sucesso!"
+    const updatedSolicitacao = await Solicitacao.findByIdAndUpdate(id, solicData, {
+        runValidators: true,
+        new: true
+    });
+    
+    if (!updatedSolicitacao) {
+        throw new Error("Solicitação não encontrada!");
+    }
+
+    return updatedSolicitacao;
 }
 
 async function deleteSolicitacao(id) {
