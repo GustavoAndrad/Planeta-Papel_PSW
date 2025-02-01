@@ -7,7 +7,7 @@ const pedidoAdapter = createEntityAdapter({
 export const fetchPedidos = createAsyncThunk('pedidos/fetchPedidos', async () => {
   try {
     const token = localStorage.getItem("token");
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/pedidos`, 
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/pedido`, 
       {
         headers: {Authorization: `Bearer ${token}`}
       }
@@ -23,7 +23,7 @@ export const fetchPedidos = createAsyncThunk('pedidos/fetchPedidos', async () =>
 export const createPedido = createAsyncThunk('pedidos/createPedido', async (newPedido) => {
   try {
     const token = localStorage.getItem("token");
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/pedidos`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/pedido`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`
@@ -40,7 +40,7 @@ export const createPedido = createAsyncThunk('pedidos/createPedido', async (newP
 export const updatePedido = createAsyncThunk('pedidos/updatePedido', async (updatedPedido) => {
   try {
     const token = localStorage.getItem("token");
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/pedidos/${updatedPedido.id}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/pedido/${updatedPedido.id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`
@@ -57,7 +57,7 @@ export const updatePedido = createAsyncThunk('pedidos/updatePedido', async (upda
 export const deletePedido = createAsyncThunk('pedidos/deletePedido', async (pedidoId) => {
   try {
     const token = localStorage.getItem("token");
-    await fetch(`${process.env.REACT_APP_API_URL}/pedidos/${pedidoId}`, {
+    await fetch(`${process.env.REACT_APP_API_URL}/pedido/${pedidoId}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${token}`

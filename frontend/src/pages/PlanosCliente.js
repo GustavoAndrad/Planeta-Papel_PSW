@@ -15,8 +15,7 @@ function PlanosCliente(){
 
     const user = useSelector((state) => selectUser(state));
     const userStatus = useSelector((state) => state.planos.status);
-    console.log("user", user);
-    console.log("staus", userStatus, planoStatus);
+    
     function handleCardClick(id){
         setOpenCardId(openCardId === id ? null : id);
     };
@@ -39,7 +38,7 @@ function PlanosCliente(){
     if (planoStatus === "rejected") {
         return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Erro ao carregar informações do plano.</div>;
     }
-    console.log("planos",planos);
+
     return(
         <>
             <SectionName sectionName={"Assinar Plano"} img={"/images/assinatura.png"}></SectionName>

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import PaymentMethod from "../components/Pagamento/PaymentMethod";
 import PixDetails from "../components/Pagamento/PixDetails";
 import CreditCardDetails from "../components/Pagamento/CreditCardDetails";
-import { carrinhoSelectors, fetchCarrinho} from "../redux/carrinhoSlice";
+import { carrinhoSelectors, deleteAllCarrinho, fetchCarrinho} from "../redux/carrinhoSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProdutos, selectProdutoByID } from "../redux/produtoSlice";
 import { createPedido } from "../redux/pedidoSlice";
@@ -108,6 +108,7 @@ const PaymentPage = () => {
       dispatch(createPedido(pedido))
       navigate("/cliente/pedidos")
       toast.success("Pedido realizado!");
+      dispatch(deleteAllCarrinho());
     }else{
       localStorage.removeItem("planoPayment")
       navigate("/cliente/pedidos")

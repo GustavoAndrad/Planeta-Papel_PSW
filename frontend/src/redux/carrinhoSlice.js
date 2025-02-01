@@ -71,7 +71,18 @@ export const deleteCarrinho = createAsyncThunk('carrinho/deleteCarrinho', async 
       console.log('Erro ao deletar produto do carrinho:', error);
       throw error;
     }
-  });  
+  });
+
+export const deleteAllCarrinho = createAsyncThunk('carrinho/deleteAllCarrinho', async () => {
+    try {
+
+      localStorage.removeItem('carrinho');
+
+    } catch (error) {
+      console.log('Erro ao deletar todos os produtos do carrinho:', error);
+      throw error;
+    }
+  });    
 
 export const carrinhoSlice = createSlice({
     name: 'carrinho',
@@ -114,7 +125,7 @@ export const carrinhoSlice = createSlice({
             })
             .addCase(updateCarrinho.fulfilled, (state, action) => {
                 carrinhoAdapter.updateOne(state,{
-                    id: action.payload.id,
+                    id: action.payload.prodId,
                     changes: { qtd: action.payload.qtd }, // Atualiza a quantidade do item
                   });
                 console.log(`[ ${(new Date()).toUTCString()} ] Carrinho atualizado com sucesso`);
@@ -132,6 +143,18 @@ export const carrinhoSlice = createSlice({
                 console.log(`[ ${(new Date()).toUTCString()} ] Item do Carrinho removido com sucesso`);
             })
             .addCase(deleteCarrinho.rejected, (state) => {
+                console.log(`[ ${(new Date()).toUTCString()} ] Falha ao remover item do carrinho`);
+            })
+
+            // Delete All Carrinho
+            .addCase(deleteAllCarrinho.pending, (state) => {
+                console.log(`[ ${(new Date()).toUTCString()} ] Removendo item do carrinho...`);
+            })
+            .addCase(deleteAllCarrinho.fulfilled, (state) => {
+                carrinhoAdapter.removeAll(state);
+                console.log(`[ ${(new Date()).toUTCString()} ] Item do Carrinho removido com sucesso`);
+            })
+            .addCase(deleteAllCarrinho.rejected, (state) => {
                 console.log(`[ ${(new Date()).toUTCString()} ] Falha ao remover item do carrinho`);
             });
     }
