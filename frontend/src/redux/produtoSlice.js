@@ -77,6 +77,29 @@ export const updateProduto = createAsyncThunk('produtos/updateProduto', async ({
   }
 });
 
+
+export const updateQuickProduto = createAsyncThunk('produtos/updateQuickProduto', async ({id, produtoData}) => {
+  try {
+
+    const token = localStorage.getItem("token")
+
+    console.log(produtoData)
+
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/produtos/quick/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(produtoData),
+      headers: { 
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+    });
+    return await response.json();
+  } catch (error) {
+    console.log('Erro ao atualizar produto:', error);
+    throw error;
+  }
+});
+
 export const deleteProduto = createAsyncThunk('produtos/deleteProduto', async (idProduto) => {
   try {
     const token = localStorage.getItem("token")
@@ -142,6 +165,21 @@ const produtoSlice = createSlice({
         console.log(`[ ${(new Date()).toUTCString()} ] Produto atualizado com sucesso`);
       })
       .addCase(updateProduto.rejected, (state) => {
+        console.log(`[ ${(new Date()).toUTCString()} ] Falha ao atualizar produto`);
+      })
+
+      // Update Quick produto
+      .addCase(updateQuickProduto.pending, (state) => {
+        console.log(`[ ${(new Date()).toUTCString()} ] Atualizando produto...`);
+      })
+      .addCase(updateQuickProduto.fulfilled, (state, action) => {
+        produtoAdapter.updateOne(state, {
+          id: action.payload.id,
+          changes: action.payload,
+        });
+        console.log(`[ ${(new Date()).toUTCString()} ] Produto atualizado com sucesso`);
+      })
+      .addCase(updateQuickProduto.rejected, (state) => {
         console.log(`[ ${(new Date()).toUTCString()} ] Falha ao atualizar produto`);
       })
 

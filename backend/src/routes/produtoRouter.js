@@ -27,6 +27,12 @@ module.exports = (router) =>{
             produtoController.updateProduto
         )
 
+        .patch('/produtos/quick/:id',
+            verifyUser, 
+            authorize, 
+            produtoController.updateQuickProduto
+        )
+
         .delete('/produtos/:id', verifyUser, authorize, produtoController.deleteProduto)
         
         .get('/produtos/images/:imageName', (req, res)=>{

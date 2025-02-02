@@ -71,6 +71,21 @@ async function updateProduto(req, res){
     }
 }
 
+
+async function updateQuickProduto(req, res){
+    try{
+        const id = req.params.id
+        const { nome, preco, descricao, qntDisponivel, categoria } = req.body;
+
+        const response = await produtoServices.updateProduto(id, { nome, preco, descricao, qntDisponivel, categoria });
+
+        res.json({status: true, message: response})
+        
+    }catch(erro){
+        res.json({status: false, message: erro.message})
+    }
+}
+
 async function deleteProduto(req, res){
     try{
         const id = req.params.id;
@@ -92,5 +107,6 @@ module.exports = {
     readProdutoById,
     readProdutos,
     updateProduto,
+    updateQuickProduto,
     deleteProduto
 }

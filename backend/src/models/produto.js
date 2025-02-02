@@ -21,9 +21,11 @@ const produtoSchema = new mongoose.Schema({
         trim: true,
     }],
     validate: {
-        validator: function(arr) {
-            return (arr.length <= 4) && (arr.length>0);
-        },
+      validator: function(arr) {
+        if (!arr || arr.length === 0) return true;
+  
+        return arr.length <= 4 && arr.length > 0;
+      },
         message: 'Deve haver, nó maximo, 3 imagens e, no mínimo, 1'
     },
     required: true

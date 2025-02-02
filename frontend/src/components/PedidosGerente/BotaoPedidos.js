@@ -1,7 +1,9 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { updatePedido } from "../../redux/pedidoSlice";
+import { fetchProdutos, produtoSelectors, updateQuickProduto } from "../../redux/produtoSlice";
+import { toast } from "react-toastify";
 
 function BotaoPedidos({isCancelado, pedido}) {
     const dispatch = useDispatch();
@@ -9,36 +11,79 @@ function BotaoPedidos({isCancelado, pedido}) {
 
     const [isGerente/*, setIsGerente*/] = useState(() => localStorage.getItem("gerente"));
     const redirect = (isGerente==="true") ? "/gerente/pedidos":"/cliente/pedidos";
+    
+    const produtos = useSelector(produtoSelectors.selectAll);
+    const prodStatus = useSelector((state) => state.produtos.status);
+    
+    // Consumindo informações
+    useEffect(() => {
+      if (prodStatus === "idle") {
+        dispatch(fetchProdutos());
+      }
+    }, [dispatch, prodStatus]);
+    console.log(produtos)
 
     const handleCancel = async (e) => {
         e.preventDefault();
         // eslint-disable-next-line no-restricted-globals
         if (confirm("Cancelar pedido? Isso extornará a compra.")) {
+    
+            let newPedido = { ...pedido }; 
+            newPedido.status = "cancelado";
+    
+            // Atualizando a quantidade dos produtos no estoque
+            for (let produto of newPedido.produtos) {
+                const p = produtos.find((prod) => String(prod.nome) === String(produto.nome));
+    
+                if (p) {  // Verifique se o produto foi encontrado
+                    const produtoData = {
+                        qntDisponivel: p.qntDisponivel + produto.quantidade
+                    };
+        
+                    // Chamar a API para atualizar a quantidade do produto
+                    await dispatch(updateQuickProduto({ id:p.id, produtoData })); // Passando os dados corretamente
+                }
+            }
 
-          let newPedido = { ...pedido }; 
-          newPedido.status = "cancelado";
-          console.log(newPedido)
-
-          await dispatch(updatePedido(newPedido));
-          navigate(`/gerente/pedidos`);
-          window.location.reload()
+            toast.info("Estoque atualizado.")
+    
+            // Atualizando o status do pedido
+            await dispatch(updatePedido(newPedido));
+            navigate(`/gerente/pedidos`);
+            window.location.reload();
         }
     };
-
+    
+    
     const handleRevoke = async (e) => {
         e.preventDefault();
         // eslint-disable-next-line no-restricted-globals
         if (confirm("Revogar cancelamento? Isso fará a cobrança novamente.")) {
+    
+            let newPedido = { ...pedido }; 
+            newPedido.status = "pendente";
 
-          let newPedido = { ...pedido }; 
-          newPedido.status = "concluido";
-          console.log(newPedido)
-
-          await dispatch(updatePedido(newPedido));
-          navigate(`/gerente/pedidos`);
-          window.location.reload()
+            for (let produto of newPedido.produtos) {
+                const p = produtos.find((prod) => String(prod.nome) === String(produto.nome));
+    
+                if (p) {
+                    const produtoData = {
+                        qntDisponivel: p.qntDisponivel - produto.quantidade
+                    };
+            
+                    await dispatch(updateQuickProduto({ id: p.id, produtoData }));
+                }
+            }
+    
+            toast.info("Estoque atualizado.");
+    
+            // Atualizando o status do pedido
+            await dispatch(updatePedido(newPedido));
+            navigate(`/gerente/pedidos`);
+            window.location.reload();
         }
     };
+    
 
     return (
         <>
