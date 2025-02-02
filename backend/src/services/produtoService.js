@@ -26,7 +26,6 @@ async function getProdutos() {
 }
 
 async function updateProduto(id, prodData) {
-    console.log(prodData)
     const prod = await Produto.findByIdAndUpdate(id, prodData, {runValidators: true});
 
     if(!prod){

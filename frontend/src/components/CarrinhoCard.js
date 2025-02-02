@@ -1,10 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { deleteCarrinho, updateCarrinho } from '../redux/carrinhoSlice';
+import { toast } from "react-toastify";
 
 export default function CarrinhoCard({ ParamQtd, prodId, produto, dispatch }){
     const [qtd, setQtd] = useState(ParamQtd);
+    const [img, setImg] = useState("");
     const total = qtd * produto.preco; 
+
+    useEffect(()=>{
+      fetchImage();      
+    })
 
     const handleBlur = () => {
         if(qtd===0){
@@ -15,8 +21,15 @@ export default function CarrinhoCard({ ParamQtd, prodId, produto, dispatch }){
 
     function handleQtdClick(n){
         let value = qtd+n;
+        if(value>produto.qntDisponivel){
+          toast.error("Não temos estoque o suficiente!")
+          return
+        }
         if(value > 999){
             value = 999;
+        }
+        if(value <= 0){
+          dispatch(deleteCarrinho(prodId));
         }
         if(value>=1){
             setQtd(value);
@@ -25,6 +38,11 @@ export default function CarrinhoCard({ ParamQtd, prodId, produto, dispatch }){
         }
     }
     function handleQtdChange(value){
+        if(value>produto.qntDisponivel){
+          toast.error("Não temos estoque o suficiente!")
+          value=0
+          return
+        }
         if(value===''){
             value=0;
         }else if(isNaN(value)){
@@ -47,12 +65,30 @@ export default function CarrinhoCard({ ParamQtd, prodId, produto, dispatch }){
         dispatch(deleteCarrinho(prodId));
     }
 
+    const fetchImage = async () => {
+          try {
+              const response = await fetch(`${process.env.REACT_APP_API_URL}/produtos/images/${produto.imagem[0]}`);
+
+              if (!response.ok) {
+                  throw new Error("Erro ao buscar a imagem");
+              }
+
+              const blob = await response.blob();
+              const imageUrl = URL.createObjectURL(blob);
+
+              // Atualiza a imagem se houver uma nova
+              setImg(imageUrl);
+          } catch (error) {
+              console.error(error.message);
+          }
+      }
+
     return (
         <>
           <div className="mt-5 group flex flex-col relative items-start rounded-lg p-4 text-sm/6 bg-white shadow-md">
             <div className="flex items-center space-x-3">
-              <div className="flex-none h-12 w-12 rounded-lg">
-                <img className="size-max cursor-pointer" src={produto.imagem[0]} alt="" />
+              <div className="flex-none h-124 w-24 rounded-lg">
+                <img className="size-max cursor-pointer" src={img} alt={produto.imagem[0]} />
               </div>
       
               <div className="flex-auto">

@@ -21,7 +21,6 @@ function BotaoPedidos({isCancelado, pedido}) {
         dispatch(fetchProdutos());
       }
     }, [dispatch, prodStatus]);
-    console.log(produtos)
 
     const handleCancel = async (e) => {
         e.preventDefault();

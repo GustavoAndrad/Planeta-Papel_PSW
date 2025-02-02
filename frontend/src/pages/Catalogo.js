@@ -84,16 +84,22 @@ function Catalogo() {
   
       // Verifica se a categoria existe
       if (categoriaIndex !== -1) {
-        produtos_agrupados[categoriaIndex].lista.push({
-          id: produto.id,
-          nome: produto.nome,
-          preco: produto.preco,
-          descricao: produto.descricao,
-          imagem: produto.imagem,
-          qnt_disponivel: produto.qnt_disponivel
-        });
+        const isGerente = localStorage.getItem("gerente") === "true";
+        if (isGerente || produto.qntDisponivel > 0){
+
+          produtos_agrupados[categoriaIndex].lista.push({
+            id: produto.id,
+            nome: produto.nome,
+            preco: produto.preco,
+            descricao: produto.descricao,
+            imagem: produto.imagem,
+            qnt_disponivel: produto.qntDisponivel
+          });
+        }
       }
-    });
+    }
+  
+  );
   
     return aplicaFiltroProdutos(produtos_agrupados);
   }, [aplicaFiltroProdutos, getCategorias]); // Passa as versões memoizadas como dependências

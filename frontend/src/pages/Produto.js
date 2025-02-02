@@ -180,10 +180,14 @@ function Produto() {
                     type="button"
                     title="Adicionar ao Carrinho"
                     onClick={() => {
-                      if (isLogged) {
-                        dispatch(addToCarrinho({ prodId: id, qtd: 1 }))                     
-                        
-                        toast.info("Adicionado ao Carrinho")
+                      if (isLogged){
+                        if(produto.qntDisponivel>0){
+                          dispatch(addToCarrinho({ prodId: id, qtd: 1 }))                     
+                          
+                          toast.info("Adicionado ao Carrinho")
+                        } else{
+                          toast.error("Falha ao adicionar ao carrinho. Estoque insuficiente")
+                        }
                       } else {
                         navigate("/login");
                       }

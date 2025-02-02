@@ -34,7 +34,7 @@ function ItemPedido({ nome, qt, total, imagem }) {
             <div>
                 <h1 className="text-2xl font-bold text-accentBlue">{nome}</h1>
                 <h2 className="font-bold text-md">Quantidade: {qt}</h2>
-                <h2 className="font-bold text-md">total - R$ {total} <br/> unit. - R${(total/qt).toFixed(2)}</h2>
+                <h2 className="font-bold text-md">total - R$ {total.toFixed(2)} <br/> unit. - R${(total/qt).toFixed(2)}</h2>
             </div>
         </div>
     );
