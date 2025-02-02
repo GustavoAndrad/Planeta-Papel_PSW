@@ -9,6 +9,7 @@ export default function ClientDataView({
   complemento,
   cep,
   onEditClick,
+  isRoot
 }) {
   return (
     <div className="p-6 bg-white rounded-lg shadow-xl">
@@ -50,11 +51,12 @@ export default function ClientDataView({
         </div>
       </div>
 
+      {!isRoot? 
       <BotaoAzul
         text="Editar"
         onClick={onEditClick}
         type="button"
-      />
+      />:null}
     </div>
   );
 }

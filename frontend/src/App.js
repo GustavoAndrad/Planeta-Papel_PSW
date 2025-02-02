@@ -32,6 +32,7 @@ import SolicGerente from "./pages/SolicGerente";
 import SolicCliente from "./pages/SolicCliente";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ClientesView from "./pages/ClientesView";
 
 function App() {
   return (
@@ -72,6 +73,8 @@ function App() {
             <Route path="/gerente/criar-plano" element={<CriarPlano />} />
             <Route path="/gerente/criar-produto" element={<CriarProduto />} />
             <Route path="/gerente/alterar-produto/:id" element={<AlteraProduto />} />
+            <Route path="/gerente/clientes" element={<ClientesView />} />
+
 
             <Route path="/produto/:id" element={<Produto />} />
             <Route path="/login" element={<Login />} />
