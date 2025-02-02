@@ -9,11 +9,13 @@ async function createPedido(req, res) {
     }
 }
 
-async function readPedidoById(req, res) {
+async function readPedidosByUserId(req, res) {
     try {
-        const pedido = await pedidoServices.getPedidoById(req.params.id);
-        if (!pedido) return res.status(404).json({ status: false, message: "Pedido não encontrado" });
-        res.status(200).json({ status: true, message: pedido });
+        const pedidos = await pedidoServices.getPedidosByUserId(req.user._id);
+        if (!pedidos || pedidos.length === 0) {
+            return res.status(404).json({ status: false, message: "Nenhum pedido encontrado para este usuário" });
+        }
+        res.status(200).json({ status: true, message: pedidos });
     } catch (error) {
         res.status(500).json({ status: false, message: error.message });
     }
@@ -50,7 +52,7 @@ async function deletePedido(req, res) {
 
 module.exports = {
     createPedido,
-    readPedidoById,
+    readPedidosByUserId,
     readPedidos,
     updatePedido,
     deletePedido
