@@ -1,6 +1,9 @@
 const Pedido = require('../models/pedido');
 const Produto = require("../models/produto")
 
+const Pedido = require('../models/pedido');
+const Produto = require("../models/produto")
+
 async function createPedido(pedidoData) {
     const session = await Pedido.startSession();
     session.startTransaction();
@@ -33,6 +36,30 @@ async function createPedido(pedidoData) {
         throw error;
     }
 }
+
+async function getPedidosByUserId(userId) {
+    return await Pedido.find({ userId });
+}
+
+async function getPedidos() {
+    return await Pedido.find();
+}
+
+async function updatePedido(id, pedidoData) {
+    return await Pedido.findByIdAndUpdate(id, pedidoData, { new: true, runValidators: true });
+}
+
+async function deletePedido(id) {
+    return await Pedido.findByIdAndDelete(id);
+}
+
+module.exports = {
+    createPedido,
+    getPedidos,
+    getPedidosByUserId,
+    updatePedido,
+    deletePedido
+};
 
 
 async function getPedidosByUserId(userId) {
