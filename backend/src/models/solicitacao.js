@@ -19,6 +19,7 @@ const solicSchema = new mongoose.Schema({
   data: { type: Date, required: true },
   analise: {
     data: { type: Date },
+    dataLimite: {type: String},
     status: { type: Boolean },
     motivoNegacao: { type: String }
   }
