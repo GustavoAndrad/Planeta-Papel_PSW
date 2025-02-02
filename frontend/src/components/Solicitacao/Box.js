@@ -31,7 +31,7 @@ export default function Box({info, type}){
                 <p className="text-lg font-semibold border-b-red-400 border-b-2 mt-2">
                     Modalidade: <span className="text-lg font-semibold text-secondaryBlue">{info.modalidade}</span></p>
                 <p className="text-lg font-semibold mt-2">
-                    Solicitado em: <span className="text-lg font-semibold text-secondaryBlue">{info.data}</span></p>
+                    Solicitado em: <span className="text-lg font-semibold text-secondaryBlue">{new Date(info.data).toLocaleDateString("pt-BR")}</span></p>
             </div>
         </>)
     }else{//cliente
@@ -42,7 +42,7 @@ export default function Box({info, type}){
             )}
             {info.analise !== null &&(
                 <div className="mt-3 p-3 bg-white ">
-                    <p className="text-lg font-semibold border-b-red-400 border-b-2">Realizado em: <span className="text-lg font-semibold text-secondaryBlue">{info.analise.data}</span></p>
+                    <p className="text-lg font-semibold border-b-red-400 border-b-2">Realizado em: <span className="text-lg font-semibold text-secondaryBlue">{new Date(info.analise.data).toLocaleDateString("pt-BR")}</span></p>
                     <p className="text-lg font-semibold border-b-red-400 border-b-2 mt-2">Status: <span className={`text-lg font-semibold ${info.analise.status? "text-primaryBlue":"text-cancelRed"}`}>{info.analise.status? "APROVADO":"NÃO APROVADO"}</span></p>
                     
                     {info.analise.status === true && (<>
