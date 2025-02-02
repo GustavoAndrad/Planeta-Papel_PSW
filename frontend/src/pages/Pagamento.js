@@ -100,8 +100,8 @@ const PaymentPage = () => {
       const pedido = {
         userId,
         prods: [...itens],
-        date: formatarDataAtual(),
-        met: paymentType,
+        data: formatarDataAtual(),
+        metodoPagamento: paymentType,
         cardDetails: {isCard:(paymentType==="CARTAO"), ...cardData},
         isCancelado: false
       }
