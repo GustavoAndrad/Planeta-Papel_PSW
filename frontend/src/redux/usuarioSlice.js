@@ -28,7 +28,7 @@ export const fetchAllUsers = createAsyncThunk('users/fetchAllUsers', async () =>
         Authorization: `Bearer ${token}`
       }
     })
-    console.log(response)
+
     return await response.json();
   } catch (error) {
     console.error('Erro ao buscar usuários:', error);

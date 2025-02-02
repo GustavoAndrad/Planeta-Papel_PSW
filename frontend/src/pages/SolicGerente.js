@@ -39,6 +39,10 @@ export default function SolicGerente(){
         return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Erro ao carregar informações das Solicitacoes.</div>;
     }
 
+    if(solic.length <= 0 || users.length <= 0){
+        return <div className="w-full h-full flex text-center justify-center items-center text-2xl bold pt-10">Erro ao carregar informações das Solicitações. <br/> Experimente recarregar a página</div>;
+    }
+
     return(
         <>
             <SectionName sectionName={"Gerenciar Solicitacoes"} img={"/images/reciclagem.png"}></SectionName>

@@ -7,16 +7,6 @@ import SectionName from "../components/PedidosGerente/TitleSection"
 import CardSolicC from "../components/SolicCliente/CardSolicC"
 import BotaoAzul from "../components/BotaoAzul";
 
-    /*
-    *
-    *    
-    *
-    *       BUSCAR CLIENTE 
-    * 
-    * 
-    * 
-    */
-
 export default function SolicCliente(){
     const dispatch = useDispatch();
     const cliente = localStorage.getItem("id");

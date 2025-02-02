@@ -64,8 +64,9 @@ export default function SolicReciclagem(){
             return
           }
         dispatch(createSolicitacao(newSolicitacao));
-    
+        
         navigate('/cliente/solicitacoes');
+        window.location.reload()
     };
 
     return(
