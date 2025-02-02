@@ -104,20 +104,26 @@ function InfoProdutoCriar() {
     }
 
     try{
+
       const prod = await dispatch(createProduto({produtoData, imagens}));
-      navigate(`/produto/${prod.payload.public_id}`);
-    } catch(e){
-      toast.error(e.message)
+      if (prod.payload.status) {
+        navigate(`/produto/${prod.payload.public_id}`);
+        window.location.reload()
+        
+        // Limpar formulário após envio
+        setNome('');
+        setPreco('');
+        setDescricao('');
+        setCategoria('');
+        setImagens([]);
+        setQnt('');
+
+      } else {
+        throw new Error(prod.payload.message);
+      }
+    } catch (e) {
+      toast.error(e.message);
     }
-
-    // Limpar formulário após envio
-    setNome('');
-    setPreco('');
-    setDescricao('');
-    setCategoria('');
-    setImagens([]);
-    setQnt('');
-
 
   };
   

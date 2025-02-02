@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const pedidoSchema = new mongoose.Schema({
-    cliente: {
+    userId: {
         type: String,
-        required: [true, "O cliente é obrigatório"],
+        required: [true, "O ID do usuário é obrigatório"],
     },
     produtos: [
         {
@@ -19,6 +19,31 @@ const pedidoSchema = new mongoose.Schema({
     metodoPagamento: {
         type: String,
         required: [true, "O método de pagamento é obrigatório"],
+        enum: ['PIX', 'CARTAO'],
+    },
+    detalhesCartao: {
+        isCard: { type: Boolean, default: false },
+        cardNumber: { 
+            type: String, 
+            required: function() { return this.metodoPagamento === 'CARTAO'; }
+        },
+        expirationDate: { 
+            type: String, 
+            required: function() { return this.metodoPagamento === 'CARTAO'; }
+        },
+        cvv: { 
+            type: String, 
+            required: function() { return this.metodoPagamento === 'CARTAO'; }
+        },
+        cardHolder: { 
+            type: String, 
+            required: function() { return this.metodoPagamento === 'CARTAO'; }
+        },
+        installments: { 
+            type: String, 
+            required: function() { return this.metodoPagamento === 'CARTAO'; },
+            default: "1x" 
+        },
     },
     status: {
         type: String,
@@ -26,8 +51,8 @@ const pedidoSchema = new mongoose.Schema({
         default: 'pendente',
     },
     data: {
-        type: Date,
-        default: Date.now,
+        type: String,
+        required: [true, "A data é obrigatória"],
     },
 }, { timestamps: true, toJSON: { virtuals: true, transform: docToJsonTransform }, toObject: { virtuals: true, transform: docToJsonTransform }, versionKey: false });
 
@@ -36,7 +61,7 @@ function docToJsonTransform(doc, ret) {
     ret.id = ret._id;
     delete ret._id;
     return ret;
-  }
+}
 
 const Pedido = mongoose.model('Pedido', pedidoSchema);
 module.exports = Pedido;

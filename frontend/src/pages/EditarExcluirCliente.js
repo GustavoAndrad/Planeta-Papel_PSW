@@ -123,7 +123,7 @@ function DadosCliente() {
         />
         <div className="flex flex-col justify-center">
           <h1 className="text-2xl font-bold" style={{ color: '#2A5EAD' }}>
-            Dados do Cliente
+            Dados Cadastrais
           </h1>
           <h2 className="text-md" style={{ color: '#2A5EAD' }}>
             Visualize e edite suas informações
@@ -141,6 +141,7 @@ function DadosCliente() {
             <ClientDataView
               {...formData}
               onEditClick={handleEditClick}
+              isRoot={clientData.email === "adm@example.com"}
             />
           ) : (
             <EditForm
@@ -151,7 +152,7 @@ function DadosCliente() {
           )}
         </div>
         <hr className="border-[#5a7597] my-4" />
-        <DeleteAccountButton onDeleteClick={handleDeleteClick} />
+        <DeleteAccountButton onDeleteClick={handleDeleteClick} isRoot={clientData.email === "adm@example.com"} />
       </div>
 
       <div className="text-center mt-4">

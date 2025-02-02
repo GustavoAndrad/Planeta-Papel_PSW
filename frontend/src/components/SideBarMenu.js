@@ -83,11 +83,13 @@ export default function SideBarMenu(props){
                       </span>
 
                         <hr />
+                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/dados-cliente"> 👤 Meu Perfil </Link></ul>
+                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/gerente/clientes"> 👥 Clientes </Link></ul>
                             <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/gerente/criar-produto"> 📓 Criar Produto </Link> </ul>
                             <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/gerente/criar-plano"> 🌱 Criar Plano </Link> </ul>
                             <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/gerente/planos"> 💸 Planos Mensais </Link> </ul>
                             <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/gerente/pedidos"> 📦 Pedidos </Link></ul>
-                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/gerente/solicitacoes"> ♻ Reciclagem</Link> </ul>
+                            <ul className="cursor-pointer hover:text-primaryBlue"><Link to="/gerente/solicitacoes"> ♻ Solicitações</Link> </ul>
                         <hr />
 
                         <ul onClick={handleLogout} className="text-white font-bold cursor-pointer hover:text-red-700">
