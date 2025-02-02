@@ -10,7 +10,6 @@ function PedidosCliente() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [userId] = useState(() => localStorage.getItem("id"));
     const pedidos = useSelector(pedidoSelectors.selectAll);
     const status = useSelector((state) => state.pedidos.status);
 
@@ -25,9 +24,6 @@ function PedidosCliente() {
         navigate(`/informacoes-pedido/${pedidoId}`); // Navega para a rota com o ID do pedido
     };
 
-
-    const pedidosUser = pedidos.filter((pedido) => pedido.userId === userId);
-
     return (
         <>
             {/* Título da seção */}
@@ -39,13 +35,14 @@ function PedidosCliente() {
             
             {/* Lista de pedidos */}
             {status === "fulfilled" && pedidos.length > 0 ? (
-                pedidosUser.map((pedido) => (
+                pedidos.map((pedido) => (
                     <Pedido
                         key={pedido.id}
-                        cancelled={pedido.isCancelado} // Ajuste conforme necessário (Exemplo: verificar se o pedido foi cancelado)
-                        data={pedido.date} // Data do pedido
-                        valor={pedido.prods.reduce((acc, prod) => acc + parseFloat(prod.prodTotal), 0)} // Soma dos valores dos produtos
-                        onClick={() => handlePedidoClick(pedido.id)} // Passa a função de clique
+                        cancelled={pedido.status === "cancelado"}
+                        data={pedido.data} 
+                        valor={pedido.total}
+                        cliente={pedido.userId}
+                        onClick={() => handlePedidoClick(pedido.id)}
                     />
                 ))
             ) : (

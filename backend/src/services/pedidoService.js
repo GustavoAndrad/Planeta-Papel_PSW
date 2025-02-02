@@ -2,58 +2,52 @@ const Pedido = require('../models/pedido');
 const Produto = require("../models/produto");
 
 async function createPedido(pedidoData) {
-    const session = await Pedido.startSession();
-    session.startTransaction();
+    const pedidoFormatado = {
+        userId: pedidoData.userId,
+        produtos: pedidoData.prods.map(item => ({
+            nome: item.prodName,
+            quantidade: parseInt(item.prodQt, 10),
+            preco: parseFloat(item.prodTotal)
+        })),
+        total: pedidoData.prods.reduce((acc, item) => acc + parseFloat(item.prodTotal), 0),
+        metodoPagamento: pedidoData.metodoPagamento,
+        detalhesCartao: pedidoData.cardDetails,
+        status: pedidoData.isCancelado ? 'cancelado' : 'pendente',
+        data: pedidoData.data
+    };
 
-    try {
-        const pedidoFormatado = {
-            userId: pedidoData.userId,
-            produtos: pedidoData.prods.map(item => ({
-                nome: item.prodName,
-                quantidade: parseInt(item.prodQt, 10),
-                preco: parseFloat(item.prodTotal)
-            })),
-            total: pedidoData.prods.reduce((acc, item) => acc + parseFloat(item.prodTotal), 0),
-            metodoPagamento: pedidoData.metodoPagamento,
-            detalhesCartao: pedidoData.cardDetails,
-            status: pedidoData.isCancelado ? 'cancelado' : 'pendente',
-            data: pedidoData.data
-        };
+    // Verificar disponibilidade dos produtos
+    const produtosNoBanco = [];
+    for (const item of pedidoFormatado.produtos) {
+        const produto = await Produto.findOne({ nome: item.nome });
 
-        for (const item of pedidoFormatado.produtos) {
-            const produto = await Produto.findOne({ nome: item.nome }).session(session);
-            if (!produto) {
-                throw new Error(`Produto "${item.nome}" não encontrado.`);
-            }
+        if (!produto) throw new Error(`Produto "${item.nome}" não encontrado.`);
+        if (produto.qntDisponivel < item.quantidade) throw new Error(`Estoque insuficiente para "${item.nome}".`);
 
-            if (produto.qntDisponivel < item.quantidade) {
-                throw new Error(`Estoque insuficiente para o produto "${item.nome}".`);
-            }
-
-            produto.qntDisponivel -= item.quantidade;
-            await produto.save({ session });
-        }
-
-        if (pedidoFormatado.metodoPagamento === 'CARTAO') {
-            const { cardNumber, expirationDate, cvv, cardHolder, installments } = pedidoFormatado.detalhesCartao;
-            if (!cardNumber || !expirationDate || !cvv || !cardHolder || !installments) {
-                throw new Error("Todos os campos do cartão são obrigatórios para pagamento com cartão.");
-            }
-        }
-
-        const pedido = new Pedido(pedidoFormatado);
-        await pedido.save({ session });
-
-        await session.commitTransaction();
-        session.endSession();
-
-        return pedido;
-    } catch (error) {
-        await session.abortTransaction();
-        session.endSession();
-        throw error;
+        produtosNoBanco.push(produto); // Guardamos para a segunda iteração
     }
+
+    // Cria pedido
+    const pedido = new Pedido(pedidoFormatado);
+    await pedido.save();
+
+    // Diminui quantidade de produtos
+    for (const item of pedidoFormatado.produtos) {
+        const produto = produtosNoBanco.find(p => p.nome === item.nome);
+        produto.qntDisponivel -= item.quantidade;
+        await produto.save();
+    }
+
+    if (pedidoFormatado.metodoPagamento === 'CARTAO') {
+        const { cardNumber, expirationDate, cvv, cardHolder, installments } = pedidoFormatado.detalhesCartao;
+        if (!cardNumber || !expirationDate || !cvv || !cardHolder || !installments) {
+            throw new Error("Todos os campos do cartão são obrigatórios para pagamento com cartão.");
+        }
+    }
+
+    return pedido;
 }
+
 
 async function getPedidosByUserId(userId) {
     return await Pedido.find({ userId });

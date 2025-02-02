@@ -13,9 +13,26 @@ export const fetchPedidos = createAsyncThunk('pedidos/fetchPedidos', async () =>
       }
     );
     let pedidos = await response.json();
+    if(!pedidos.status){
+      return []
+    }
     return pedidos.message;
   } catch (error) {
     console.error('Erro ao buscar pedidos:', error);
+    throw error;
+  }
+});
+
+export const fetchAllPedidos = createAsyncThunk('pedidos/fetchAllPedidos', async () => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/pedido/all`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    let pedidos = await response.json();
+    return pedidos.message;
+  } catch (error) {
+    console.error('Erro ao buscar todos os pedidos:', error);
     throw error;
   }
 });
@@ -41,7 +58,7 @@ export const updatePedido = createAsyncThunk('pedidos/updatePedido', async (upda
   try {
     const token = localStorage.getItem("token");
     const response = await fetch(`${process.env.REACT_APP_API_URL}/pedido/${updatedPedido.id}`, {
-      method: 'PUT',
+      method: 'PATCH',
       headers: { 'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`
        },
@@ -78,6 +95,7 @@ const pedidoSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      // Fetch user pedidos
       .addCase(fetchPedidos.pending, (state) => {
         state.status = 'pending';
         console.log(`[ ${(new Date()).toUTCString()} ] Carregando pedidos...`);
@@ -92,6 +110,22 @@ const pedidoSlice = createSlice({
         console.log(`[ ${(new Date()).toUTCString()} ] Falha ao carregar pedidos`);
       })
 
+      // Fetch gerente pedidos
+      .addCase(fetchAllPedidos.pending, (state) => {
+        state.status = 'pending';
+        console.log(`[ ${(new Date()).toUTCString()} ] Carregando todos os pedidos...`);
+      })
+      .addCase(fetchAllPedidos.fulfilled, (state, action) => {
+        state.status = 'fulfilled';
+        pedidoAdapter.setAll(state, action.payload);
+        console.log(`[ ${(new Date()).toUTCString()} ] Todos os pedidos carregados com sucesso`);
+      })
+      .addCase(fetchAllPedidos.rejected, (state) => {
+        state.status = 'rejected';
+        console.log(`[ ${(new Date()).toUTCString()} ] Falha ao carregar todos os pedidos`);
+      })
+
+      // Create pedido
       .addCase(createPedido.pending, (state) => {
         console.log(`[ ${(new Date()).toUTCString()} ] Criando pedido...`);
       })

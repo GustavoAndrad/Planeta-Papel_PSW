@@ -80,7 +80,7 @@ const PaymentPage = () => {
     return `${dia}/${mes}/${ano}`;
   }
 
-  const handlePagamento = (e)=>{
+  const handlePagamento = async (e)=>{
     e.preventDefault()
 
     const isPlanoPayment = localStorage.getItem("planoPayment")
@@ -105,13 +105,27 @@ const PaymentPage = () => {
         cardDetails: {isCard:(paymentType==="CARTAO"), ...cardData},
         isCancelado: false
       }
-      dispatch(createPedido(pedido))
+
+      try{
+        const {payload} = await dispatch(createPedido(pedido));
+        console.log(pedido)
+
+        if(!payload.status){
+          throw new Error(payload.message)
+        }
+      } catch(e){
+        toast.error("Pedido não finalizado: "+e.message);
+        return
+      }
+
       navigate("/cliente/pedidos")
+      window.location.reload()
       toast.success("Pedido realizado!");
       dispatch(deleteAllCarrinho());
     }else{
       localStorage.removeItem("planoPayment")
       navigate("/cliente/pedidos")
+      window.location.reload()
       toast.success("Plano assinado com sucesso!");  
     }
     }

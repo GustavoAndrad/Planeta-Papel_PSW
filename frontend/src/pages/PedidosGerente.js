@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchPedidos, pedidoSelectors } from "../redux/pedidoSlice";
+import { fetchAllPedidos, pedidoSelectors } from "../redux/pedidoSlice";
 import { useNavigate } from "react-router-dom";
 import StrokeLine from "../components/Catalogo/StrokeLine";
 import Pedido from "../components/PedidosGerente/Pedido";
@@ -16,7 +16,7 @@ function PedidosGerente() {
 
     useEffect(() => {
         if (status === "idle") {
-            dispatch(fetchPedidos());
+            dispatch(fetchAllPedidos());
         }
     }, [status, dispatch]);
 
@@ -24,6 +24,8 @@ function PedidosGerente() {
     const handlePedidoClick = (pedidoId) => {
         navigate(`/informacoes-pedido/${pedidoId}`); // Navega para a rota com o ID do pedido
     };
+
+    console.log(pedidos)
 
     return (
         <>
@@ -36,12 +38,13 @@ function PedidosGerente() {
             
             {/* Lista de pedidos */}
             {status === "fulfilled" && pedidos.length > 0 ? (
-                pedidos.map((pedido) => (
+                pedidos.map((pedido, index) => (
                     <Pedido
-                        key={pedido.id}
-                        cancelled={pedido.isCancelado} // Ajuste conforme necessário (Exemplo: verificar se o pedido foi cancelado)
-                        data={pedido.date} // Data do pedido
-                        valor={pedido.prods.reduce((acc, prod) => acc + parseFloat(prod.prodTotal), 0)} // Soma dos valores dos produtos
+                        key={pedido.id+index}
+                        cancelled={pedido.status === "cancelado"}
+                        data={pedido.data}
+                        valor={pedido.total}
+                        cliente={pedido.userId}
                         onClick={() => handlePedidoClick(pedido.id)} // Passa a função de clique
                     />
                 ))

@@ -13,13 +13,30 @@ function BotaoPedidos({isCancelado, pedido}) {
     const handleCancel = async (e) => {
         e.preventDefault();
         // eslint-disable-next-line no-restricted-globals
-        if (confirm("Alterar Permanentemente?")) {
+        if (confirm("Cancelar pedido? Isso extornará a compra.")) {
 
           let newPedido = { ...pedido }; 
-          newPedido.isCancelado = true;
+          newPedido.status = "cancelado";
+          console.log(newPedido)
 
           await dispatch(updatePedido(newPedido));
           navigate(`/gerente/pedidos`);
+          window.location.reload()
+        }
+    };
+
+    const handleRevoke = async (e) => {
+        e.preventDefault();
+        // eslint-disable-next-line no-restricted-globals
+        if (confirm("Revogar cancelamento? Isso fará a cobrança novamente.")) {
+
+          let newPedido = { ...pedido }; 
+          newPedido.status = "concluido";
+          console.log(newPedido)
+
+          await dispatch(updatePedido(newPedido));
+          navigate(`/gerente/pedidos`);
+          window.location.reload()
         }
     };
 
@@ -31,6 +48,10 @@ function BotaoPedidos({isCancelado, pedido}) {
 
             {(!isCancelado && isGerente==="true") ? (
                 <button onClick={handleCancel} className="text-xl my-10 p-3 font-semibold flex items-center justify-center mx-auto bg-red-500 text-white w-full rounded-full">Cancelar pedido</button>
+            ) : null}
+
+            {(isCancelado && isGerente==="true") ? (
+                <button onClick={handleRevoke} className="text-xl my-10 p-3 font-semibold flex items-center justify-center mx-auto bg-red-500 text-white w-full rounded-full">Revogar cancelamento</button>
             ) : null}
         </>
     );

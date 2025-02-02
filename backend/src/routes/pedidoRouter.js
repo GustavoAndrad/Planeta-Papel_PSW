@@ -9,7 +9,7 @@ const authorize = require("../authorize");
 module.exports = (router) =>{
 
     router
-        .get('/pedido', verifyUser, authorize, pedidoController.readPedidos)
+        .get('/pedido/all', verifyUser, authorize, pedidoController.readPedidos)
         .get('/pedido', verifyUser, pedidoController.readPedidosByUserId)
         .post('/pedido', verifyUser, pedidoController.createPedido)
         .patch('/pedido/:id', verifyUser, pedidoController.updatePedido)
