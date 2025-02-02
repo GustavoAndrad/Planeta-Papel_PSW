@@ -1,12 +1,42 @@
 const Pedido = require('../models/pedido');
+const Produto = require("../models/produto")
 
 async function createPedido(pedidoData) {
-    const pedido = new Pedido(pedidoData);
-    return await pedido.save();
+    const session = await Pedido.startSession();
+    session.startTransaction();
+
+    try {
+        for (const item of pedidoData.produtos) {
+            const produto = await Produto.findOne({ nome: item.nome }).session(session);
+            if (!produto) {
+                throw new Error(`Produto "${item.nome}" não encontrado.`);
+            }
+
+            if (produto.qntDisponivel < item.quantidade) {
+                throw new Error(`Estoque insuficiente para o produto "${item.nome}".`);
+            }
+
+            produto.qntDisponivel -= item.quantidade;
+            await produto.save({ session });
+        }
+
+        const pedido = new Pedido(pedidoData);
+        await pedido.save({ session });
+        
+        await session.commitTransaction();
+        session.endSession();
+
+        return pedido;
+    } catch (error) {
+        await session.abortTransaction();
+        session.endSession();
+        throw error;
+    }
 }
 
-async function getPedidoById(id) {
-    return await Pedido.findById(id);
+
+async function getPedidosByUserId(userId) {
+    return await Pedido.find({ userId });
 }
 
 async function getPedidos() {
@@ -24,7 +54,7 @@ async function deletePedido(id) {
 module.exports = {
     createPedido,
     getPedidos,
-    getPedidoById,
+    getPedidosByUserId,
     updatePedido,
     deletePedido
 };
