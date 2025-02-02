@@ -24,7 +24,7 @@ const produtoSchema = new mongoose.Schema({
         validator: function(arr) {
             return (arr.length <= 4) && (arr.length>0);
         },
-        message: 'Deve haver, nó maximo, 3 e imagens e, no mínimo, 1'
+        message: 'Deve haver, nó maximo, 3 imagens e, no mínimo, 1'
     },
     required: true
   },

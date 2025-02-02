@@ -1,9 +1,6 @@
 const Pedido = require('../models/pedido');
 const Produto = require("../models/produto")
 
-const Pedido = require('../models/pedido');
-const Produto = require("../models/produto")
-
 async function createPedido(pedidoData) {
     const session = await Pedido.startSession();
     session.startTransaction();

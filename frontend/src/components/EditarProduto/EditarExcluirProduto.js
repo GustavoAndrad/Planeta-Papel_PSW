@@ -172,6 +172,7 @@ function InfoProdutoEditarExcluir() {
   
       try {
         const prod = await dispatch(updateProduto({ produtoData, imagens: filesImages }));
+
         if (prod.payload.status) {
           navigate(`/produto/${id}`);
           window.location.reload()
