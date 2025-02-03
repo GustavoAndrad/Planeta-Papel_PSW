@@ -9,7 +9,7 @@ import CardSolic from "../components/SolicGerente/CardSolic"
 export default function SolicGerente(){
     const dispatch = useDispatch();
 
-    const solic = useSelector(solicSelectors.selectAll);
+    let solic = useSelector(solicSelectors.selectAll);
     const solicStatus = useSelector((state) => state.solicitacoes.status);
 
     const users = useSelector(userSelectors.selectAll);
@@ -42,6 +42,8 @@ export default function SolicGerente(){
     if(solic.length <= 0 || users.length <= 0){
         return <div className="w-full h-full flex text-center justify-center items-center text-2xl bold pt-10">Erro ao carregar informações das Solicitações. <br/> Experimente recarregar a página</div>;
     }
+
+    solic = [...solic].reverse()
 
     return(
         <>

@@ -9,7 +9,7 @@ import TitleSection from "../components/PedidosGerente/TitleSection";
 function PedidosGerente() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const pedidos = useSelector(pedidoSelectors.selectAll);
+    let pedidos = useSelector(pedidoSelectors.selectAll);
     const status = useSelector((state) => state.pedidos.status);
 
     useEffect(() => {
@@ -22,6 +22,8 @@ function PedidosGerente() {
     const handlePedidoClick = (pedidoId) => {
         navigate(`/informacoes-pedido/${pedidoId}`); // Navega para a rota com o ID do pedido
     };
+
+    pedidos = [...pedidos].reverse();
 
     return (
         <>

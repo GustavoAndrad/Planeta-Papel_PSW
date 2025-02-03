@@ -82,22 +82,26 @@ export default function Caixa({ items, setItems, outros, setOutros, isCheck, tog
                                 placeholder="Qtd"
                                 className="border border-accentBlue p-2 rounded-[20px] w-full mb-4 pl-4"
                             />
-                            <button
-                                type="button"
-                                onClick={()=>removeOutro(index)}
-                                className={`${item===""?"invisible":"mb-3 py-1.5 px-2.5 text-sm text-white bg-cancelRed hover:bg-red-700 rounded-full"}`}
-                                >
-                                Excluir
-                            </button>
+                            {(outros[0].nome || outros.length >1) ?
+                                <button
+                                    type="button"
+                                    onClick={()=>removeOutro(index)}
+                                    className={`${item===""?"invisible":"mb-3 py-1.5 px-2.5 text-sm text-white bg-cancelRed hover:bg-red-700 rounded-full"}`}
+                                    >
+                                    Excluir
+                                </button>
+                            :null}
                         </div>
                         ))}
-                        <button
-                            type="button"
-                            onClick={addOutro}
-                            className="py-0.5 px-3 block text-lg text-white bg-primaryBlue hover:bg-secondaryBlue rounded-full"
-                        >
-                            +
-                        </button>
+                        {(outros[0].nome || outros.length >1) ?
+                            <button
+                                type="button"
+                                onClick={addOutro}
+                                className="py-0.5 px-3 block text-lg text-white bg-primaryBlue hover:bg-secondaryBlue rounded-full"
+                            >
+                                +
+                            </button>
+                        :null}
                     </div>
                 </div>
             </div>

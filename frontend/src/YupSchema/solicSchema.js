@@ -12,14 +12,13 @@ const solicValidationSchema = Yup.object({
         qtd: Yup.string()
           .required('Quantidade do item é obrigatória'),
       })
-    )
-    .min(1, 'A solicitação deve ter pelo menos 1 item')
-    .required('Itens são obrigatórios'),
+    ),
 
   outros: Yup.array()
     .of(
       Yup.object({
         nome: Yup.string()
+          .min(3,"Material inválido")
           .required('Nome do item extra é obrigatório'),
         qtd: Yup.string()
           .required('Quantidade do item extra é obrigatória'),
@@ -34,6 +33,10 @@ const solicValidationSchema = Yup.object({
 
   data: Yup.string()
     .required('Data é obrigatória'),
-});
+}).test('at-least-one', 'A solicitação deve conter pelo menos um item em "items" ou "outros"', function (values) {
+  const hasItems = values.items && values.items.length > 0;
+  const hasOutros = values.outros && values.outros.length > 0;
+  return hasItems || hasOutros;
+  });
 
 export default solicValidationSchema;

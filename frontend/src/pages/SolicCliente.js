@@ -10,7 +10,7 @@ import BotaoAzul from "../components/BotaoAzul";
 export default function SolicCliente(){
     const dispatch = useDispatch();
     const cliente = localStorage.getItem("id");
-    const solic = useSelector((state)=>selectSolicitacoesByCliente(state,cliente));
+    let solic = useSelector((state)=>selectSolicitacoesByCliente(state,cliente));
     const solicStatus = useSelector((state) => state.solicitacoes.status);
     const [openCardId, setOpenCardId] = useState(null);
 
@@ -34,6 +34,8 @@ export default function SolicCliente(){
         return <div className="w-full h-full flex justify-center items-center text-2xl bold pt-10">Erro ao carregar informações das Solicitacoes.</div>;
     }
     
+    solic = [...solic].reverse()
+
     return(
         <>
             <SectionName sectionName={"Ver Solicitacoes"} img={"/images/reciclagem.png"}></SectionName>
