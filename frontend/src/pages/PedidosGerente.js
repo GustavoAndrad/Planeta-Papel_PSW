@@ -12,8 +12,6 @@ function PedidosGerente() {
     const pedidos = useSelector(pedidoSelectors.selectAll);
     const status = useSelector((state) => state.pedidos.status);
 
-    console.log(pedidos)
-
     useEffect(() => {
         if (status === "idle") {
             dispatch(fetchAllPedidos());
@@ -24,8 +22,6 @@ function PedidosGerente() {
     const handlePedidoClick = (pedidoId) => {
         navigate(`/informacoes-pedido/${pedidoId}`); // Navega para a rota com o ID do pedido
     };
-
-    console.log(pedidos)
 
     return (
         <>

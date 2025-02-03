@@ -45,33 +45,27 @@ function InfoPlanoAssinar() {
 
         // Cria uma nova cópia do usuário com as modificações
         const updatedUser = {
-            ...user,
             plano: nome,
         };
 
         localStorage.setItem("planoPayment", true);
+        localStorage.setItem("planoData", JSON.stringify(updatedUser));
+        localStorage.setItem("planoPrice", JSON.stringify(preco));
 
-        // Dispara a ação de atualização do usuário
-        dispatch(updateUser(updatedUser))
-            .then(() => {
-                // Ação concluída, redireciona para outra página ou força atualização do estado
-                navigate('/pagamento');
-            })
-            .catch((error) => {
-                console.error('Erro ao atualizar usuário:', error);
-                alert('Erro ao atualizar usuário. Por favor, tente novamente.'); // Exibe mensagem de erro ao usuário
-            });
+        navigate('/pagamento');
+
     };
 
-    function handleCancelPlan(){
-        
+    function handleCancelPlan(e){
+        e.preventDefault();
+
         let updatedUser = {
-            ...user,
             plano: null
         }
         
         dispatch(updateUser(updatedUser)).then(() => {
             navigate('/cliente/planos');
+            window.location.reload()
         })
     }
 

@@ -45,7 +45,7 @@ function PlanosCliente(){
 
             <div className="flex items-center gap-3 w-[300px]">
                 <h1 className="text-2xl font-semibold text-secondaryBlue">📦 Plano Atual: </h1>
-                <h1 className="text-2xl font-semibold">{user ? user.plano : 'Nenhum'}</h1>
+                <h1 className="text-2xl font-semibold">{user?.plano || 'Nenhum'}</h1>
             </div>
             
             {planos.map((item) => (

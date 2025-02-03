@@ -1,4 +1,5 @@
 const Pedido = require('../models/pedido');
+const Plano = require('../models/plano');
 const Produto = require("../models/produto");
 
 async function createPedido(pedidoData) {
@@ -19,10 +20,18 @@ async function createPedido(pedidoData) {
     // Verificar disponibilidade dos produtos
     const produtosNoBanco = [];
     for (const item of pedidoFormatado.produtos) {
-        const produto = await Produto.findOne({ nome: item.nome });
+        let produto = await Produto.findOne({ nome: item.nome });
 
-        if (!produto) throw new Error(`Produto "${item.nome}" não encontrado.`);
-        if (produto.qntDisponivel < item.quantidade) throw new Error(`Estoque insuficiente para "${item.nome}".`);
+        if (!produto) {
+            const plano = await Plano.findOne({ nome: item.nome });
+            if (!plano) throw new Error(`"${item.nome}" não encontrado em Produtos nem em Planos.`);
+            
+            // Se for um plano, você pode definir uma estrutura específica para armazená-lo
+            produto = { ...plano, isPlano: true }; // Marcando como plano, se necessário
+        }
+        if (!produto.isPlano){
+            if(produto.qntDisponivel < item.quantidade) throw new Error(`Estoque insuficiente para "${item.nome}".`);
+        }
 
         produtosNoBanco.push(produto); // Guardamos para a segunda iteração
     }
@@ -34,8 +43,10 @@ async function createPedido(pedidoData) {
     // Diminui quantidade de produtos
     for (const item of pedidoFormatado.produtos) {
         const produto = produtosNoBanco.find(p => p.nome === item.nome);
-        produto.qntDisponivel -= item.quantidade;
-        await produto.save();
+        if(produto){
+            produto.qntDisponivel -= item.quantidade;
+            await produto.save();
+        }
     }
 
     if (pedidoFormatado.metodoPagamento === 'CARTAO') {

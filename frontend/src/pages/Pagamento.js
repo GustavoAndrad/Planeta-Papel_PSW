@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProdutos, selectProdutoByID } from "../redux/produtoSlice";
 import { createPedido } from "../redux/pedidoSlice";
 import { toast } from "react-toastify";
+import { updateUser } from "../redux/usuarioSlice";
 
 const PaymentPage = () => {
   const navigate = useNavigate();
@@ -97,37 +98,67 @@ const PaymentPage = () => {
 
     if(paymentType){
       if(!isPlanoPayment){
-      const pedido = {
-        userId,
-        prods: [...itens],
-        data: formatarDataAtual(),
-        metodoPagamento: paymentType,
-        cardDetails: {isCard:(paymentType==="CARTAO"), ...cardData},
-        isCancelado: false
-      }
-
-      try{
-        const {payload} = await dispatch(createPedido(pedido));
-        console.log(pedido)
-
-        if(!payload.status){
-          throw new Error(payload.message)
+        const pedido = {
+          userId,
+          prods: [...itens],
+          data: formatarDataAtual(),
+          metodoPagamento: paymentType,
+          cardDetails: {isCard:(paymentType==="CARTAO"), ...cardData},
+          isCancelado: false
         }
-      } catch(e){
-        toast.error("Pedido não finalizado: "+e.message);
-        return
-      }
 
-      navigate("/cliente/pedidos")
-      window.location.reload()
-      toast.success("Pedido realizado!");
-      dispatch(deleteAllCarrinho());
-    }else{
-      localStorage.removeItem("planoPayment")
-      navigate("/cliente/pedidos")
-      window.location.reload()
-      toast.success("Plano assinado com sucesso!");  
-    }
+        try{
+          const {payload} = await dispatch(createPedido(pedido));
+
+          if(!payload.status){
+            throw new Error(payload.message)
+          }
+        } catch(e){
+          toast.error("Pedido não finalizado: "+e.message);
+          return
+        }
+
+        navigate("/cliente/pedidos")
+        window.location.reload()
+        toast.success("Pedido realizado!");
+        dispatch(deleteAllCarrinho());
+        
+      }else{
+
+        const planoData = JSON.parse(localStorage.getItem("planoData"))
+        const planoPrice = Number(localStorage.getItem("planoPrice"))
+
+        const pedido = {
+          userId,
+          prods: [{prodName: planoData.plano, prodQt:1, prodTotal: planoPrice}],
+          data: formatarDataAtual(),
+          metodoPagamento: paymentType,
+          cardDetails: {isCard:(paymentType==="CARTAO"), ...cardData},
+          isCancelado: false
+        }
+
+        try{
+          const {payload} = await dispatch(createPedido(pedido));
+
+          if(!payload.status){
+            throw new Error(payload.message)
+          }
+          
+          dispatch(updateUser(planoData));
+          
+          localStorage.removeItem("planoPayment")
+          localStorage.removeItem("planoData");
+          
+          navigate("/cliente/pedidos")
+          
+          window.location.reload()
+          toast.success("Plano assinado com sucesso!"); 
+
+        } catch(e){
+          toast.error("Assinatura não finalizada: "+e.message);
+          return
+        }
+      }
     }
   }
 

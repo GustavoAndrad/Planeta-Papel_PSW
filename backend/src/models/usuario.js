@@ -49,14 +49,16 @@ const usuarioSchema = new mongoose.Schema(
       required: false,
       validate: {
         validator: async function (value) {
-          if(value){
-            const exists = await Plano.exists({ nome: value });
-            return exists;
+          if (!value) {
+            return true;
           }
-          return true
+          
+          const exists = await Plano.exists({ nome: value });
+          return !!exists;
         },
         message: "Plano inválido. Certifique-se de que ele existe.",
       },
+      default: "Nenhum"
     },
   },
   { timestamps: true, toJSON: { virtuals: true, transform: docToJsonTransform }, toObject: { virtuals: true, transform: docToJsonTransform }, versionKey: false }
