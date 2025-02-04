@@ -66,177 +66,254 @@ const produtos = [
     ],
     "qntDisponivel": 200,
     "categoria": "Papel"
-    },
-    {
-      "id": "8",
-      "nome": "Post-it 76mm x 76mm - Bloco com 100 folhas",
-      "preco": 9.9,
-      "descricao": "Bloco de post-it tamanho 76mm x 76mm, perfeito para anotações rápidas.",
-      "imagem": [
-        "postit1.jpeg"
-      ],
-      "qntDisponivel": 200,
-      "categoria": "Post-it"
-    },
-    {
-      "id": "9",
-      "nome": "Post-it Super Sticky 76mm x 76mm - Bloco com 90 folhas",
-      "preco": 14.9,
-      "descricao": "Post-it super sticky que gruda mais e é ideal para papéis e superfícies diversas.",
-      "imagem": [
-        "postit2.jpeg"
-      ],
-      "qntDisponivel": 120,
-      "categoria": "Post-it"
-    },
-    {
-      "id": "10",
-      "nome": "Post-it 50mm x 50mm - Bloco com 150 folhas",
-      "preco": 11.9,
-      "descricao": "Post-it com 150 folhas no tamanho 50mm x 50mm, excelente para uso escolar e de escritório.",
-      "imagem": [
-        "postit3.jpeg"
-      ],
-      "qntDisponivel": 180,
-      "categoria": "Post-it"
-    },
-    {
-      "id": "11",
-      "nome": "Post-it Neon 76mm x 76mm - Bloco com 100 folhas",
-      "preco": 13.9,
-      "descricao": "Bloco de post-it neon para destacar suas anotações, com 100 folhas.",
-      "imagem": [
-        "postit1.jpeg"
-      ],
-      "qntDisponivel": 150,
-      "categoria": "Post-it"
-    },
-    {
-      "id": "12",
-      "nome": "Post-it 76mm x 76mm - Bloco com 50 folhas",
-      "preco": 7.9,
-      "descricao": "Bloco de post-it tamanho 76mm x 76mm com 50 folhas.",
-      "imagem": [
-        "postit2.jpeg",
-        "postit1.jpeg",
-        "postit3.jpeg"
-      ],
-      "qntDisponivel": 200,
-      "categoria": "Post-it"
-    },
-    {
-      "id": "16",
-      "nome": "Cartolina Colorida A3 - 10 folhas",
-      "preco": 10.9,
-      "descricao": "Pacote com 10 folhas de cartolina colorida A3, excelente para trabalhos escolares e artes.",
-      "imagem": [
-        "cartolina1.jpeg"
-      ],
-      "qntDisponivel": 80,
-      "categoria": "Cartolina"
-    },
-    {
-      "id": "17",
-      "nome": "Cartolina Branca A3 - 10 folhas",
-      "preco": 8.9,
-      "descricao": "Pacote de 10 folhas de cartolina branca A3, versátil para projetos e apresentações.",
-      "imagem": [
-        "cartolina2.jpeg"
-      ],
-      "qntDisponivel": 60,
-      "categoria": "Cartolina"
-    },
-    {
-      "id": "18",
-      "nome": "Cartolina Colorida A4 - 25 folhas",
-      "preco": 12.9,
-      "descricao": "Cartolina colorida A4, com 25 folhas para criar projetos criativos.",
-      "imagem": [
-        "cartolina3.jpeg"
-      ],
-      "qntDisponivel": 100,
-      "categoria": "Cartolina"
-    },
-    {
-      "id": "19",
-      "nome": "Cartolina Branca A4 - 25 folhas",
-      "preco": 10.9,
-      "descricao": "Cartolina branca A4, pacote com 25 folhas.",
-      "imagem": [
-        "cartolina1.jpeg"
-      ],
-      "qntDisponivel": 80,
-      "categoria": "Cartolina"
-    },
-    {
-      "id": "20",
-      "nome": "Cartolina Colorida A3 - 5 folhas",
-      "preco": 7.9,
-      "descricao": "Cartolina colorida A3, com 5 folhas para pequenas criações.",
-      "imagem": [
-        "cartolina2.jpeg",
-        "cartolina1.jpeg"
-      ],
-      "qntDisponivel": 60,
-      "categoria": "Cartolina"
-    },
-    {
-      "id": "24",
-      "nome": "Caderno Universitário - 80 folhas",
-      "preco": 19.9,
-      "descricao": "Caderno universitário com capa dura e 80 folhas, ideal para anotações no dia a dia.",
-      "imagem": [
-        "caderno1.jpeg"
-      ],
-      "qntDisponivel": 150,
-      "categoria": "Caderno"
-    },
-    {
-      "id": "25",
-      "nome": "Caderno Espiral - 100 folhas",
-      "preco": 23.9,
-      "descricao": "Caderno espiral com 100 folhas, capa dura e formato A5, ideal para o uso escolar e profissional.",
-      "imagem": [
-        "caderno2.jpeg"
-      ],
-      "qntDisponivel": 120,
-      "categoria": "Caderno"
-    },
-    {
-      "id": "26",
-      "nome": "Caderno Universitário 120 folhas",
-      "preco": 28.9,
-      "descricao": "Caderno universitário 120 folhas, ideal para uso em cursos técnicos e faculdade.",
-      "imagem": [
-        "caderno3.jpeg"
-      ],
-      "qntDisponivel": 90,
-      "categoria": "Caderno"
-    },
-    {
-      "id": "27",
-      "nome": "Caderno Pautado - 200 folhas",
-      "preco": 35.9,
-      "descricao": "Caderno pautado de 200 folhas, ideal para escritores e estudantes.",
-      "imagem": [
-        "caderno1.jpeg"
-      ],
-      "qntDisponivel": 60,
-      "categoria": "Caderno"
-    },
-    {
-      "id": "28",
-      "nome": "Caderno Escolar - 60 folhas",
-      "preco": 16.9,
-      "descricao": "Caderno escolar com 60 folhas pautadas, ideal para o uso diário.",
-      "imagem": [
-        "caderno2.jpeg",
-        "caderno1.jpeg"
-      ],
-      "qntDisponivel": 200,
-      "categoria": "Caderno"
-    }
-]
+  },
+  {
+    "id": "8",
+    "nome": "Post-it 76mm x 76mm - Bloco com 100 folhas",
+    "preco": 9.9,
+    "descricao": "Bloco de post-it tamanho 76mm x 76mm, perfeito para anotações rápidas.",
+    "imagem": [
+      "postit1.jpeg"
+    ],
+    "qntDisponivel": 200,
+    "categoria": "Post-it"
+  },
+  {
+    "id": "9",
+    "nome": "Post-it Super Sticky 76mm x 76mm - Bloco com 90 folhas",
+    "preco": 14.9,
+    "descricao": "Post-it super sticky que gruda mais e é ideal para papéis e superfícies diversas.",
+    "imagem": [
+      "postit2.jpeg"
+    ],
+    "qntDisponivel": 120,
+    "categoria": "Post-it"
+  },
+  {
+    "id": "10",
+    "nome": "Post-it 50mm x 50mm - Bloco com 150 folhas",
+    "preco": 11.9,
+    "descricao": "Post-it com 150 folhas no tamanho 50mm x 50mm, excelente para uso escolar e de escritório.",
+    "imagem": [
+      "postit3.jpeg"
+    ],
+    "qntDisponivel": 180,
+    "categoria": "Post-it"
+  },
+  {
+    "id": "11",
+    "nome": "Post-it Neon 76mm x 76mm - Bloco com 100 folhas",
+    "preco": 13.9,
+    "descricao": "Bloco de post-it neon para destacar suas anotações, com 100 folhas.",
+    "imagem": [
+      "postit1.jpeg"
+    ],
+    "qntDisponivel": 150,
+    "categoria": "Post-it"
+  },
+  {
+    "id": "12",
+    "nome": "Post-it 76mm x 76mm - Bloco com 50 folhas",
+    "preco": 7.9,
+    "descricao": "Bloco de post-it tamanho 76mm x 76mm com 50 folhas.",
+    "imagem": [
+      "postit2.jpeg",
+      "postit1.jpeg",
+      "postit3.jpeg"
+    ],
+    "qntDisponivel": 200,
+    "categoria": "Post-it"
+  },
+  {
+    "id": "16",
+    "nome": "Cartolina Colorida A3 - 10 folhas",
+    "preco": 10.9,
+    "descricao": "Pacote com 10 folhas de cartolina colorida A3, excelente para trabalhos escolares e artes.",
+    "imagem": [
+      "cartolina1.jpeg"
+    ],
+    "qntDisponivel": 80,
+    "categoria": "Cartolina"
+  },
+  {
+    "id": "17",
+    "nome": "Cartolina Branca A3 - 10 folhas",
+    "preco": 8.9,
+    "descricao": "Pacote de 10 folhas de cartolina branca A3, versátil para projetos e apresentações.",
+    "imagem": [
+      "cartolina2.jpeg"
+    ],
+    "qntDisponivel": 60,
+    "categoria": "Cartolina"
+  },
+  {
+    "id": "18",
+    "nome": "Cartolina Colorida A4 - 25 folhas",
+    "preco": 12.9,
+    "descricao": "Cartolina colorida A4, com 25 folhas para criar projetos criativos.",
+    "imagem": [
+      "cartolina3.jpeg"
+    ],
+    "qntDisponivel": 100,
+    "categoria": "Cartolina"
+  },
+  {
+    "id": "19",
+    "nome": "Cartolina Branca A4 - 25 folhas",
+    "preco": 10.9,
+    "descricao": "Cartolina branca A4, pacote com 25 folhas.",
+    "imagem": [
+      "cartolina1.jpeg"
+    ],
+    "qntDisponivel": 80,
+    "categoria": "Cartolina"
+  },
+  {
+    "id": "20",
+    "nome": "Cartolina Colorida A3 - 5 folhas",
+    "preco": 7.9,
+    "descricao": "Cartolina colorida A3, com 5 folhas para pequenas criações.",
+    "imagem": [
+      "cartolina2.jpeg",
+      "cartolina1.jpeg"
+    ],
+    "qntDisponivel": 60,
+    "categoria": "Cartolina"
+  },
+  {
+    "id": "24",
+    "nome": "Caderno Universitário - 80 folhas",
+    "preco": 19.9,
+    "descricao": "Caderno universitário com capa dura e 80 folhas, ideal para anotações no dia a dia.",
+    "imagem": [
+      "caderno1.jpeg"
+    ],
+    "qntDisponivel": 150,
+    "categoria": "Caderno"
+  },
+  {
+    "id": "25",
+    "nome": "Caderno Espiral - 100 folhas",
+    "preco": 23.9,
+    "descricao": "Caderno espiral com 100 folhas, capa dura e formato A5, ideal para o uso escolar e profissional.",
+    "imagem": [
+      "caderno2.jpeg"
+    ],
+    "qntDisponivel": 120,
+    "categoria": "Caderno"
+  },
+  {
+    "id": "26",
+    "nome": "Caderno Universitário 120 folhas",
+    "preco": 28.9,
+    "descricao": "Caderno universitário 120 folhas, ideal para uso em cursos técnicos e faculdade.",
+    "imagem": [
+      "caderno3.jpeg"
+    ],
+    "qntDisponivel": 90,
+    "categoria": "Caderno"
+  },
+  {
+    "id": "27",
+    "nome": "Caderno Pautado - 200 folhas",
+    "preco": 35.9,
+    "descricao": "Caderno pautado de 200 folhas, ideal para escritores e estudantes.",
+    "imagem": [
+      "caderno1.jpeg"
+    ],
+    "qntDisponivel": 60,
+    "categoria": "Caderno"
+  },
+  {
+    "id": "28",
+    "nome": "Caderno Escolar - 60 folhas",
+    "preco": 16.9,
+    "descricao": "Caderno escolar com 60 folhas pautadas, ideal para o uso diário.",
+    "imagem": [
+      "caderno2.jpeg",
+      "caderno1.jpeg"
+    ],
+    "qntDisponivel": 200,
+    "categoria": "Caderno"
+  },
+  {
+    "id": "99",
+    "nome": "Mini caderno - 30 folhas",
+    "preco": 11.9,
+    "descricao": "Caderno escolar com 60 folhas pautadas, ideal para o uso diário.",
+    "imagem": [
+      "caderno2.jpeg"
+    ],
+    "qntDisponivel": 2,
+    "categoria": "Caderno"
+  },
+  {
+    "id": "21",
+    "nome": "Papel Sulfite A4 - 500 folhas",
+    "preco": 19.9,
+    "descricao": "Pacote com 500 folhas de papel sulfite A4, ideal para impressão em grandes volumes.",
+    "imagem": [
+      "papel1.jpeg"
+    ],
+    "qntDisponivel": 100,
+    "categoria": "Papel"
+  },
+  {
+    "id": "22",
+    "nome": "Papel Reciclado A4 - 250 folhas",
+    "preco": 22.9,
+    "descricao": "Papel reciclado A4, 250 folhas, uma opção ecológica para impressão e escrita.",
+    "imagem": [
+      "papel2.jpeg"
+    ],
+    "qntDisponivel": 80,
+    "categoria": "Papel"
+  },
+  {
+    "id": "29",
+    "nome": "Post-it 50mm x 50mm - Bloco com 100 folhas",
+    "preco": 9.5,
+    "descricao": "Post-it tamanho 50mm x 50mm, ideal para anotações rápidas e visíveis.",
+    "imagem": [
+      "postit1.jpeg"
+    ],
+    "qntDisponivel": 150,
+    "categoria": "Post-it"
+  },
+  {
+    "id": "30",
+    "nome": "Post-it 76mm x 76mm - Bloco com 120 folhas",
+    "preco": 11.5,
+    "descricao": "Bloco de post-it tamanho 76mm x 76mm, com 120 folhas, para destacar informações importantes.",
+    "imagem": [
+      "postit2.jpeg"
+    ],
+    "qntDisponivel": 180,
+    "categoria": "Post-it"
+  },
+  {
+    "id": "31",
+    "nome": "Cartolina Colorida A4 - 10 folhas",
+    "preco": 7.5,
+    "descricao": "Cartolina colorida A4, pacote com 10 folhas, ideal para projetos criativos.",
+    "imagem": [
+      "cartolina1.jpeg"
+    ],
+    "qntDisponivel": 90,
+    "categoria": "Cartolina"
+  },
+  {
+    "id": "32",
+    "nome": "Cartolina Branca A4 - 50 folhas",
+    "preco": 15.9,
+    "descricao": "Cartolina branca A4, pacote com 50 folhas, versátil para diversos tipos de trabalho.",
+    "imagem": [
+      "cartolina2.jpeg"
+    ],
+    "qntDisponivel": 110,
+    "categoria": "Cartolina"
+  }
+];
 
 const planos = [
   {
@@ -339,11 +416,13 @@ module.exports = async () =>{
                 complemento: "Segunda porta depois do lago",
                 cep: "00000-000",
                 isGerente: true,
+                plano:null,
                 cpf: process.env.ADMIN_CPF,
                 codigoSeguranca: process.env.ADMIN_SECURITY_CODE,
             }, senha=process.env.ADMIN_PASS);
 
             const registered = await Gerente.register(gerente, senha);
+
 
             if(!registered){
                 throw new Error("Unable to create!")

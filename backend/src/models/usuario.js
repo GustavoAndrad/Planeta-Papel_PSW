@@ -52,7 +52,7 @@ const usuarioSchema = new mongoose.Schema(
           if (!value) {
             return true;
           }
-          
+                    
           const exists = await Plano.exists({ nome: value });
           return !!exists;
         },
